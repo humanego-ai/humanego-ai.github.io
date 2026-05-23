@@ -401,7 +401,11 @@
     @media (max-width: 480px) {
       /* Tighter hero padding so the title has more usable width */
       .hero-body { padding: 2.2rem 1rem 1.2rem 1rem; }
-      .author-list { font-size: 1.05rem; }
+      /* Author row: shrink font + margins so the four first authors
+         (separated by <br>) fit on a single line on phones. */
+      .author-list { font-size: 0.86rem; line-height: 1.7; }
+      .author-block { margin: 0.15em 0.3em; }
+      .author-block a { white-space: nowrap; }
       .umd-logo { height: 64px; }
       /* Reduce horizontal padding on every section so charts/videos
          can use more screen width on phones. */
