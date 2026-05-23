@@ -225,7 +225,7 @@
       preload="auto"
       disablepictureinpicture
       style="width: 100%; border-radius: 6px; display: block;">
-      <source src="static/images/architecture.mov" type="video/mp4">
+      <source src="static/images/architecture.mp4" type="video/mp4">
     </video>
     <p class="caption">
       <strong>System overview.</strong> Arm inpainting and visual keypoints bridge the
@@ -252,6 +252,107 @@
     <p class="caption">
       HumanEgo achieves the highest success rate on every task, outperforming
       both human-video baselines and matched-time robot teleoperation.
+    </p>
+  </div>
+</section>
+
+<!-- ================= GENERALIZATION ================= -->
+<section class="section">
+  <div class="container content">
+    <h2 class="title is-3 has-text-centered">Zero-Shot Cross-Condition Generalization</h2>
+    <video
+      class="scroll-play"
+      muted
+      playsinline
+      preload="auto"
+      disablepictureinpicture
+      style="width: 100%; border-radius: 6px; display: block;">
+      <source src="static/images/generalization.mov" type="video/mp4">
+    </video>
+    <p class="caption">
+      A single policy trained on human data transfers <em>zero-shot</em> across
+      novel embodiments, setups, and environments &mdash; all sectors stay above 85%.
+    </p>
+  </div>
+</section>
+
+<!-- ================= DATA EFFICIENCY ================= -->
+<section class="section">
+  <div class="container content">
+    <h2 class="title is-3 has-text-centered">Data Efficiency</h2>
+    <video
+      class="scroll-play"
+      muted
+      playsinline
+      preload="auto"
+      disablepictureinpicture
+      style="width: 100%; border-radius: 6px; display: block;">
+      <source src="static/images/data_efficiency.mov" type="video/mp4">
+    </video>
+    <p class="caption">
+      HumanEgo reaches 75% success with just 20 minutes of human videos and 95% by
+      30 minutes &mdash; far surpassing what matched-time robot teleoperation achieves.
+    </p>
+  </div>
+</section>
+
+<!-- ================= DATA COMPARISON ================= -->
+<section class="section">
+  <div class="container content">
+    <h2 class="title is-3 has-text-centered">Human vs Robot Data</h2>
+    <video
+      class="scroll-play"
+      muted
+      playsinline
+      preload="auto"
+      disablepictureinpicture
+      style="width: 100%; border-radius: 6px; display: block;">
+      <source src="static/images/data_comparison.mov" type="video/mp4">
+    </video>
+    <p class="caption">
+      Aria-recorded human demonstrations have higher image SNR, lower idle time, and
+      cover a wider spatial distribution than robot teleop &mdash; quality and diversity
+      both favor human data.
+    </p>
+  </div>
+</section>
+
+<!-- ================= REPRESENTATION STUDY ================= -->
+<section class="section">
+  <div class="container content">
+    <h2 class="title is-3 has-text-centered">Representation Study</h2>
+    <video
+      class="scroll-play"
+      muted
+      playsinline
+      preload="auto"
+      disablepictureinpicture
+      style="width: 100%; border-radius: 6px; display: block;">
+      <source src="static/images/representation.mov" type="video/mp4">
+    </video>
+    <p class="caption">
+      Moving from visual-only inputs to our Interaction-Centric Tokens (ICT) lifts
+      success rate from 32.5% to 95% &mdash; spatial structure matters far more than pixels.
+    </p>
+  </div>
+</section>
+
+<!-- ================= AUX TRAINING STUDY ================= -->
+<section class="section">
+  <div class="container content">
+    <h2 class="title is-3 has-text-centered">Auxiliary Training Study</h2>
+    <video
+      class="scroll-play"
+      muted
+      playsinline
+      preload="auto"
+      disablepictureinpicture
+      style="width: 100%; border-radius: 6px; display: block;">
+      <source src="static/images/aux_training.mov" type="video/mp4">
+    </video>
+    <p class="caption">
+      Each auxiliary objective contributes independently; combining all three
+      auxiliary losses takes success rate from 50% to 75% on Water Flowers.
     </p>
   </div>
 </section>
