@@ -32,10 +32,25 @@
       background-color: #ffffff !important;
     }
     .publication-title { font-weight: 700; }
-    .hero-body { padding: 3rem 1.5rem 1.5rem 1.5rem; }
+    .hero { position: relative; overflow: hidden; }
+    .hero-body { padding: 3rem 1.5rem 1.5rem 1.5rem; position: relative; z-index: 1; }
+    /* Subtle wire-frame hands behind the title / authors / buttons */
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("static/images/dual_arms.png") no-repeat center center;
+      background-size: min(100%, 1280px) auto;
+      opacity: 0.18;
+      pointer-events: none;
+      z-index: 0;
+    }
+    @media (max-width: 768px) {
+      .hero::before { background-size: 140% auto; opacity: 0.12; }
+    }
     .content { max-width: 900px; margin: 0 auto; }
     .content.wide { max-width: 1200px; }
-    .content p { font-size: 1.18em; line-height: 1.65; }
+    .content p { font-size: 1.30em; line-height: 1.7; }
     .link-buttons { margin-top: 1.8em; }
     .link-buttons a {
       display: inline-block;
@@ -199,7 +214,7 @@
       background: #fafafa;
       font-size: 1.0em;
     }
-    .caption { font-size: 1.15em; color: #555; text-align: center; margin-top: 0.9em; line-height: 1.6; }
+    .caption { font-size: 1.28em; color: #555; text-align: center; margin-top: 1.0em; line-height: 1.65; }
     /* Side-by-side pair rows */
     .pair-cols { align-items: stretch; }
     .pair-cols .column { display: flex; flex-direction: column; }
