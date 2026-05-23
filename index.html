@@ -35,6 +35,49 @@
        the page's accent palette. Section titles and other headings keep
        their own colors via their own !important rules. */
     strong, b { color: #C45A0E; }
+    /* ---- Insights (project thesis: 3 manifesto-level takeaways) ---- */
+    .insights-list {
+      list-style: none !important;
+      counter-reset: insight;
+      margin: 1.8em 0 0 !important;
+      padding: 0 !important;
+    }
+    .insights-list > li {
+      counter-increment: insight;
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      gap: clamp(1rem, 2.5vw, 2rem);
+      padding: 1.5em 0;
+      border-top: 1px solid #F0DCC4;
+      margin-left: 0 !important;
+    }
+    .insights-list > li:last-child { border-bottom: 1px solid #F0DCC4; }
+    .insights-list > li::marker { content: ""; }
+    .insights-list > li::before {
+      content: counter(insight);
+      flex-shrink: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.4rem, 6vw, 3.6rem);
+      font-weight: 800;
+      color: #C45A0E;
+      line-height: 0.95;
+      width: 1.4em;
+      text-align: center;
+      letter-spacing: -0.02em;
+    }
+    .insight-text {
+      font-size: clamp(1.1rem, 3.5vw, 1.45em);
+      line-height: 1.6;
+      color: #1a1a1a;
+      margin: 0.15em 0 0 0 !important;
+      flex: 1;
+    }
+    @media (max-width: 600px) {
+      .insights-list > li { gap: 0.7rem; padding: 1.2em 0; }
+      .insights-list > li::before { width: 1.2em; }
+    }
+
     /* "Findings" bullet list — appears under a Results caption to highlight
        the 3 key takeaways. Each item is a custom-bulleted line with a bold
        black heading + supporting prose. */
@@ -672,6 +715,7 @@
       </ul>
     </li>
     <li class="toc-item" data-target="clip-full-video"><a class="toc-link" href="#clip-full-video">HumanEgo &mdash; Full Video</a></li>
+    <li class="toc-item" data-target="insights"><a class="toc-link" href="#insights">Insights</a></li>
     <li class="toc-item" data-target="overview"><a class="toc-link" href="#overview">Overview</a></li>
     <li class="toc-item" data-target="abstract"><a class="toc-link" href="#abstract">Abstract</a></li>
     <li class="toc-item" data-target="architecture"><a class="toc-link" href="#architecture">Architecture</a></li>
@@ -895,6 +939,35 @@
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen></iframe>
     </div>
+  </div>
+</section>
+
+<!-- ================= INSIGHTS ================= -->
+<section class="section" id="insights" data-toc="insights">
+  <div class="container content">
+    <h2 class="title is-3 section-title">Insights</h2>
+    <ol class="insights-list">
+      <li>
+        <p class="insight-text">
+          Human video is not merely a cheap substitute but a
+          <strong>superior</strong> and <strong>more efficient</strong> data
+          source for policy learning.
+        </p>
+      </li>
+      <li>
+        <p class="insight-text">
+          Explicit <strong>spatial representation</strong>, not visual fidelity,
+          is the key to bridging the embodiment gap. Neither hand nor object
+          alone defines a skill&mdash;what matters is their <strong>interaction</strong>.
+        </p>
+      </li>
+      <li>
+        <p class="insight-text">
+          Beyond action labels, human videos contain way more information.
+          <strong>Richer supervision signal</strong> provides complementary gains.
+        </p>
+      </li>
+    </ol>
   </div>
 </section>
 
