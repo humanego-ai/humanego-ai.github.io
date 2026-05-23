@@ -31,6 +31,10 @@
     html, body, .hero, .hero-body, .section, .footer {
       background-color: #ffffff !important;
     }
+    /* All bold text (<strong>, <b>) rendered in dark brand orange to match
+       the page's accent palette. Section titles and other headings keep
+       their own colors via their own !important rules. */
+    strong, b { color: #C45A0E; }
     .publication-title { font-weight: 700; }
     .hero { position: relative; overflow: hidden; }
     /* The global "all white" rule above forces .hero-body to white, which
@@ -59,18 +63,18 @@
     .content { max-width: 900px; margin: 0 auto; }
     .content.wide { max-width: 1200px; }
     /* Body paragraph (Abstract, FAQ answer, Acknowledge, etc.):
-       1.0rem on narrow phones → 1.30em on desktop. */
-    .content p { font-size: clamp(1.0rem, 3.5vw, 1.30em); line-height: 1.7; }
+       1.1rem on narrow phones → 1.55em on desktop. */
+    .content p { font-size: clamp(1.1rem, 3.8vw, 1.55em); line-height: 1.7; }
     .link-buttons { margin-top: 1.8em; }
     .link-buttons a {
       display: inline-block;
-      padding: clamp(0.5em, 1.6vw, 0.65em) clamp(0.95em, 3vw, 1.35em);
-      margin: 0.25em;
+      padding: clamp(0.55em, 1.8vw, 0.75em) clamp(1.05em, 3.3vw, 1.5em);
+      margin: 0.28em;
       background: #363636;
       color: white !important;
       border-radius: 999px;
       text-decoration: none;
-      font-size: clamp(0.92rem, 2.6vw, 1.10em);
+      font-size: clamp(1.0rem, 2.9vw, 1.25em);
       font-weight: 500;
       transition: background 0.15s;
     }
@@ -94,7 +98,7 @@
     .section-title {
       text-align: left !important;
       color: #C45A0E !important;
-      font-size: clamp(1.55rem, 5.5vw, 2rem) !important;
+      font-size: clamp(1.75rem, 6vw, 2.35rem) !important;
       font-weight: 800;
       letter-spacing: -0.01em;
       margin-bottom: 1.4rem !important;
@@ -113,7 +117,7 @@
     /* Results sub-section: "Results — Title" with orange prefix + black sub */
     .results-title {
       text-align: left !important;
-      font-size: clamp(1.55rem, 5.5vw, 2rem) !important;
+      font-size: clamp(1.75rem, 6vw, 2.35rem) !important;
       font-weight: 800;
       letter-spacing: -0.01em;
       margin-bottom: 1.3rem !important;
@@ -143,7 +147,7 @@
       align-items: center;
       gap: 0.38em;
       font-family: 'Inter', sans-serif;
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       font-weight: 800;
       letter-spacing: -0.015em;
       line-height: 1.15;
@@ -172,10 +176,10 @@
     .toc-item { position: relative; }
     .toc-link {
       display: block;
-      padding: 0.48em 0.2em 0.48em 0.4em;
+      padding: 0.52em 0.2em 0.52em 0.4em;
       color: #888;
       text-decoration: none;
-      font-size: 1.0em;
+      font-size: 1.15em;
       font-weight: 500;
       letter-spacing: 0.01em;
       transition: color 0.18s ease, padding-left 0.18s ease;
@@ -221,7 +225,7 @@
       max-height: 420px;
       opacity: 1;
     }
-    .toc-sub .toc-link { font-size: 0.94em; padding: 0.38em 0.2em 0.38em 0.4em; }
+    .toc-sub .toc-link { font-size: 1.05em; padding: 0.42em 0.2em 0.42em 0.4em; }
     .toc-sub .toc-item.active > .toc-link { color: #C45A0E; font-weight: 700; }
     .toc-sub .toc-item.active > .toc-link::before { width: 7px; height: 7px; }
 
@@ -275,7 +279,7 @@
     }
     .hero-quote-text {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.0rem, 3vw, 1.22em);
+      font-size: clamp(1.15rem, 3.5vw, 1.45em);
       line-height: 1.55;
       font-style: italic;
       font-weight: 400;
@@ -285,7 +289,7 @@
     .hero-quote-cite {
       display: block;
       margin-top: 1.4em;
-      font-size: 1.05em;
+      font-size: 1.18em;
       font-style: normal;
       font-weight: 600;
       color: #C45A0E;
@@ -324,7 +328,7 @@
     /* Per-task small title inside Real-World Video Clips (e.g. "Serve Bread").
        Smaller and lighter than the section title — centered above each clip. */
     .task-clip-title {
-      font-size: clamp(1.1rem, 3vw, 1.45rem) !important;
+      font-size: clamp(1.3rem, 3.5vw, 1.7rem) !important;
       font-weight: 700 !important;
       color: #C45A0E !important;
       text-align: center !important;
@@ -338,7 +342,7 @@
        (Bulma .title.is-3 = 2rem). !important is needed because Bulma's
        `.content h3` rule has higher specificity than `.clip-title`. */
     .clip-title {
-      font-size: clamp(1.55rem, 5.5vw, 2rem) !important;
+      font-size: clamp(1.75rem, 6vw, 2.35rem) !important;
       font-weight: 800 !important;
       color: #C45A0E !important;
       text-align: left !important;
@@ -372,7 +376,7 @@
       font-size: 1.0em;
     }
     .caption {
-      font-size: clamp(1.0rem, 3.4vw, 1.28em);
+      font-size: clamp(1.1rem, 3.8vw, 1.55em);
       color: #555;
       text-align: left;
       margin-top: 1.0em;
@@ -425,7 +429,7 @@
       justify-content: center;
       flex-wrap: nowrap;
       gap: 0.3em;
-      font-size: clamp(2.4rem, 9vw, 5rem);
+      font-size: clamp(2.7rem, 10vw, 5.6rem);
       font-weight: 800;
       letter-spacing: -0.02em;
       margin-bottom: 0.2em;
@@ -448,7 +452,7 @@
       display: block;
       font-weight: 700;
       letter-spacing: -0.005em;
-      font-size: clamp(1.4rem, 5vw, 2.5rem);
+      font-size: clamp(1.6rem, 5.5vw, 2.85rem);
       /* Override Bulma's word-break: break-word so the subtitle wraps at
          spaces, not at character level. */
       word-break: normal;
@@ -481,7 +485,7 @@
       .team-name { font-size: 0.95em; }
     }
     .author-list {
-      font-size: clamp(0.95rem, 3.2vw, 1.28rem);
+      font-size: clamp(1.05rem, 3.5vw, 1.48rem);
       font-weight: 500;
       color: #333;
       margin-top: 0.5em;
@@ -518,7 +522,7 @@
       box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
     }
     .team-name {
-      margin-top: 0.75em; font-size: 1.05em; font-weight: 600;
+      margin-top: 0.75em; font-size: 1.2em; font-weight: 600;
       color: #C45A0E; text-align: center; line-height: 1.25;
     }
     .team-member:hover .team-name { color: #9C3F00; }
@@ -536,7 +540,7 @@
     .faq-item:last-of-type { border-bottom: 1px solid #ececec; }
     .faq-item > summary {
       cursor: pointer; list-style: none;
-      font-size: 1.08em; font-weight: 600; color: #333;
+      font-size: 1.22em; font-weight: 600; color: #333;
       display: flex; align-items: center; justify-content: space-between;
       gap: 1em; outline: none;
     }
@@ -551,7 +555,7 @@
     }
     .faq-item > summary:hover { color: #D46714; }
     .faq-answer {
-      margin: 0.8em 0 0; font-size: 1.02em; line-height: 1.6;
+      margin: 0.8em 0 0; font-size: 1.18em; line-height: 1.65;
       color: #555;
     }
   </style>
@@ -803,9 +807,10 @@
       <source src="static/images/teaser.mp4" type="video/mp4">
     </video>
     <p class="caption">
-      We introduce <strong>HumanEgo</strong>, a robot-data-free, hardware-agnostic,
-      and data-efficient pipeline that learns robot manipulation policies from minutes
-      of raw human egocentric videos&mdash;powered by a flow matching policy with dense
+      We introduce <strong>HumanEgo</strong>, a <strong>robot-data-free</strong>,
+      <strong>hardware-agnostic</strong>, and <strong>data-efficient</strong> pipeline
+      that learns robot manipulation policies from <strong>minutes of</strong> raw
+      human egocentric videos&mdash;powered by a flow matching policy with dense
       auxiliary objectives.
     </p>
   </div>
