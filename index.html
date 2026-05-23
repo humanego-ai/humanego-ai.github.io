@@ -565,19 +565,6 @@
     <span>Human<span class="brand-ego">Ego</span></span>
   </a>
   <ul class="toc-list">
-    <li class="toc-item" data-target="overview"><a class="toc-link" href="#overview">Overview</a></li>
-    <li class="toc-item" data-target="abstract"><a class="toc-link" href="#abstract">Abstract</a></li>
-    <li class="toc-item" data-target="architecture"><a class="toc-link" href="#architecture">Architecture</a></li>
-    <li class="toc-item" data-target="data-collection"><a class="toc-link" href="#data-collection">Data Collection</a></li>
-    <li class="toc-item has-sub" data-target="results" data-group="results">
-      <a class="toc-link" href="#results-bridge">Results</a>
-      <ul class="toc-sub">
-        <li class="toc-item" data-target="results-bridge"><a class="toc-link" href="#results-bridge">Bridge the Embodiment Gap</a></li>
-        <li class="toc-item" data-target="results-efficiency"><a class="toc-link" href="#results-efficiency">Efficiency of Human Demos</a></li>
-        <li class="toc-item" data-target="results-conditions"><a class="toc-link" href="#results-conditions">One Policy, Many Conditions</a></li>
-        <li class="toc-item" data-target="results-drivers"><a class="toc-link" href="#results-drivers">What Drives Performance</a></li>
-      </ul>
-    </li>
     <li class="toc-item has-sub" data-target="real-world-clips" data-group="real-world-clips">
       <a class="toc-link" href="#real-world-clips">Real-World Video Clips</a>
       <ul class="toc-sub">
@@ -595,7 +582,20 @@
         <li class="toc-item" data-target="clip-cross-setup"><a class="toc-link" href="#clip-cross-setup">Serve Bread: Generalization</a></li>
       </ul>
     </li>
-    <li class="toc-item" data-target="clip-full-video"><a class="toc-link" href="#clip-full-video">HumanEgo &mdash; Full Video</a></li>
+    <li class="toc-item" data-target="overview"><a class="toc-link" href="#overview">Overview</a></li>
+    <li class="toc-item" data-target="abstract"><a class="toc-link" href="#abstract">Abstract</a></li>
+    <li class="toc-item" data-target="architecture"><a class="toc-link" href="#architecture">Architecture</a></li>
+    <li class="toc-item" data-target="data-collection"><a class="toc-link" href="#data-collection">Data Collection</a></li>
+    <li class="toc-item has-sub" data-target="results" data-group="results">
+      <a class="toc-link" href="#results-bridge">Results</a>
+      <ul class="toc-sub">
+        <li class="toc-item" data-target="results-bridge"><a class="toc-link" href="#results-bridge">Bridge the Embodiment Gap</a></li>
+        <li class="toc-item" data-target="results-efficiency"><a class="toc-link" href="#results-efficiency">Efficiency of Human Demos</a></li>
+        <li class="toc-item" data-target="results-conditions"><a class="toc-link" href="#results-conditions">One Policy, Many Conditions</a></li>
+        <li class="toc-item" data-target="results-drivers"><a class="toc-link" href="#results-drivers">What Drives Performance</a></li>
+      </ul>
+    </li>
+        <li class="toc-item" data-target="clip-full-video"><a class="toc-link" href="#clip-full-video">HumanEgo &mdash; Full Video</a></li>
     <li class="toc-item" data-target="faq"><a class="toc-link" href="#faq">FAQ</a></li>
     <li class="toc-item" data-target="team"><a class="toc-link" href="#team">Our Team</a></li>
     <li class="toc-item" data-target="acknowledge"><a class="toc-link" href="#acknowledge">Acknowledge</a></li>
@@ -643,6 +643,133 @@
            style="margin-top: 1.4em; font-size: 0.78em; color: #b5b5b5; letter-spacing: 0.01em; visibility: hidden;">
         <i class="far fa-eye" style="opacity: 0.7;"></i>
         <span id="view-count">—</span> views
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REAL-WORLD VIDEO CLIPS ================= -->
+<section class="section" id="real-world-clips" data-toc="real-world-clips">
+  <div class="container content wide">
+    <h2 class="title is-3 section-title">Real-World Video Clips</h2>
+
+    <!-- Row 1 -->
+    <div class="columns pair-cols is-variable is-5">
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-water-flowers" data-toc="clip-water-flowers" data-toc-parent="real-world-clips">Water Flowers</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/water_flowers.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-downstack-cups" data-toc="clip-downstack-cups" data-toc-parent="real-world-clips">Downstack Cups</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/downstack_cups.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-adjust-table" data-toc="clip-adjust-table" data-toc-parent="real-world-clips">Adjust Table</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/adjust_table.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-serve-bread" data-toc="clip-serve-bread" data-toc-parent="real-world-clips">Serve Bread</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/serve_bread.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-charge-devices" data-toc="clip-charge-devices" data-toc-parent="real-world-clips">Charge Devices</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/charge_devices.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-unscrew-cap" data-toc="clip-unscrew-cap" data-toc-parent="real-world-clips">Unscrew Cap</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/unscrew_cap.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 4 -->
+    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-open-door" data-toc="clip-open-door" data-toc-parent="real-world-clips">Open Door</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/open_door.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-open-cabinet" data-toc="clip-open-cabinet" data-toc-parent="real-world-clips">Open Cabinet</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/open_cabinet.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 5 -->
+    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-grab-tissue" data-toc="clip-grab-tissue" data-toc-parent="real-world-clips">Grab Tissue</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/grab_tissue.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-cross-embodiment" data-toc="clip-cross-embodiment" data-toc-parent="real-world-clips">Downstack Cups: Cross-Embodiment Test</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/cross_condition_1.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 6 -->
+    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-cross-environment" data-toc="clip-cross-environment" data-toc-parent="real-world-clips">Water Flowers: Generalization Test</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/cross_condition_2.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-cross-setup" data-toc="clip-cross-setup" data-toc-parent="real-world-clips">Serve Bread: Generalization Test</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/cross_condition_3.mp4" type="video/mp4">
+          </video>
+        </div>
       </div>
     </div>
   </div>
@@ -883,133 +1010,6 @@
           Each auxiliary objective contributes independently; combining all three
           auxiliary losses takes success rate from 50% to 75% on Water Flowers.
         </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ================= REAL-WORLD VIDEO CLIPS ================= -->
-<section class="section" id="real-world-clips" data-toc="real-world-clips">
-  <div class="container content wide">
-    <h2 class="title is-3 section-title">Real-World Video Clips</h2>
-
-    <!-- Row 1 -->
-    <div class="columns pair-cols is-variable is-5">
-      <div class="column">
-        <h3 class="task-clip-title" id="clip-water-flowers" data-toc="clip-water-flowers" data-toc-parent="real-world-clips">Water Flowers</h3>
-        <div class="pair-media-wrap">
-          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/videos/water_flowers.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <div class="column">
-        <h3 class="task-clip-title" id="clip-downstack-cups" data-toc="clip-downstack-cups" data-toc-parent="real-world-clips">Downstack Cups</h3>
-        <div class="pair-media-wrap">
-          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/videos/downstack_cups.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-
-    <!-- Row 2 -->
-    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
-      <div class="column">
-        <h3 class="task-clip-title" id="clip-adjust-table" data-toc="clip-adjust-table" data-toc-parent="real-world-clips">Adjust Table</h3>
-        <div class="pair-media-wrap">
-          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/videos/adjust_table.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <div class="column">
-        <h3 class="task-clip-title" id="clip-serve-bread" data-toc="clip-serve-bread" data-toc-parent="real-world-clips">Serve Bread</h3>
-        <div class="pair-media-wrap">
-          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/videos/serve_bread.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-
-    <!-- Row 3 -->
-    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
-      <div class="column">
-        <h3 class="task-clip-title" id="clip-charge-devices" data-toc="clip-charge-devices" data-toc-parent="real-world-clips">Charge Devices</h3>
-        <div class="pair-media-wrap">
-          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/videos/charge_devices.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <div class="column">
-        <h3 class="task-clip-title" id="clip-unscrew-cap" data-toc="clip-unscrew-cap" data-toc-parent="real-world-clips">Unscrew Cap</h3>
-        <div class="pair-media-wrap">
-          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/videos/unscrew_cap.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-
-    <!-- Row 4 -->
-    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
-      <div class="column">
-        <h3 class="task-clip-title" id="clip-open-door" data-toc="clip-open-door" data-toc-parent="real-world-clips">Open Door</h3>
-        <div class="pair-media-wrap">
-          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/videos/open_door.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <div class="column">
-        <h3 class="task-clip-title" id="clip-open-cabinet" data-toc="clip-open-cabinet" data-toc-parent="real-world-clips">Open Cabinet</h3>
-        <div class="pair-media-wrap">
-          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/videos/open_cabinet.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-
-    <!-- Row 5 -->
-    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
-      <div class="column">
-        <h3 class="task-clip-title" id="clip-grab-tissue" data-toc="clip-grab-tissue" data-toc-parent="real-world-clips">Grab Tissue</h3>
-        <div class="pair-media-wrap">
-          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/videos/grab_tissue.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <div class="column">
-        <h3 class="task-clip-title" id="clip-cross-embodiment" data-toc="clip-cross-embodiment" data-toc-parent="real-world-clips">Downstack Cups: Cross-Embodiment Test</h3>
-        <div class="pair-media-wrap">
-          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/videos/cross_condition_1.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-
-    <!-- Row 6 -->
-    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
-      <div class="column">
-        <h3 class="task-clip-title" id="clip-cross-environment" data-toc="clip-cross-environment" data-toc-parent="real-world-clips">Water Flowers: Generalization Test</h3>
-        <div class="pair-media-wrap">
-          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/videos/cross_condition_2.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
-      <div class="column">
-        <h3 class="task-clip-title" id="clip-cross-setup" data-toc="clip-cross-setup" data-toc-parent="real-world-clips">Serve Bread: Generalization Test</h3>
-        <div class="pair-media-wrap">
-          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/videos/cross_condition_3.mp4" type="video/mp4">
-          </video>
-        </div>
       </div>
     </div>
   </div>
