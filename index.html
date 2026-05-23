@@ -158,6 +158,12 @@
         <a href="https://youtu.be/rLd90ewhwgI" target="_blank" rel="noopener"><i class="fab fa-youtube"></i>&nbsp;Video</a>
         <a href="#bibtex"><i class="fas fa-quote-right"></i>&nbsp;BibTeX</a>
       </div>
+
+      <div class="view-counter" id="view-counter" aria-hidden="true"
+           style="margin-top: 1.4em; font-size: 0.78em; color: #b5b5b5; letter-spacing: 0.01em; visibility: hidden;">
+        <i class="far fa-eye" style="opacity: 0.7;"></i>
+        <span id="view-count">—</span> views
+      </div>
     </div>
   </div>
 </section>
@@ -291,6 +297,35 @@
 </footer>
 
 <script>
+  // ------- subtle page-view counter -------
+  // Uses counterapi.dev (no signup). Element stays hidden on failure so a
+  // dead service can't leave dashes on the page.
+  (function () {
+    const wrap = document.getElementById('view-counter');
+    const out  = document.getElementById('view-count');
+    if (!wrap || !out) return;
+
+    const endpoints = [
+      'https://api.counterapi.dev/v1/humanego/site/up',
+      'https://api.counterapi.dev/v2/humanego/site/up'
+    ];
+
+    function tryNext(i) {
+      if (i >= endpoints.length) return; // give up silently
+      fetch(endpoints[i], { method: 'GET', cache: 'no-store' })
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(d => {
+          const n = (d && (d.count ?? d.value));
+          if (typeof n !== 'number') throw new Error('bad payload');
+          out.textContent = n.toLocaleString();
+          wrap.style.visibility = 'visible';
+        })
+        .catch(() => tryNext(i + 1));
+    }
+
+    tryNext(0);
+  })();
+
   // Play .scroll-play videos once per page load: start the first time they
   // enter the viewport, then let them run to the end and freeze on the last
   // frame. Scrolling away and back does NOT replay — only a page refresh resets.
