@@ -243,7 +243,15 @@
 <section class="section has-background-light">
   <div class="container content">
     <h2 class="title is-3 has-text-centered">Results</h2>
-    <img src="static/images/baselines.png" alt="Real-world results" style="width: 100%; border-radius: 6px;">
+    <video
+      class="scroll-play"
+      src="static/images/baselines_dark.mp4"
+      muted
+      playsinline
+      preload="auto"
+      disablepictureinpicture
+      style="width: 100%; border-radius: 6px; display: block;">
+    </video>
     <p class="caption">
       HumanEgo achieves the highest success rate on every task, outperforming
       both human-video baselines and matched-time robot teleoperation.
@@ -278,6 +286,42 @@
     </p>
   </div>
 </footer>
+
+<script>
+  // Play .scroll-play videos like GIFs: start when they enter the viewport,
+  // rewind and replay each time they re-enter, never show controls.
+  (function () {
+    const videos = document.querySelectorAll('video.scroll-play');
+    if (!videos.length) return;
+
+    videos.forEach(v => {
+      v.controls = false;
+      v.setAttribute('aria-hidden', 'false');
+      // pause and rewind initially so it starts from frame 0 on first reveal
+      try { v.pause(); v.currentTime = 0; } catch (_) {}
+    });
+
+    if (!('IntersectionObserver' in window)) {
+      // Fallback: just autoplay once
+      videos.forEach(v => v.play().catch(() => {}));
+      return;
+    }
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const v = entry.target;
+        if (entry.isIntersecting) {
+          try { v.currentTime = 0; } catch (_) {}
+          v.play().catch(() => {});
+        } else {
+          v.pause();
+        }
+      });
+    }, { threshold: 0.35 });
+
+    videos.forEach(v => io.observe(v));
+  })();
+</script>
 
 </body>
 </html>
