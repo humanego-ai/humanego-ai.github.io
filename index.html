@@ -521,9 +521,9 @@
       .section { padding: 1.6rem 0.9rem; }
       /* Slightly smaller team headshots */
       .team-row { gap: 1.1rem 0.9rem; }
-      .team-member { width: 100px; }
+      .team-member { width: 130px; }
       .team-photo { width: 100px; height: 100px; }
-      .team-name { font-size: 0.95em; }
+      .team-name { font-size: 0.85em; }
     }
     .author-list {
       font-size: clamp(1.05rem, 3.5vw, 1.48rem);
@@ -593,8 +593,9 @@
     }
     .team-member {
       display: flex; flex-direction: column; align-items: center;
-      text-decoration: none; width: 130px;
+      text-decoration: none; width: 170px;
     }
+    .team-member .team-name { white-space: nowrap; }
     .team-photo {
       width: 130px; height: 130px; border-radius: 50%;
       object-fit: cover; background: #f5f5f5;
