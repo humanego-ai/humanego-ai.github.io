@@ -500,6 +500,34 @@
          videos pinned to the SAME top edge instead of vertically centering
          in unequal column heights. */
     }
+    /* 2/3 video + 1/3 image rows: shrink the portrait image so its rendered
+       height matches the height of the 16:9 video on the left. Inner widths
+       of the two columns sit in roughly a 2:1 ratio (modulo a fixed column
+       gap), so video_height ≈ image_col_width × 9/8. We approximate that as
+       aspect-ratio 5/6 on the image wrap — within a few pixels of the video
+       across the realistic container-width range (~900–1200 px). */
+    .pair-cols .column.is-one-third .pair-media-wrap {
+      aspect-ratio: 5 / 6;
+      align-items: center;
+      overflow: hidden;
+    }
+    .pair-cols .column.is-one-third .pair-media-wrap img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    /* On mobile Bulma stacks the columns; let the image return to its
+       natural size so it isn't squashed inside a small aspect box. */
+    @media (max-width: 768px) {
+      .pair-cols .column.is-one-third .pair-media-wrap { aspect-ratio: auto; }
+      .pair-cols .column.is-one-third .pair-media-wrap img {
+        width: 100%;
+        height: auto;
+        max-height: none;
+      }
+    }
     video.teaser-video { width: 100%; max-width: 900px; border-radius: 28px; }
     .embed-video {
       position: relative;
