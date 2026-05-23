@@ -39,10 +39,12 @@
        the 3 key takeaways. Each item is a custom-bulleted line with a bold
        black heading + supporting prose. */
     .findings-list {
-      list-style: none;
-      margin: 1.6em 0 0;
-      padding: 0;
+      list-style: none !important;     /* override Bulma .content ul disc */
+      margin: 1.6em 0 0 !important;
+      padding: 0 !important;
     }
+    .findings-list > li { margin-left: 0 !important; }
+    .findings-list > li::marker { content: ""; }   /* nuke any disc marker */
     .findings-list > li {
       position: relative;
       padding: 0.55em 0 0.55em 2.2em;
@@ -1076,6 +1078,12 @@
         </p>
       </div>
     </div>
+
+    <ul class="findings-list">
+      <li><span class="find-head">HumanEgo learns effectively from minimal human data.</span></li>
+      <li><span class="find-head">Auxiliary objectives amplify learning when demonstrations are scarce.</span></li>
+      <li><span class="find-head">Human video is a more efficient data source than robot teleoperation.</span></li>
+    </ul>
   </div>
 </section>
 
@@ -1110,6 +1118,12 @@
         </p>
       </div>
     </div>
+
+    <ul class="findings-list">
+      <li><span class="find-head">HumanEgo is robust to arbitrary visual conditions.</span></li>
+      <li><span class="find-head">HumanEgo is robust to arbitrary object placements.</span></li>
+      <li><span class="find-head">HumanEgo is hardware-agnostic.</span></li>
+    </ul>
   </div>
 </section>
 
@@ -1147,6 +1161,11 @@
         </p>
       </div>
     </div>
+
+    <ul class="findings-list">
+      <li><span class="find-head">Explicit spatial representation, not visual fidelity, is the key to bridging the embodiment gap.</span></li>
+      <li><span class="find-head">Auxiliary objectives provide complementary gains.</span></li>
+    </ul>
   </div>
 </section>
 
