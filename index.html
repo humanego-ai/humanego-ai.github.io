@@ -132,6 +132,63 @@
     .author-block a:hover { color: #D46714; border-bottom-color: #D46714; }
     .affiliation { margin-top: 1.4em; }
     .umd-logo { height: 88px; width: auto; }
+
+    /* ---- Team section ---- */
+    .team-row {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 1.6rem 1.4rem; margin-top: 1.8rem;
+    }
+    .team-member {
+      display: flex; flex-direction: column; align-items: center;
+      text-decoration: none; width: 130px;
+    }
+    .team-photo {
+      width: 130px; height: 130px; border-radius: 50%;
+      object-fit: cover; background: #f5f5f5;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .team-member:hover .team-photo {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
+    }
+    .team-name {
+      margin-top: 0.75em; font-size: 1.0em; font-weight: 600;
+      color: #2E8B6F; text-align: center; line-height: 1.25;
+    }
+    .team-member:hover .team-name { color: #D46714; }
+    .team-aff {
+      margin-top: 0.4em; font-size: 0.78em; color: #888;
+      text-align: center; letter-spacing: 0.02em;
+    }
+
+    /* ---- FAQ section ---- */
+    .faq-list { margin-top: 1.2rem; }
+    .faq-item {
+      border-top: 1px solid #ececec;
+      padding: 1.1em 0.2em;
+    }
+    .faq-item:last-of-type { border-bottom: 1px solid #ececec; }
+    .faq-item > summary {
+      cursor: pointer; list-style: none;
+      font-size: 1.08em; font-weight: 600; color: #333;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1em; outline: none;
+    }
+    .faq-item > summary::-webkit-details-marker { display: none; }
+    .faq-item > summary::after {
+      content: "+"; font-size: 1.3em; font-weight: 400;
+      color: #999; transition: transform 0.18s ease;
+      line-height: 1;
+    }
+    .faq-item[open] > summary::after {
+      content: "−"; color: #D46714;
+    }
+    .faq-item > summary:hover { color: #D46714; }
+    .faq-answer {
+      margin: 0.8em 0 0; font-size: 1.02em; line-height: 1.6;
+      color: #555;
+    }
   </style>
 </head>
 <body>
@@ -151,13 +208,13 @@
 
       <!-- Author homepages: replace href="#" with each author's site as it becomes available. -->
       <div class="author-list">
-        <span class="author-block"><a href="https://tx-leo.github.io">Zhi (Leo) Wang</a></span>
-        <span class="author-block"><a href="#">Botao He</a></span>
-        <span class="author-block"><a href="#">Kelin Yu</a></span>
-        <span class="author-block"><a href="#">Seungjae Lee</a></span><br>
-        <span class="author-block"><a href="#">Ruohan Gao</a></span>
-        <span class="author-block"><a href="#">Furong Huang</a></span>
-        <span class="author-block"><a href="#">Yiannis Aloimonos</a></span>
+        <span class="author-block"><a href="https://tx-leo.github.io" target="_blank" rel="noopener">Zhi (Leo) Wang</a></span>
+        <span class="author-block"><a href="https://bottle101.github.io/" target="_blank" rel="noopener">Botao He</a></span>
+        <span class="author-block"><a href="https://colinyu1.github.io/" target="_blank" rel="noopener">Kelin Yu</a></span>
+        <span class="author-block"><a href="https://sjlee.cc/" target="_blank" rel="noopener">Seungjae Lee</a></span><br>
+        <span class="author-block"><a href="https://ruohangao.github.io/" target="_blank" rel="noopener">Ruohan Gao</a></span>
+        <span class="author-block"><a href="https://furong-huang.com/" target="_blank" rel="noopener">Furong Huang</a></span>
+        <span class="author-block"><a href="https://robotics.umd.edu/clark/faculty/350/Yiannis-Aloimonos" target="_blank" rel="noopener">Yiannis Aloimonos</a></span>
       </div>
 
       <div class="affiliation">
@@ -373,6 +430,65 @@
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen></iframe>
     </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="section" id="faq">
+  <div class="container content">
+    <h2 class="title is-3 has-text-centered">FAQ</h2>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>Question 1 — placeholder</summary>
+        <p class="faq-answer">Answer 1 goes here. Replace this placeholder with the actual response.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Question 2 — placeholder</summary>
+        <p class="faq-answer">Answer 2 goes here.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Question 3 — placeholder</summary>
+        <p class="faq-answer">Answer 3 goes here.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TEAM ================= -->
+<section class="section" id="team">
+  <div class="container content">
+    <h2 class="title is-3 has-text-centered">Team</h2>
+    <div class="team-row">
+      <a class="team-member" href="https://tx-leo.github.io" target="_blank" rel="noopener">
+        <img class="team-photo" src="static/images/team/leo.jpg" alt="Zhi (Leo) Wang">
+        <div class="team-name">Zhi (Leo) Wang</div>
+      </a>
+      <a class="team-member" href="https://bottle101.github.io/" target="_blank" rel="noopener">
+        <img class="team-photo" src="static/images/team/botao.jpg" alt="Botao He">
+        <div class="team-name">Botao He</div>
+      </a>
+      <a class="team-member" href="https://colinyu1.github.io/" target="_blank" rel="noopener">
+        <img class="team-photo" src="static/images/team/kelin.png" alt="Kelin Yu">
+        <div class="team-name">Kelin Yu</div>
+      </a>
+      <a class="team-member" href="https://sjlee.cc/" target="_blank" rel="noopener">
+        <img class="team-photo" src="static/images/team/seungjae.png" alt="Seungjae Lee">
+        <div class="team-name">Seungjae Lee</div>
+      </a>
+      <a class="team-member" href="https://ruohangao.github.io/" target="_blank" rel="noopener">
+        <img class="team-photo" src="static/images/team/ruohan.jpg" alt="Ruohan Gao">
+        <div class="team-name">Ruohan Gao</div>
+      </a>
+      <a class="team-member" href="https://furong-huang.com/" target="_blank" rel="noopener">
+        <img class="team-photo" src="static/images/team/furong.jpg" alt="Furong Huang">
+        <div class="team-name">Furong Huang</div>
+      </a>
+      <a class="team-member" href="https://robotics.umd.edu/clark/faculty/350/Yiannis-Aloimonos" target="_blank" rel="noopener">
+        <img class="team-photo" src="static/images/team/yiannis.jpg" alt="Yiannis Aloimonos">
+        <div class="team-name">Yiannis Aloimonos</div>
+      </a>
+    </div>
+    <p class="team-aff" style="margin-top: 1.6em;">University of Maryland, College Park</p>
   </div>
 </section>
 
