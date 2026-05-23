@@ -218,7 +218,7 @@
     }
     .toc-item.has-sub.active > .toc-sub,
     .toc-item.has-sub.expanded > .toc-sub {
-      max-height: 220px;
+      max-height: 420px;
       opacity: 1;
     }
     .toc-sub .toc-link { font-size: 0.94em; padding: 0.38em 0.2em 0.38em 0.4em; }
@@ -581,10 +581,18 @@
     <li class="toc-item has-sub" data-target="real-world-clips" data-group="real-world-clips">
       <a class="toc-link" href="#real-world-clips">Real-World Video Clips</a>
       <ul class="toc-sub">
-        <li class="toc-item" data-target="clip-serve-bread"><a class="toc-link" href="#clip-serve-bread">Serve Bread</a></li>
-        <li class="toc-item" data-target="clip-downstack-cups"><a class="toc-link" href="#clip-downstack-cups">Downstack Cups</a></li>
         <li class="toc-item" data-target="clip-water-flowers"><a class="toc-link" href="#clip-water-flowers">Water Flowers</a></li>
+        <li class="toc-item" data-target="clip-downstack-cups"><a class="toc-link" href="#clip-downstack-cups">Downstack Cups</a></li>
         <li class="toc-item" data-target="clip-adjust-table"><a class="toc-link" href="#clip-adjust-table">Adjust Table</a></li>
+        <li class="toc-item" data-target="clip-serve-bread"><a class="toc-link" href="#clip-serve-bread">Serve Bread</a></li>
+        <li class="toc-item" data-target="clip-charge-devices"><a class="toc-link" href="#clip-charge-devices">Charge Devices</a></li>
+        <li class="toc-item" data-target="clip-unscrew-cap"><a class="toc-link" href="#clip-unscrew-cap">Unscrew Cap</a></li>
+        <li class="toc-item" data-target="clip-open-door"><a class="toc-link" href="#clip-open-door">Open Door</a></li>
+        <li class="toc-item" data-target="clip-open-cabinet"><a class="toc-link" href="#clip-open-cabinet">Open Cabinet</a></li>
+        <li class="toc-item" data-target="clip-grab-tissue"><a class="toc-link" href="#clip-grab-tissue">Grab Tissue</a></li>
+        <li class="toc-item" data-target="clip-cross-embodiment"><a class="toc-link" href="#clip-cross-embodiment">Cross-Embodiment</a></li>
+        <li class="toc-item" data-target="clip-cross-environment"><a class="toc-link" href="#clip-cross-environment">Cross-Environment</a></li>
+        <li class="toc-item" data-target="clip-cross-setup"><a class="toc-link" href="#clip-cross-setup">Cross-Setup</a></li>
       </ul>
     </li>
     <li class="toc-item" data-target="clip-full-video"><a class="toc-link" href="#clip-full-video">HumanEgo &mdash; Full Video</a></li>
@@ -884,12 +892,14 @@
 <section class="section" id="real-world-clips" data-toc="real-world-clips">
   <div class="container content wide">
     <h2 class="title is-3 section-title">Real-World Video Clips</h2>
+
+    <!-- Row 1 -->
     <div class="columns pair-cols is-variable is-5">
       <div class="column">
-        <h3 class="task-clip-title" id="clip-serve-bread" data-toc="clip-serve-bread" data-toc-parent="real-world-clips">Serve Bread</h3>
+        <h3 class="task-clip-title" id="clip-water-flowers" data-toc="clip-water-flowers" data-toc-parent="real-world-clips">Water Flowers</h3>
         <div class="pair-media-wrap">
           <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/videos/serve_bread.mp4" type="video/mp4">
+            <source src="static/videos/water_flowers.mp4" type="video/mp4">
           </video>
         </div>
       </div>
@@ -902,20 +912,102 @@
         </div>
       </div>
     </div>
+
+    <!-- Row 2 -->
     <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
-      <div class="column">
-        <h3 class="task-clip-title" id="clip-water-flowers" data-toc="clip-water-flowers" data-toc-parent="real-world-clips">Water Flowers</h3>
-        <div class="pair-media-wrap">
-          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/videos/water_flowers.mp4" type="video/mp4">
-          </video>
-        </div>
-      </div>
       <div class="column">
         <h3 class="task-clip-title" id="clip-adjust-table" data-toc="clip-adjust-table" data-toc-parent="real-world-clips">Adjust Table</h3>
         <div class="pair-media-wrap">
           <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
             <source src="static/videos/adjust_table.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-serve-bread" data-toc="clip-serve-bread" data-toc-parent="real-world-clips">Serve Bread</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/serve_bread.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-charge-devices" data-toc="clip-charge-devices" data-toc-parent="real-world-clips">Charge Devices</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/charge_devices.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-unscrew-cap" data-toc="clip-unscrew-cap" data-toc-parent="real-world-clips">Unscrew Cap</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/unscrew_cap.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 4 -->
+    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-open-door" data-toc="clip-open-door" data-toc-parent="real-world-clips">Open Door</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/open_door.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-open-cabinet" data-toc="clip-open-cabinet" data-toc-parent="real-world-clips">Open Cabinet</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/open_cabinet.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 5 -->
+    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-grab-tissue" data-toc="clip-grab-tissue" data-toc-parent="real-world-clips">Grab Tissue</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/grab_tissue.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-cross-embodiment" data-toc="clip-cross-embodiment" data-toc-parent="real-world-clips">Cross-Embodiment</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/cross_condition_1.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 6 -->
+    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-cross-environment" data-toc="clip-cross-environment" data-toc-parent="real-world-clips">Cross-Environment</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/cross_condition_2.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <h3 class="task-clip-title" id="clip-cross-setup" data-toc="clip-cross-setup" data-toc-parent="real-world-clips">Cross-Setup</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/videos/cross_condition_3.mp4" type="video/mp4">
           </video>
         </div>
       </div>
