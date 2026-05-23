@@ -205,6 +205,13 @@
     @media (max-width: 1180px) {
       .toc { display: none; }
     }
+    /* On mid-width laptops the floating TOC (≈220px wide) would overlap
+       the centered content. Reserve a 240px left gutter so content gets
+       pushed right to clear it. Wider monitors (≥1701px) have enough
+       natural margin to fit both, so no offset there. */
+    @media (min-width: 1181px) and (max-width: 1700px) {
+      body { padding-left: 240px; }
+    }
 
     /* Smooth scroll on anchor clicks */
     html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
