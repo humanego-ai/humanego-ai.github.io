@@ -397,14 +397,23 @@
       font-weight: 700;
       letter-spacing: -0.005em;
       font-size: clamp(1.4rem, 5vw, 2.5rem);
+      /* Override Bulma's word-break: break-word so the subtitle wraps at
+         spaces, not at character level. */
+      word-break: normal;
+      overflow-wrap: normal;
     }
     @media (max-width: 480px) {
       /* Tighter hero padding so the title has more usable width */
-      .hero-body { padding: 2.2rem 1rem 1.2rem 1rem; }
-      /* Author row: shrink font + margins so the four first authors
-         (separated by <br>) fit on a single line on phones. */
-      .author-list { font-size: 0.86rem; line-height: 1.7; }
-      .author-block { margin: 0.15em 0.3em; }
+      .hero-body { padding: 2.2rem 0.75rem 1.2rem 0.75rem; }
+      /* Title subtitles: shrink so each fits on one line.
+         "Zero-Shot Robot Learning" + "from Minutes of Human Egocentric Videos"
+         become 2 lines total instead of 3. */
+      .title-line-2, .title-line-3 { font-size: 1.02rem; }
+      /* Author row: shrink font + margins aggressively so the four first
+         authors (separated by <br>) fit on a single line on phones,
+         leaving the remaining three on row 2. */
+      .author-list { font-size: 0.76rem; line-height: 1.7; }
+      .author-block { margin: 0.05em 0.18em; }
       .author-block a { white-space: nowrap; }
       .umd-logo { height: 64px; }
       /* Reduce horizontal padding on every section so charts/videos
