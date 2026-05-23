@@ -35,6 +35,10 @@
        the page's accent palette. Section titles and other headings keep
        their own colors via their own !important rules. */
     strong, b { color: #C45A0E; }
+    /* Caption-prefix label (e.g. "System overview.", "Data Collection.") —
+       a darker burnt-orange so it visually separates from inline emphasis
+       within the same caption. */
+    strong.cap-label, b.cap-label { color: #7A3804; }
     .publication-title { font-weight: 700; }
     .hero { position: relative; overflow: hidden; }
     /* The global "all white" rule above forces .hero-body to white, which
@@ -907,7 +911,7 @@
       <source src="static/images/architecture.mp4" type="video/mp4">
     </video>
     <p class="caption">
-      <strong>System overview.</strong> Arm inpainting and visual keypoints bridge the
+      <strong class="cap-label">System overview.</strong> Arm inpainting and visual keypoints bridge the
       visual gap; <strong>Interaction-Centric Tokens (ICT)</strong> encode spatial
       relationships among all entities; a <strong>flow matching policy with dense
       auxiliary objectives</strong> learns bimanual robot actions from
@@ -928,7 +932,7 @@
           </video>
         </div>
         <p class="caption">
-          <strong>Data Collection:</strong> Data collection by
+          <strong class="cap-label">Data Collection.</strong> Data collection by
           <strong>anyone, anytime, anywhere</strong>; policies deployed to
           <strong>any lab, any camera, any robot</strong> &mdash; all from only
           <strong>30 minutes</strong> of data. A human demonstrator wears
@@ -944,7 +948,7 @@
           </video>
         </div>
         <p class="caption">
-          <strong>Data Preprocessing:</strong> Each demonstration takes only
+          <strong class="cap-label">Data Preprocessing.</strong> Each demonstration takes only
           <strong>seconds</strong>. <strong>Aria glasses</strong> are particularly
           well suited for learning from human video: their <strong>Machine
           Perception Services (MPS)</strong> provide high-quality 6-DoF SLAM
