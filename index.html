@@ -35,6 +35,23 @@
        the page's accent palette. Section titles and other headings keep
        their own colors via their own !important rules. */
     strong, b { color: #C45A0E; }
+    /* Inline ✦ star prefix used in section headings + TOC entries
+       (e.g. "✦ Insights"). Slightly smaller than text and given a hair of
+       space on the right so it reads as an emblem, not a bullet. */
+    .title-star {
+      display: inline-block;
+      color: #C45A0E;
+      font-size: 0.78em;
+      margin-right: 0.4em;
+      transform: translateY(-0.08em);
+    }
+    .toc-star {
+      display: inline-block;
+      color: #C45A0E;
+      font-size: 0.9em;
+      margin-right: 0.35em;
+    }
+
     /* ---- Insights (project thesis: 3 manifesto-level takeaways) ---- */
     .insights-list {
       list-style: none !important;
@@ -715,7 +732,7 @@
       </ul>
     </li>
     <li class="toc-item" data-target="clip-full-video"><a class="toc-link" href="#clip-full-video">HumanEgo &mdash; Full Video</a></li>
-    <li class="toc-item" data-target="insights"><a class="toc-link" href="#insights">Insights</a></li>
+    <li class="toc-item" data-target="insights"><a class="toc-link" href="#insights"><span class="toc-star">&#x2726;</span>Insights</a></li>
     <li class="toc-item" data-target="overview"><a class="toc-link" href="#overview">Overview</a></li>
     <li class="toc-item" data-target="abstract"><a class="toc-link" href="#abstract">Abstract</a></li>
     <li class="toc-item" data-target="architecture"><a class="toc-link" href="#architecture">Architecture</a></li>
@@ -945,7 +962,7 @@
 <!-- ================= INSIGHTS ================= -->
 <section class="section" id="insights" data-toc="insights">
   <div class="container content">
-    <h2 class="title is-3 section-title">Insights</h2>
+    <h2 class="title is-3 section-title"><span class="title-star">&#x2726;</span>Insights</h2>
     <ol class="insights-list">
       <li>
         <p class="insight-text">
