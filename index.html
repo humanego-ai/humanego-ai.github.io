@@ -62,11 +62,12 @@
       position: relative;
       aspect-ratio: 16 / 9;
       width: 100%;
-      max-width: 960px;
+      max-width: 1200px;
       margin: 0 auto;
       background: #000;
-      border-radius: 10px;
+      border-radius: 12px;
       overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
     }
     .embed-video iframe {
       position: absolute;
@@ -158,8 +159,20 @@
   </div>
 </section>
 
+<!-- ================= VIDEO ================= -->
+<section class="section" id="video" style="padding-top: 0;">
+  <div class="container">
+    <div class="embed-video">
+      <iframe src="https://www.youtube.com/embed/rLd90ewhwgI"
+              title="HumanEgo video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+
 <!-- ================= TEASER ================= -->
-<section class="section" style="padding-top: 0;">
+<section class="section" style="padding-top: 1.5rem;">
   <div class="container has-text-centered">
     <!-- Replace with teaser video once available -->
     <img src="static/images/teaser.png" alt="HumanEgo teaser" class="teaser-figure">
@@ -194,25 +207,6 @@
       teleoperation by <strong>32%</strong>, and robustly transfers zero-shot across
       novel robots, cameras, and environments.
     </p>
-  </div>
-</section>
-
-<!-- ================= VIDEO ================= -->
-<section class="section" id="video" style="padding-top: 0;">
-  <div class="container content">
-    <h2 class="title is-3 has-text-centered">Video</h2>
-    <!--
-      To embed a local .mp4, replace this block with:
-        <video class="teaser-video" controls>
-          <source src="static/videos/main_video.mp4" type="video/mp4">
-        </video>
-    -->
-    <div class="embed-video">
-      <iframe src="https://www.youtube.com/embed/rLd90ewhwgI"
-              title="HumanEgo video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowfullscreen></iframe>
-    </div>
   </div>
 </section>
 
