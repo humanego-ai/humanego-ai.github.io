@@ -250,16 +250,16 @@
     }
     .hero-quote {
       position: relative;
-      max-width: 880px;
+      max-width: 920px;
       margin: 0 auto;
-      padding: 3rem 3.4rem 2.2rem 3.4rem;
+      padding: 3rem 4.2rem 2.4rem 4.2rem;
       text-align: center;
     }
     .hero-quote::before,
     .hero-quote::after {
       position: absolute;
       font-family: "Times New Roman", Georgia, serif;
-      font-size: 11rem;
+      font-size: 13rem;
       line-height: 1;
       color: #C45A0E;
       opacity: 0.38;
@@ -269,17 +269,17 @@
     }
     .hero-quote::before {
       content: "\201C";
-      left: -0.2rem;
-      top: -0.6rem;
+      left: -2.6rem;
+      top: -1.0rem;
     }
     .hero-quote::after {
       content: "\201D";
-      right: -0.2rem;
-      bottom: -3.3rem;
+      right: -2.6rem;
+      bottom: -3.9rem;
     }
     .hero-quote-text {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(1.15rem, 3.5vw, 1.45em);
+      font-size: clamp(1.3rem, 4vw, 1.75em);
       line-height: 1.55;
       font-style: italic;
       font-weight: 400;
@@ -306,10 +306,11 @@
       border-bottom-color: #9C3F00;
     }
     @media (max-width: 768px) {
-      .hero-quote { padding: 2.2rem 2rem 2rem 2rem; }
-      .hero-quote::before, .hero-quote::after { font-size: 7rem; }
-      .hero-quote::after { bottom: -2rem; }
-      .hero-quote-cite { font-size: 0.88em; }
+      .hero-quote { padding: 2.5rem 2.5rem 2.2rem 2.5rem; }
+      .hero-quote::before, .hero-quote::after { font-size: 8rem; }
+      .hero-quote::before { left: -1.4rem; top: -0.6rem; }
+      .hero-quote::after  { right: -1.4rem; bottom: -2.6rem; }
+      .hero-quote-cite { font-size: 0.92em; }
     }
 
     /* Acknowledgement links — orange to match author + team styling */
@@ -497,16 +498,19 @@
     /* Four-feature highlight row directly under the publication title. */
     .hero-features {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;            /* force a single row */
       justify-content: center;
       align-items: center;
-      gap: 0.55em 1.9em;
-      margin: 1.4em auto 0.7em;
-      max-width: 1000px;
-      font-size: clamp(1.2rem, 3vw, 1.5em);
+      gap: 0.5em 1.6em;
+      margin: 1.5em auto 0.8em;
+      max-width: 1200px;
+      /* Font scales with viewport so all 4 fit on one line down to ~480px */
+      font-size: clamp(0.78rem, 2.05vw, 1.5em);
       font-weight: 600;
       letter-spacing: 0.01em;
       color: #1a1a1a;
+      padding: 0 0.5rem;
+      white-space: nowrap;
     }
     .hero-feature {
       display: inline-flex;
@@ -521,11 +525,17 @@
       line-height: 1;
       transform: translateY(-0.02em);
     }
-    @media (max-width: 600px) {
-      .hero-features { gap: 0.45em 1.1em; font-size: 1.18rem; }
+    /* Below ~480px the single-line font would be unreadably small, so
+       allow wrap to a 2x2 grid only on truly narrow phones. */
+    @media (max-width: 480px) {
+      .hero-features {
+        flex-wrap: wrap;
+        gap: 0.4em 1.0em;
+        font-size: 0.98rem;
+      }
     }
     @media (max-width: 380px) {
-      .hero-features { gap: 0.35em 0.9em; font-size: 1.08rem; }
+      .hero-features { gap: 0.3em 0.7em; font-size: 0.92rem; }
     }
 
     .author-block { margin: 0 0.55em; display: inline-block; }
