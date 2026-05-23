@@ -33,7 +33,15 @@
     }
     .publication-title { font-weight: 700; }
     .hero { position: relative; overflow: hidden; }
-    .hero-body { padding: 3rem 1.5rem 1.5rem 1.5rem; position: relative; z-index: 1; }
+    /* The global "all white" rule above forces .hero-body to white, which
+       hid the ::before pseudo-element behind it. Override to transparent so
+       the dual-arms background can show through. */
+    .hero-body {
+      padding: 3rem 1.5rem 1.5rem 1.5rem;
+      position: relative;
+      z-index: 1;
+      background-color: transparent !important;
+    }
     /* Subtle wire-frame hands behind the title / authors / buttons */
     .hero::before {
       content: "";
@@ -245,7 +253,15 @@
       background: #fafafa;
       font-size: 1.0em;
     }
-    .caption { font-size: 1.28em; color: #555; text-align: center; margin-top: 1.0em; line-height: 1.65; }
+    .caption {
+      font-size: 1.28em;
+      color: #555;
+      text-align: left;
+      margin-top: 1.0em;
+      line-height: 1.65;
+      padding-right: 1.0em;
+      border-right: 3px solid #C45A0E;
+    }
     /* Side-by-side pair rows */
     .pair-cols { align-items: stretch; }
     .pair-cols .column { display: flex; flex-direction: column; }
