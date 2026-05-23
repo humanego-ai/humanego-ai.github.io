@@ -1404,7 +1404,7 @@
       </details>
 
       <details class="faq-item">
-        <summary>Why are Interaction-Centric Tokens (ICTs) so powerful?</summary>
+        <summary>Why are Interaction-Centric Tokens (ICTs) so powerful &mdash; and why doesn't visual fidelity matter as much?</summary>
         <p class="faq-answer">
           <strong>ICTs encode each entity (hand and object) by its 6-DoF pose
           relative to other task entities</strong>, not relative to the camera
@@ -1413,11 +1413,40 @@
           describe the same skill whether the demonstrator is a human or a
           robot, whether the camera is a RealSense or a ZED, whether the table
           is tall or short. The policy learns once and transfers everywhere.
-          Empirically, adding ICTs to raw human RGB jumps Water Flowers success
-          rate from 7.5% to 85% &mdash; a <strong>+77.5 pp gap</strong> that no
-          amount of visual preprocessing can close, because monocular RGB
-          encodes appearance, not the 3D spatial relationships that
-          manipulation demands.
+        </p>
+        <p class="faq-answer">
+          As for why visual fidelity matters less than people expect: vision is
+          obviously central to how humans <em>experience</em> the world &mdash;
+          but for most manipulation tasks, it isn't strictly required. Imagine
+          glancing at a table, closing your eyes, and then putting a flower
+          into a vase. You can still do it. Once a brief look gives you a
+          coarse spatial map, the rest of the task runs on
+          <strong>spatial memory, proprioception, touch, and the geometric
+          interaction between hand and object</strong> &mdash; not on continued
+          visual confirmation. Manipulation is fundamentally a
+          spatial-and-interaction problem; vision is just one of several inputs
+          that surfaces that structure.
+        </p>
+        <p class="faq-answer">
+          Inspired by this, we designed ICT to make spatial observation and
+          hand&ndash;object interaction the <em>first-class citizens</em> of
+          the policy. The result is an elegantly compact representation that is
+          <strong>unified</strong> (every entity, hand or object, lives in the
+          same token format), <strong>easy to implement</strong> (off-the-shelf
+          pose estimators are enough), <strong>variable-length</strong> (works
+          whether the scene has one object or many), and
+          <strong>embodiment-invariant</strong> (the same token whether the
+          body is a human or a robot).
+        </p>
+        <p class="faq-answer">
+          That mix of simple-but-right choices is precisely why HumanEgo
+          generalizes so widely. Empirically, adding ICTs to raw human RGB
+          jumps Water Flowers success from 7.5% to 85% &mdash; a
+          <strong>+77.5 pp gap</strong> that no amount of visual preprocessing
+          can close. We believe ICT is a <strong>simple yet critical</strong>
+          representation that should reach well beyond this paper &mdash; a
+          general-purpose spatial encoding for any embodied agent that needs to
+          reason about object interactions.
         </p>
       </details>
 
