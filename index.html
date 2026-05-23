@@ -1305,14 +1305,25 @@
       <details class="faq-item">
         <summary>Why use Aria glasses?</summary>
         <p class="faq-answer">
-          Aria Gen1 glasses are uniquely well suited for learning from human
-          video: their on-board <strong>Machine Perception Services (MPS)</strong>
-          provide high-quality 6-DoF SLAM tracking, calibrated 3D hand pose
-          estimation, and synchronized egocentric RGB streams &mdash; all from a
-          single <strong>lightweight wearable device</strong>. A demonstrator
-          performs the task naturally in any convenient environment, and we get
-          clean, time-aligned multimodal signals for free, without ever
-          attaching a sensor to the scene or the robot.
+          <strong>Aria glasses are, today, the most mature and capable platform
+          for egocentric data collection.</strong> Two things set them apart
+          from anything else in the category: genuinely
+          <strong>lightweight, production-grade hardware</strong> that a
+          demonstrator can wear naturally for extended sessions in any
+          environment; and Meta's <strong>MPS pipeline</strong>, which delivers
+          calibrated SLAM, hand-pose estimation, and synchronized multi-stream
+          egocentric RGB out of the box &mdash; turnkey, no per-session
+          calibration.
+        </p>
+        <p class="faq-answer">
+          The <em>precision</em> of these signals is what really matters: our
+          experiments show that <strong>the accuracy of the upstream SLAM and
+          hand-tracking signal directly bounds downstream policy performance</strong>.
+          Noisy poses propagate into the action loss and the learned
+          representation; the clean, drift-free trajectories from Aria are
+          exactly what enable HumanEgo to converge on minutes of data. No other
+          consumer egocentric device today delivers this level of out-of-the-box
+          accuracy.
         </p>
       </details>
 
