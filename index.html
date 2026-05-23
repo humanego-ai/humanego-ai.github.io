@@ -20,13 +20,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap">
 
   <style>
-    body { font-family: 'Noto Sans', sans-serif; }
-    .title, .subtitle, .hero-body { font-family: 'Google Sans', sans-serif; }
+    body, .title, .subtitle, .hero-body, button, input, select, textarea {
+      font-family: 'Inter', sans-serif;
+    }
     .publication-title { font-weight: 700; }
-    .author-block { margin: 0 0.6em; display: inline-block; }
     .hero-body { padding: 3rem 1.5rem 1.5rem 1.5rem; }
     .content { max-width: 900px; margin: 0 auto; }
     .link-buttons { margin-top: 1.8em; }
@@ -71,14 +73,45 @@
       border-radius: 8px;
     }
     .brand-ego { color: #D46714; }
-    .title-logo {
-      height: 0.95em;
-      vertical-align: -0.18em;
-      margin: 0 0.05em 0 0.25em;
+    .publication-title { line-height: 1.15; margin-bottom: 0.6em; }
+    .title-line-1 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3em;
+      font-size: 1.55em;
+      font-weight: 800;
+      letter-spacing: -0.015em;
+      margin-bottom: 0.15em;
     }
-    .publication-title { line-height: 1.25; }
-    .affiliation { margin-top: 1.1em; }
-    .umd-logo { height: 42px; width: auto; }
+    .title-logo {
+      height: 1.2em;
+      width: auto;
+      flex-shrink: 0;
+    }
+    .title-line-2,
+    .title-line-3 {
+      display: block;
+      font-weight: 700;
+      letter-spacing: -0.005em;
+    }
+    .author-list {
+      font-size: 1.28rem;
+      font-weight: 500;
+      color: #333;
+      margin-top: 0.5em;
+      line-height: 1.7;
+    }
+    .author-block { margin: 0 0.55em; display: inline-block; }
+    .author-block a {
+      color: #333;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .author-block a:hover { color: #D46714; border-bottom-color: #D46714; }
+    .affiliation { margin-top: 1.4em; }
+    .umd-logo { height: 64px; width: auto; }
   </style>
 </head>
 <body>
@@ -88,18 +121,23 @@
   <div class="hero-body has-text-centered">
     <div class="container">
       <h1 class="title is-2 publication-title">
-        Human<span class="brand-ego">Ego</span><img src="static/images/humanego_logo_trim.png" class="title-logo" alt="HumanEgo logo">: Zero-Shot Robot Learning<br>from Minutes of Human Egocentric Videos
+        <span class="title-line-1">
+          <img src="static/images/humanego_logo_trim.png" class="title-logo" alt="HumanEgo logo">
+          <span>Human<span class="brand-ego">Ego</span></span>
+        </span>
+        <span class="title-line-2">Zero-Shot Robot Learning</span>
+        <span class="title-line-3">from Minutes of Human Egocentric Videos</span>
       </h1>
-      <h3 class="subtitle is-5" style="color:#666;">CoRL 2026</h3>
 
-      <div class="is-size-6" style="color:#444; margin-top: 0.5em;">
-        <span class="author-block">Zhi (Leo) Wang</span>
-        <span class="author-block">Botao He</span>
-        <span class="author-block">Kelin Yu</span>
-        <span class="author-block">Seungjae Lee</span><br>
-        <span class="author-block">Ruohan Gao</span>
-        <span class="author-block">Furong Huang</span>
-        <span class="author-block">Yiannis Aloimonos</span>
+      <!-- Author homepages: replace href="#" with each author's site as it becomes available. -->
+      <div class="author-list">
+        <span class="author-block"><a href="https://tx-leo.github.io">Zhi (Leo) Wang</a></span>
+        <span class="author-block"><a href="#">Botao He</a></span>
+        <span class="author-block"><a href="#">Kelin Yu</a></span>
+        <span class="author-block"><a href="#">Seungjae Lee</a></span><br>
+        <span class="author-block"><a href="#">Ruohan Gao</a></span>
+        <span class="author-block"><a href="#">Furong Huang</a></span>
+        <span class="author-block"><a href="#">Yiannis Aloimonos</a></span>
       </div>
 
       <div class="affiliation">
