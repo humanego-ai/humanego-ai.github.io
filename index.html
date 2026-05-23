@@ -194,6 +194,19 @@
     /* Smooth scroll on anchor clicks */
     html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
 
+    /* Acknowledgement links — orange to match author + team styling */
+    .ack-link {
+      color: #C45A0E;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s, color 0.15s;
+      font-weight: 600;
+    }
+    .ack-link:hover {
+      color: #9C3F00;
+      border-bottom-color: #9C3F00;
+    }
+
     /* Title above each clip in Real-World Video Clips — same dark-orange,
        left-aligned look as the top-level section titles. */
     .clip-title {
@@ -376,6 +389,7 @@
     <li class="toc-item" data-target="real-world-videos"><a class="toc-link" href="#real-world-videos">Real-World Video Clips</a></li>
     <li class="toc-item" data-target="faq"><a class="toc-link" href="#faq">FAQ</a></li>
     <li class="toc-item" data-target="team"><a class="toc-link" href="#team">Our Team</a></li>
+    <li class="toc-item" data-target="acknowledge"><a class="toc-link" href="#acknowledge">Acknowledge</a></li>
     <li class="toc-item" data-target="bibtex"><a class="toc-link" href="#bibtex">BibTeX</a></li>
   </ul>
 </nav>
@@ -692,6 +706,20 @@
       </a>
     </div>
     <p class="team-aff" style="margin-top: 1.6em;">University of Maryland</p>
+  </div>
+</section>
+
+<!-- ================= ACKNOWLEDGE ================= -->
+<section class="section" id="acknowledge" data-toc="acknowledge">
+  <div class="container content">
+    <h2 class="title is-3 section-title">Acknowledge</h2>
+    <p>
+      We thank
+      <a href="https://www.cs.umd.edu/~edessale/" target="_blank" rel="noopener" class="ack-link">Eadom Dessalene</a>
+      and
+      <a href="https://yoonkyojung.com/" target="_blank" rel="noopener" class="ack-link">Yoonkyo Jung</a>
+      for their helpful feedback and support throughout this project.
+    </p>
   </div>
 </section>
 
