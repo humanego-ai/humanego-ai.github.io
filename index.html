@@ -352,15 +352,28 @@
     }
     .brand-ego { color: #D46714; }
     .publication-title { line-height: 1.15; margin-bottom: 0.6em; }
+    /* Title line 1 (logo + "HumanEgo") scales with viewport so the word
+       never wraps onto multiple lines on narrow screens. clamp() floors at
+       ~2.4rem on phones and caps at the original 5rem (= 2em of .title.is-2)
+       on desktop, so the desktop look is unchanged. */
     .title-line-1 {
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-wrap: nowrap;
       gap: 0.3em;
-      font-size: 2em;
+      font-size: clamp(2.4rem, 9vw, 5rem);
       font-weight: 800;
       letter-spacing: -0.02em;
       margin-bottom: 0.2em;
+      white-space: nowrap;
+    }
+    .title-line-1 > span {
+      /* Bulma's .title sets word-break: break-word, which lets the browser
+         split "HumanEgo" mid-word on narrow widths. Force it to stay whole. */
+      white-space: nowrap;
+      word-break: keep-all;
+      overflow-wrap: normal;
     }
     .title-logo {
       height: 0.95em;
@@ -372,6 +385,13 @@
       display: block;
       font-weight: 700;
       letter-spacing: -0.005em;
+      font-size: clamp(1.4rem, 5vw, 2.5rem);
+    }
+    @media (max-width: 480px) {
+      /* Tighter hero padding so the title has more usable width */
+      .hero-body { padding: 2.2rem 1rem 1.2rem 1rem; }
+      .author-list { font-size: 1.05rem; }
+      .umd-logo { height: 64px; }
     }
     .author-list {
       font-size: 1.28rem;
