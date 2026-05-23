@@ -924,8 +924,10 @@
 <section class="section" id="data-collection" data-toc="data-collection">
   <div class="container content wide">
     <h2 class="title is-3 section-title">Data Collection and Data Preprocessing</h2>
+
+    <!-- Row 1: data collection video (3) + setup image (2) -->
     <div class="columns pair-cols is-variable is-5">
-      <div class="column">
+      <div class="column is-three-fifths">
         <div class="pair-media-wrap">
           <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture loop>
             <source src="static/videos/data_collection_1.mp4" type="video/mp4">
@@ -941,7 +943,19 @@
           and without specialized workspace or calibration.
         </p>
       </div>
-      <div class="column">
+      <div class="column is-two-fifths">
+        <div class="pair-media-wrap">
+          <img src="static/images/data_collection.png" alt="Data collection setup">
+        </div>
+        <p class="caption">
+          <strong class="cap-label">Data collection setup.</strong>
+        </p>
+      </div>
+    </div>
+
+    <!-- Row 2: data preprocessing video (3) + hand-to-gripper image (2) -->
+    <div class="columns pair-cols is-variable is-5" style="margin-top: 1.5rem;">
+      <div class="column is-three-fifths">
         <div class="pair-media-wrap">
           <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture loop>
             <source src="static/videos/data_collection_2.mp4" type="video/mp4">
@@ -954,6 +968,14 @@
           Perception Services (MPS)</strong> provide high-quality 6-DoF SLAM
           tracking, calibrated 3D hand pose estimation, and synchronized egocentric
           RGB streams&mdash;all from a single lightweight wearable device.
+        </p>
+      </div>
+      <div class="column is-two-fifths">
+        <div class="pair-media-wrap">
+          <img src="static/images/hand2gripper.png" alt="Hand-to-gripper mapping">
+        </div>
+        <p class="caption">
+          <strong class="cap-label">Hand-to-gripper mapping.</strong>
         </p>
       </div>
     </div>
