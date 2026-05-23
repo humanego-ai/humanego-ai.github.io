@@ -676,6 +676,34 @@
       text-align: center; letter-spacing: 0.02em;
     }
 
+    /* Egocentric data pyramid list inside a FAQ answer */
+    .faq-pyramid {
+      list-style: none !important;
+      margin: 0.6em 0 0.9em 0 !important;
+      padding: 0 !important;
+    }
+    .faq-pyramid > li {
+      position: relative;
+      margin: 0 0 0.7em 0 !important;
+      padding: 0.6em 0.9em 0.6em 1.1em;
+      font-size: 1.05em;
+      line-height: 1.55;
+      color: #444;
+      border-left: 4px solid #F4D3BB;
+      background: #FFFAF5;
+      border-radius: 0 8px 8px 0;
+    }
+    .faq-pyramid > li:nth-child(1) { border-left-color: #F4D3BB; }
+    .faq-pyramid > li:nth-child(2) { border-left-color: #E89A5D; }
+    .faq-pyramid > li:nth-child(3) { border-left-color: #C45A0E; }
+    .faq-pyramid > li::marker { content: ""; }
+    .faq-pyramid .pyr-tier {
+      display: inline-block;
+      font-weight: 800;
+      color: #1a1a1a;
+      letter-spacing: 0.005em;
+    }
+
     /* ---- FAQ section ---- */
     .faq-list { margin-top: 1.2rem; }
     .faq-item {
@@ -1299,6 +1327,54 @@
           video isn't merely a cheap substitute for robot data; it is a
           <strong>superior</strong> and <strong>more efficient</strong> data
           source for policy learning.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Why <em>efficient</em> robot learning from human egocentric videos?</summary>
+        <p class="faq-answer">
+          The internet hosts an enormous amount of human video, and people often
+          assume "just train on YouTube" is a viable shortcut. But if you
+          actually look at what's inside these datasets, you find all kinds of
+          issues &mdash; most clips have <strong>no accurate action labels</strong>,
+          many suffer from <strong>uncompensated head motion</strong> (so the
+          camera shakes everywhere), and most are <strong>random everyday
+          activities</strong> with no specific task in mind.
+          <strong>Human data is super rich in quantity, but actually very poor
+          in quality.</strong>
+        </p>
+        <p class="faq-answer">
+          We find it useful to think about an <strong>egocentric data pyramid</strong>,
+          analogous to the well-known robotics data pyramid:
+        </p>
+        <ul class="faq-pyramid">
+          <li>
+            <span class="pyr-tier">Bottom (largest, lowest quality)</span> &mdash;
+            passive videos like YouTube. Pixels-only, unlabeled, noisy. The
+            human in frame isn't collecting data for us. The biggest layer, but
+            also the hardest to use directly.
+          </li>
+          <li>
+            <span class="pyr-tier">Middle</span> &mdash; egocentric
+            demonstrations. Someone deliberately wears a camera and performs a
+            task, with hand poses tracked. Cleaner, has action labels, the
+            human is actively demonstrating. But still not good enough for
+            training a deployable policy.
+          </li>
+          <li>
+            <span class="pyr-tier">Top (smallest, highest quality)</span> &mdash;
+            teleop-grade human data: fully structured, interactive, with
+            accurate action labels, where the human interacts with the scene in
+            a way a robot could reproduce. This is what we want &mdash; but it
+            is very rare.
+          </li>
+        </ul>
+        <p class="faq-answer">
+          So the central question becomes: <strong>how do we squeeze every bit
+          of learning signal out of the small amount of teleop-grade human data
+          we can actually collect?</strong> That is exactly what HumanEgo is
+          built for &mdash; making the most of <em>minutes</em>, not hours or
+          days, of high-quality human egocentric data.
         </p>
       </details>
 
