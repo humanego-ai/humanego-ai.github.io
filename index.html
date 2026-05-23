@@ -1508,18 +1508,40 @@
       <details class="faq-item">
         <summary>Why is human data better and more efficient than robot data?</summary>
         <p class="faq-answer">
-          Robot teleoperation data is expensive (one trained operator per
-          arm), brittle (a new robot means re-collecting everything), and
-          low-throughput (each minute on the robot yields less behavioral
-          diversity than each minute on a human). Human Aria video has the
-          opposite profile: any person can collect it, any environment works,
-          and each minute encodes more dexterous, spatially varied behavior.
-          Empirically, HumanEgo trained on just <strong>8 minutes of human
-          video (57.5%)</strong> already beats ACT trained on
-          <strong>30 minutes of robot teleoperation (52.5%)</strong> &mdash;
-          a <strong>3.75&times; reduction in collection effort</strong> &mdash;
-          while scaling to 92.5% by 30 minutes, far surpassing any matched-time
-          teleoperation baseline.
+          First, an important caveat: when we say <em>human data</em>, we mean
+          <strong>carefully designed human-egocentric data</strong> &mdash;
+          captured with intent, the manipulation task clearly in mind, the
+          camera stable on the head, the hand pose tracked. Comparing random
+          YouTube footage against carefully designed teleop data is
+          apples-to-oranges. What we are comparing here is <em>carefully
+          designed</em> human data against <em>carefully designed</em> teleop
+          data.
+        </p>
+        <p class="faq-answer">
+          <strong>Higher-quality data is intrinsically easier for humans to
+          produce.</strong> A demonstrator naturally generates motion that is
+          <strong>smooth, dexterous, fast, and physically plausible</strong>:
+          they cover a much larger workspace than any single robot, switch
+          grip strategies on the fly, and adapt in milliseconds &mdash; without
+          any active control loop or training. Teleoperation, by contrast, is
+          fundamentally a <strong>lossy remote-control problem</strong>:
+          smoothness, speed, and dexterity all bottleneck on the operator's
+          skill at piloting the robot. Top-tier teleop exists, but it is
+          <strong>rare and expensive</strong>; everyday teleop produces choppy,
+          slow, or unrepresentative trajectories that the policy then has to
+          learn from.
+        </p>
+        <p class="faq-answer">
+          <strong>Human data generalizes more naturally across embodiments
+          and environments.</strong> Given the right processing pipeline
+          (ours uses an entity-relative ICT representation), human data is
+          <strong>inherently more transferable</strong> &mdash; it isn't
+          bound to any particular robot's kinematic configuration, gripper,
+          base height, or camera mount, so the same dataset can serve many
+          target embodiments. Teleop data is the opposite: it is born inside
+          one specific robot's body, so a new arm, a new gripper, or even a
+          new camera mount typically means <strong>re-collecting the entire
+          dataset</strong>.
         </p>
       </details>
     </div>
