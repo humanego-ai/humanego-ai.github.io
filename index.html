@@ -131,10 +131,34 @@
       transform: translateY(-50%);
       z-index: 50;
       font-family: 'Inter', sans-serif;
-      max-height: 80vh;
+      max-height: 84vh;
       overflow-y: auto;
       padding: 0.3rem 0;
       scrollbar-width: thin;
+    }
+    /* Brand header sitting above the TOC list — small "HumanEgo" wordmark
+       with the glasses logo, "Ego" tinted brand orange to mirror the hero. */
+    .toc-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.38em;
+      font-family: 'Inter', sans-serif;
+      font-size: 1.18rem;
+      font-weight: 800;
+      letter-spacing: -0.015em;
+      line-height: 1.15;
+      color: #1a1a1a;
+      text-decoration: none;
+      padding: 0 0 0.85rem 0.45rem;
+      margin-bottom: 0.65rem;
+      border-bottom: 1px solid #ececec;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+    }
+    .toc-brand:hover { opacity: 0.78; transform: translateX(2px); }
+    .toc-brand-logo {
+      height: 1.3em;
+      width: auto;
+      flex-shrink: 0;
     }
     .toc::-webkit-scrollbar { width: 2px; }
     .toc::-webkit-scrollbar-thumb { background: #ddd; border-radius: 1px; }
@@ -524,6 +548,10 @@
 
 <!-- ================= FLOATING TOC ================= -->
 <nav class="toc" aria-label="Page sections">
+  <a class="toc-brand" href="#overview" aria-label="HumanEgo home">
+    <img class="toc-brand-logo" src="static/images/humanego_logo_trim.png" alt="">
+    <span>Human<span class="brand-ego">Ego</span></span>
+  </a>
   <ul class="toc-list">
     <li class="toc-item" data-target="overview"><a class="toc-link" href="#overview">Overview</a></li>
     <li class="toc-item" data-target="abstract"><a class="toc-link" href="#abstract">Abstract</a></li>
