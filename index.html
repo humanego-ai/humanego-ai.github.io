@@ -208,14 +208,15 @@
     }
 
     /* Title above each clip in Real-World Video Clips — same dark-orange,
-       left-aligned look as the top-level section titles. */
+       left-aligned look as the top-level section titles. !important is
+       needed because Bulma's `.content h3` rule is more specific. */
     .clip-title {
-      font-size: 1.6em;
-      font-weight: 800;
-      color: #C45A0E;
-      text-align: left;
+      font-size: 1.6em !important;
+      font-weight: 800 !important;
+      color: #C45A0E !important;
+      text-align: left !important;
       letter-spacing: -0.01em;
-      margin: 1.4em 0 0.9em 0;
+      margin: 1.4em 0 0.9em 0 !important;
       padding-bottom: 0.45rem;
       border-bottom: 2px solid #F4D3BB;
       position: relative;
