@@ -1082,9 +1082,9 @@
           </video>
         </div>
         <p class="caption">
-          Aria-recorded human demonstrations have higher image SNR, lower idle time,
-          and cover a wider spatial distribution than robot teleop &mdash; quality and
-          diversity both favor human data.
+          <strong class="cap-label">Human vs. robot data.</strong>
+          Human egocentric data exhibits higher SNR, smoother motion, less idle
+          time (top), and greater spatial and trajectory diversity (bottom).
         </p>
       </div>
       <div class="column">
@@ -1094,8 +1094,9 @@
           </video>
         </div>
         <p class="caption">
-          HumanEgo reaches 75% success with just 20 minutes of human videos and 95%
-          by 30 minutes &mdash; far surpassing matched-time robot teleoperation.
+          <strong class="cap-label">Data efficiency.</strong>
+          Success rate (%) vs. data collection time. HumanEgo trained on 8 min of
+          human data surpasses ACT's 30-min robot data.
         </p>
       </div>
     </div>
@@ -1116,9 +1117,8 @@
           </video>
         </div>
         <p class="caption">
-          Nine test scenes spanning three robot embodiments, three novel setups
-          (height, viewpoint, camera) and three environment shifts (background,
-          lighting, distractors).
+          <strong class="cap-label">Cross-condition real-world evaluation:</strong>
+          cross-embodiment / environment / setup.
         </p>
       </div>
       <div class="column">
@@ -1128,8 +1128,9 @@
           </video>
         </div>
         <p class="caption">
-          A single policy trained on human data transfers <em>zero-shot</em> across
-          novel embodiments, setups, and environments &mdash; all sectors stay above 85%.
+          <strong class="cap-label">Zero-Shot Cross-Condition Generalization.</strong>
+          HumanEgo maintains robust success across different conditions without
+          retraining.
         </p>
       </div>
     </div>
@@ -1150,9 +1151,10 @@
           </video>
         </div>
         <p class="caption">
-          Moving from visual-only inputs to our Interaction-Centric Tokens (ICT)
-          lifts success rate from 32.5% to 95% &mdash; spatial structure matters far
-          more than pixels.
+          <strong class="cap-label">Representation study.</strong>
+          Success rate (%) for five input configurations. Visual-only methods
+          plateau at 32.5% with any strategy; adding spatial tokens yields
+          <strong>+52.5 pp</strong>.
         </p>
       </div>
       <div class="column">
@@ -1162,8 +1164,10 @@
           </video>
         </div>
         <p class="caption">
-          Each auxiliary objective contributes independently; combining all three
-          auxiliary losses takes success rate from 50% to 75% on Water Flowers.
+          <strong class="cap-label">Auxiliary training study.</strong>
+          Success rate (%) at 15 min of data for each auxiliary objective
+          individually. Object motion contributes the most
+          (<strong>+17.5 pp</strong>); all three combine for <strong>+25 pp</strong>.
         </p>
       </div>
     </div>
