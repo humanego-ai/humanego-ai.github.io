@@ -1262,16 +1262,87 @@
     <h2 class="title is-3 section-title">FAQ</h2>
     <div class="faq-list">
       <details class="faq-item">
-        <summary>Question 1 — placeholder</summary>
-        <p class="faq-answer">Answer 1 goes here. Replace this placeholder with the actual response.</p>
+        <summary>Why use human data?</summary>
+        <p class="faq-answer">
+          Human egocentric video captures rich manipulation demonstrations
+          <strong>without any robot hardware</strong>. Anyone can collect it,
+          anywhere, anytime &mdash; no specialized workspace, no teleoperation
+          rig, no calibration. We show that human video isn't merely a cheap
+          substitute for robot data; it's actually a <strong>superior</strong>
+          and <strong>more efficient</strong> data source for policy learning,
+          delivering both higher quality (better SNR, smoother motion, less
+          idle time) and greater diversity (wider spatial coverage and
+          trajectory variability) per minute of collection effort.
+        </p>
       </details>
+
       <details class="faq-item">
-        <summary>Question 2 — placeholder</summary>
-        <p class="faq-answer">Answer 2 goes here.</p>
+        <summary>Why use Aria glasses?</summary>
+        <p class="faq-answer">
+          Aria Gen1 glasses are uniquely well suited for learning from human
+          video: their on-board <strong>Machine Perception Services (MPS)</strong>
+          provide high-quality 6-DoF SLAM tracking, calibrated 3D hand pose
+          estimation, and synchronized egocentric RGB streams &mdash; all from a
+          single <strong>lightweight wearable device</strong>. A demonstrator
+          performs the task naturally in any convenient environment, and we get
+          clean, time-aligned multimodal signals for free, without ever
+          attaching a sensor to the scene or the robot.
+        </p>
       </details>
+
       <details class="faq-item">
-        <summary>Question 3 — placeholder</summary>
-        <p class="faq-answer">Answer 3 goes here.</p>
+        <summary>Why are Interaction-Centric Tokens (ICTs) so powerful?</summary>
+        <p class="faq-answer">
+          <strong>ICTs encode each entity (hand and object) by its 6-DoF pose
+          relative to other task entities</strong>, not relative to the camera
+          or a fixed world frame. This makes the representation invariant to
+          embodiment, viewpoint, and environment &mdash; the same ICT tokens
+          describe the same skill whether the demonstrator is a human or a
+          robot, whether the camera is a RealSense or a ZED, whether the table
+          is tall or short. The policy learns once and transfers everywhere.
+          Empirically, adding ICTs to raw human RGB jumps Water Flowers success
+          rate from 7.5% to 85% &mdash; a <strong>+77.5 pp gap</strong> that no
+          amount of visual preprocessing can close, because monocular RGB
+          encodes appearance, not the 3D spatial relationships that
+          manipulation demands.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Why do dense auxiliary objectives work?</summary>
+        <p class="faq-answer">
+          Each human demonstration encodes far more than the action label
+          alone &mdash; it implicitly tells us how objects will move, where
+          hands will appear in 2D, and how the scene's latent state evolves.
+          Our three auxiliary objectives &mdash;
+          <strong>Object Motion</strong>, <strong>2D Trace</strong>, and
+          <strong>Latent Consistency</strong> &mdash; forecast future scene
+          dynamics in complementary spaces (3D physical, 2D visual, and latent).
+          Sharing one encoder across these tasks forces the network to learn
+          the <strong>causal structure of manipulation</strong>, not just
+          memorize action sequences. The effect is largest in the low-data
+          regime: at 8 minutes of data, auxiliary losses lift success from
+          37.5% to 57.5% (+20 pp); they converge with the no-aux variant by
+          18 minutes once data becomes abundant.
+        </p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Why is human data better and more efficient than robot data?</summary>
+        <p class="faq-answer">
+          Robot teleoperation data is expensive (one trained operator per
+          arm), brittle (a new robot means re-collecting everything), and
+          low-throughput (each minute on the robot yields less behavioral
+          diversity than each minute on a human). Human Aria video has the
+          opposite profile: any person can collect it, any environment works,
+          and each minute encodes more dexterous, spatially varied behavior.
+          Empirically, HumanEgo trained on just <strong>8 minutes of human
+          video (57.5%)</strong> already beats ACT trained on
+          <strong>30 minutes of robot teleoperation (52.5%)</strong> &mdash;
+          a <strong>3.75&times; reduction in collection effort</strong> &mdash;
+          while scaling to 92.5% by 30 minutes, far surpassing any matched-time
+          teleoperation baseline.
+        </p>
       </details>
     </div>
   </div>
