@@ -61,6 +61,134 @@
     .teaser-figure { max-width: 100%; height: auto; border-radius: 8px; }
     .section { padding: 2.5rem 1.5rem; }
     .section h2.title.is-3 { margin-bottom: 1rem; }
+
+    /* ---- Section titles ---- */
+    /* Top-level section title: left-aligned, dark orange, with a thin underline accent */
+    .section-title {
+      text-align: left !important;
+      color: #C45A0E !important;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.4rem !important;
+      padding-bottom: 0.55rem;
+      border-bottom: 2px solid #F4D3BB;
+      position: relative;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 56px; height: 2px;
+      background: #C45A0E;
+    }
+    /* Results sub-section: "Results — Title" with orange prefix + black sub */
+    .results-title {
+      text-align: left !important;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.3rem !important;
+    }
+    .results-title .res-prefix { color: #C45A0E; }
+    .results-title .res-sep    { color: #C45A0E; margin: 0 0.35em; }
+    .results-title .res-sub    { color: #1a1a1a; font-weight: 700; }
+
+    /* ---- Floating left-side Table of Contents ---- */
+    .toc {
+      position: fixed;
+      top: 50%;
+      left: 1.25rem;
+      transform: translateY(-50%);
+      z-index: 50;
+      font-family: 'Inter', sans-serif;
+      max-height: 80vh;
+      overflow-y: auto;
+      padding: 0.3rem 0;
+      scrollbar-width: thin;
+    }
+    .toc::-webkit-scrollbar { width: 2px; }
+    .toc::-webkit-scrollbar-thumb { background: #ddd; border-radius: 1px; }
+    .toc-list {
+      list-style: none;
+      padding: 0 0 0 1.0rem;
+      margin: 0;
+      border-left: 1.5px solid #e8e8e8;
+      position: relative;
+    }
+    .toc-item { position: relative; }
+    .toc-link {
+      display: block;
+      padding: 0.42em 0.2em 0.42em 0.4em;
+      color: #999;
+      text-decoration: none;
+      font-size: 0.86em;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      transition: color 0.18s ease, padding-left 0.18s ease;
+      line-height: 1.3;
+      white-space: nowrap;
+      position: relative;
+    }
+    .toc-link:hover { color: #C45A0E; }
+    /* Active marker — a small dot that "snaps" to the active item */
+    .toc-link::before {
+      content: '';
+      position: absolute;
+      left: -1.05rem;    /* sits on the vertical line */
+      top: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: #C45A0E;
+      transform: translate(-50%, -50%);
+      transition: width 0.18s ease, height 0.18s ease, box-shadow 0.18s ease;
+    }
+    .toc-item.active > .toc-link {
+      color: #C45A0E;
+      font-weight: 700;
+      padding-left: 0.8em;
+    }
+    .toc-item.active > .toc-link::before {
+      width: 9px; height: 9px;
+      box-shadow: 0 0 0 3px rgba(196, 90, 14, 0.15);
+    }
+    /* Sub-items (Results children) */
+    .toc-sub {
+      list-style: none;
+      padding: 0 0 0 0.9em;
+      margin: 0;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.28s ease, opacity 0.2s ease;
+    }
+    .toc-item.has-sub.active > .toc-sub,
+    .toc-item.has-sub.expanded > .toc-sub {
+      max-height: 220px;
+      opacity: 1;
+    }
+    .toc-sub .toc-link { font-size: 0.80em; padding: 0.32em 0.2em 0.32em 0.4em; }
+    .toc-sub .toc-item.active > .toc-link { color: #C45A0E; font-weight: 700; }
+    .toc-sub .toc-item.active > .toc-link::before { width: 7px; height: 7px; }
+
+    /* Hide TOC on narrow viewports — keep page usable on phones/tablets. */
+    @media (max-width: 1180px) {
+      .toc { display: none; }
+    }
+
+    /* Smooth scroll on anchor clicks */
+    html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
+
+    /* Empty-section placeholder */
+    .section-placeholder {
+      color: #aaa;
+      font-style: italic;
+      padding: 1.2em 0;
+      text-align: center;
+      border: 1px dashed #e0e0e0;
+      border-radius: 8px;
+      background: #fafafa;
+      font-size: 1.0em;
+    }
     .caption { font-size: 1.15em; color: #555; text-align: center; margin-top: 0.9em; line-height: 1.6; }
     /* Side-by-side pair rows */
     .pair-cols { align-items: stretch; }
@@ -193,6 +321,29 @@
 </head>
 <body>
 
+<!-- ================= FLOATING TOC ================= -->
+<nav class="toc" aria-label="Page sections">
+  <ul class="toc-list">
+    <li class="toc-item" data-target="overview"><a class="toc-link" href="#overview">Overview</a></li>
+    <li class="toc-item" data-target="abstract"><a class="toc-link" href="#abstract">Abstract</a></li>
+    <li class="toc-item" data-target="architecture"><a class="toc-link" href="#architecture">Architecture</a></li>
+    <li class="toc-item" data-target="data-collection"><a class="toc-link" href="#data-collection">Data Collection</a></li>
+    <li class="toc-item has-sub" data-target="results" data-group="results">
+      <a class="toc-link" href="#results-bridge">Results</a>
+      <ul class="toc-sub">
+        <li class="toc-item" data-target="results-bridge"><a class="toc-link" href="#results-bridge">Bridge the Embodiment Gap</a></li>
+        <li class="toc-item" data-target="results-efficiency"><a class="toc-link" href="#results-efficiency">Efficiency of Human Demos</a></li>
+        <li class="toc-item" data-target="results-conditions"><a class="toc-link" href="#results-conditions">One Policy, Many Conditions</a></li>
+        <li class="toc-item" data-target="results-drivers"><a class="toc-link" href="#results-drivers">What Drives Performance</a></li>
+      </ul>
+    </li>
+    <li class="toc-item" data-target="real-world-videos"><a class="toc-link" href="#real-world-videos">Real-World Videos</a></li>
+    <li class="toc-item" data-target="faq"><a class="toc-link" href="#faq">FAQ</a></li>
+    <li class="toc-item" data-target="team"><a class="toc-link" href="#team">Team</a></li>
+    <li class="toc-item" data-target="bibtex"><a class="toc-link" href="#bibtex">BibTeX</a></li>
+  </ul>
+</nav>
+
 <!-- ================= HERO ================= -->
 <section class="hero">
   <div class="hero-body has-text-centered">
@@ -238,9 +389,10 @@
   </div>
 </section>
 
-<!-- ================= TEASER ================= -->
-<section class="section" style="padding-top: 1.5rem;">
-  <div class="container has-text-centered">
+<!-- ================= OVERVIEW ================= -->
+<section class="section" id="overview" data-toc="overview" style="padding-top: 1.5rem;">
+  <div class="container content">
+    <h2 class="title is-3 section-title">Overview</h2>
     <video
       class="scroll-play teaser-figure"
       muted
@@ -260,9 +412,9 @@
 </section>
 
 <!-- ================= ABSTRACT ================= -->
-<section class="section">
+<section class="section" id="abstract" data-toc="abstract">
   <div class="container content">
-    <h2 class="title is-3 has-text-centered">Abstract</h2>
+    <h2 class="title is-3 section-title">Abstract</h2>
     <p>
       Human egocentric video captures rich manipulation demonstrations without any
       robot hardware, yet transferring these skills to robots remains challenging
@@ -282,10 +434,10 @@
   </div>
 </section>
 
-<!-- ================= METHOD ================= -->
-<section class="section">
+<!-- ================= ARCHITECTURE ================= -->
+<section class="section" id="architecture" data-toc="architecture">
   <div class="container content">
-    <h2 class="title is-3 has-text-centered">Method</h2>
+    <h2 class="title is-3 section-title">Architecture</h2>
     <video
       class="scroll-play"
       muted
@@ -304,10 +456,20 @@
   </div>
 </section>
 
-<!-- ================= 4.1 BRIDGE THE EMBODIMENT GAP ================= -->
-<section class="section">
+<!-- ================= DATA COLLECTION (placeholder) ================= -->
+<section class="section" id="data-collection" data-toc="data-collection">
   <div class="container content">
-    <h2 class="title is-3 has-text-centered">4.1 HumanEgo Can Bridge the Embodiment Gap</h2>
+    <h2 class="title is-3 section-title">Data Collection</h2>
+    <div class="section-placeholder">Coming soon&hellip;</div>
+  </div>
+</section>
+
+<!-- ================= RESULTS — BRIDGE THE EMBODIMENT GAP ================= -->
+<section class="section" id="results-bridge" data-toc="results-bridge" data-toc-parent="results">
+  <div class="container content">
+    <h2 class="title is-3 results-title">
+      <span class="res-prefix">Results</span><span class="res-sep">&mdash;</span><span class="res-sub">HumanEgo Can Bridge the Embodiment Gap</span>
+    </h2>
     <video
       class="scroll-play"
       src="static/images/baselines.mp4"
@@ -324,10 +486,12 @@
   </div>
 </section>
 
-<!-- ================= 4.2 EFFICIENCY OF HUMAN DEMONSTRATIONS ================= -->
-<section class="section">
+<!-- ================= RESULTS — EFFICIENCY ================= -->
+<section class="section" id="results-efficiency" data-toc="results-efficiency" data-toc-parent="results">
   <div class="container content wide">
-    <h2 class="title is-3 has-text-centered">4.2 The Efficiency of Human Demonstrations</h2>
+    <h2 class="title is-3 results-title">
+      <span class="res-prefix">Results</span><span class="res-sep">&mdash;</span><span class="res-sub">The Efficiency of Human Demonstrations</span>
+    </h2>
     <div class="columns pair-cols is-variable is-5">
       <div class="column">
         <div class="pair-media-wrap">
@@ -356,10 +520,12 @@
   </div>
 </section>
 
-<!-- ================= 4.3 ONE POLICY, MANY CONDITIONS ================= -->
-<section class="section">
+<!-- ================= RESULTS — ONE POLICY, MANY CONDITIONS ================= -->
+<section class="section" id="results-conditions" data-toc="results-conditions" data-toc-parent="results">
   <div class="container content wide">
-    <h2 class="title is-3 has-text-centered">4.3 One Policy, Many Conditions</h2>
+    <h2 class="title is-3 results-title">
+      <span class="res-prefix">Results</span><span class="res-sep">&mdash;</span><span class="res-sub">One Policy, Many Conditions</span>
+    </h2>
     <div class="columns pair-cols is-variable is-5">
       <div class="column">
         <div class="pair-media-wrap">
@@ -386,10 +552,12 @@
   </div>
 </section>
 
-<!-- ================= 4.4 WHAT DRIVES PERFORMANCE ================= -->
-<section class="section">
+<!-- ================= RESULTS — WHAT DRIVES PERFORMANCE ================= -->
+<section class="section" id="results-drivers" data-toc="results-drivers" data-toc-parent="results">
   <div class="container content wide">
-    <h2 class="title is-3 has-text-centered">4.4 What Drives Performance of HumanEgo?</h2>
+    <h2 class="title is-3 results-title">
+      <span class="res-prefix">Results</span><span class="res-sep">&mdash;</span><span class="res-sub">What Drives Performance of HumanEgo?</span>
+    </h2>
     <div class="columns pair-cols is-variable is-5">
       <div class="column">
         <div class="pair-media-wrap">
@@ -418,10 +586,11 @@
   </div>
 </section>
 
-<!-- ================= VIDEO ================= -->
-<section class="section" id="video">
-  <div class="container">
-    <div class="embed-video">
+<!-- ================= REAL-WORLD VIDEOS ================= -->
+<section class="section" id="real-world-videos" data-toc="real-world-videos">
+  <div class="container content">
+    <h2 class="title is-3 section-title">Real-World Videos</h2>
+    <div class="embed-video" style="margin-top: 0.4em;">
       <iframe src="https://www.youtube.com/embed/rLd90ewhwgI"
               title="HumanEgo video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -431,9 +600,9 @@
 </section>
 
 <!-- ================= FAQ ================= -->
-<section class="section" id="faq">
+<section class="section" id="faq" data-toc="faq">
   <div class="container content">
-    <h2 class="title is-3 has-text-centered">FAQ</h2>
+    <h2 class="title is-3 section-title">FAQ</h2>
     <div class="faq-list">
       <details class="faq-item">
         <summary>Question 1 — placeholder</summary>
@@ -452,9 +621,9 @@
 </section>
 
 <!-- ================= TEAM ================= -->
-<section class="section" id="team">
+<section class="section" id="team" data-toc="team">
   <div class="container content">
-    <h2 class="title is-3 has-text-centered">Team</h2>
+    <h2 class="title is-3 section-title">Team</h2>
     <div class="team-row">
       <a class="team-member" href="https://tx-leo.github.io" target="_blank" rel="noopener">
         <img class="team-photo" src="static/images/team/leo.jpg" alt="Zhi (Leo) Wang">
@@ -490,9 +659,9 @@
 </section>
 
 <!-- ================= BIBTEX ================= -->
-<section class="section" id="bibtex">
+<section class="section" id="bibtex" data-toc="bibtex">
   <div class="container content">
-    <h2 class="title is-3">BibTeX</h2>
+    <h2 class="title is-3 section-title">BibTeX</h2>
     <pre class="bibtex">@misc{humanego2026,
   title         = {HumanEgo: Zero-Shot Robot Learning from Minutes of Human Egocentric Videos},
   author        = {Wang, Zhi and He, Botao and Yu, Kelin and Lee, Seungjae and Gao, Ruohan and Huang, Furong and Aloimonos, Yiannis},
@@ -518,6 +687,64 @@
 </footer>
 
 <script>
+  // ------- floating TOC scroll-spy -------
+  // Highlights the TOC entry whose section is currently in the upper portion
+  // of the viewport. Sub-items belonging to "Results" also light up their
+  // parent group when active.
+  (function () {
+    const toc = document.querySelector('.toc');
+    if (!toc) return;
+    const sections = Array.from(document.querySelectorAll('section[data-toc]'));
+    if (!sections.length) return;
+
+    const itemForId = new Map();
+    toc.querySelectorAll('.toc-item[data-target]').forEach(li => {
+      itemForId.set(li.dataset.target, li);
+    });
+
+    function clearActive() {
+      toc.querySelectorAll('.toc-item.active').forEach(li => li.classList.remove('active'));
+    }
+
+    function setActive(id) {
+      const li = itemForId.get(id);
+      if (!li) return;
+      clearActive();
+      li.classList.add('active');
+      // If this is a sub-item under the Results group, also light up the group.
+      const sec = document.getElementById(id);
+      const parentGroup = sec && sec.dataset.tocParent;
+      if (parentGroup) {
+        const groupLi = toc.querySelector(`.toc-item[data-group="${parentGroup}"]`);
+        if (groupLi) groupLi.classList.add('active');
+      }
+    }
+
+    // Pick the section whose top is closest above the viewport's 30% line.
+    function update() {
+      const probeY = window.innerHeight * 0.30;
+      let best = null;
+      let bestDist = -Infinity;
+      for (const sec of sections) {
+        const top = sec.getBoundingClientRect().top;
+        if (top <= probeY && top > bestDist) {
+          best = sec;
+          bestDist = top;
+        }
+      }
+      if (best) setActive(best.dataset.toc);
+    }
+
+    let raf = 0;
+    function onScroll() {
+      if (raf) return;
+      raf = requestAnimationFrame(() => { raf = 0; update(); });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  })();
+
   // ------- subtle page-view counter -------
   // Uses counterapi.dev (no signup). Element stays hidden on failure so a
   // dead service can't leave dashes on the page.
