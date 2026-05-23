@@ -394,10 +394,13 @@
     .pair-cols .column h2.title { margin-bottom: 0.8rem; }
     .pair-cols .column video,
     .pair-cols .column img { width: 100%; border-radius: 6px; display: block; }
-    .pair-cols .column .caption { flex-grow: 1; }
+    /* caption no longer flex-grows — it sits naturally below the video,
+       keeping the videos' tops aligned across columns. */
     .pair-cols .column .pair-media-wrap {
-      display: flex; align-items: center; justify-content: center;
-      flex-grow: 1; min-height: 0;
+      display: flex; align-items: flex-start; justify-content: center;
+      /* No flex-grow: when captions differ in height, we still want both
+         videos pinned to the SAME top edge instead of vertically centering
+         in unequal column heights. */
     }
     video.teaser-video { width: 100%; max-width: 900px; border-radius: 8px; }
     .embed-video {
@@ -920,8 +923,7 @@
           from only <strong>30 minutes</strong> of data. A human demonstrator wears
           <strong>Aria glasses</strong> and performs each task in any convenient
           environment &mdash; regardless of table height, lighting, or background,
-          and without specialized workspace or calibration. Each demonstration takes
-          only <strong>seconds</strong>.
+          and without specialized workspace or calibration.
         </p>
       </div>
       <div class="column">
