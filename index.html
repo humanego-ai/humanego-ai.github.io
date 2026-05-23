@@ -48,13 +48,13 @@
       position: absolute;
       inset: 0;
       background: url("static/images/dual_arms.png") no-repeat center center;
-      background-size: min(100%, 1280px) auto;
-      opacity: 0.18;
+      background-size: min(80%, 1024px) auto;
+      opacity: 0.32;
       pointer-events: none;
       z-index: 0;
     }
     @media (max-width: 768px) {
-      .hero::before { background-size: 140% auto; opacity: 0.12; }
+      .hero::before { background-size: 112% auto; opacity: 0.22; }
     }
     .content { max-width: 900px; margin: 0 auto; }
     .content.wide { max-width: 1200px; }
@@ -259,8 +259,8 @@
       text-align: left;
       margin-top: 1.0em;
       line-height: 1.65;
-      padding-right: 1.0em;
-      border-right: 3px solid #C45A0E;
+      padding-left: 1.0em;
+      border-left: 3px solid #C45A0E;
     }
     /* Side-by-side pair rows */
     .pair-cols { align-items: stretch; }
