@@ -34,6 +34,8 @@
     .publication-title { font-weight: 700; }
     .hero-body { padding: 3rem 1.5rem 1.5rem 1.5rem; }
     .content { max-width: 900px; margin: 0 auto; }
+    .content.wide { max-width: 1200px; }
+    .content p { font-size: 1.05em; line-height: 1.6; }
     .link-buttons { margin-top: 1.8em; }
     .link-buttons a {
       display: inline-block;
@@ -59,7 +61,18 @@
     .teaser-figure { max-width: 100%; height: auto; border-radius: 8px; }
     .section { padding: 2.5rem 1.5rem; }
     .section h2.title.is-3 { margin-bottom: 1rem; }
-    .caption { font-size: 0.92em; color: #555; text-align: center; margin-top: 0.8em; }
+    .caption { font-size: 1.02em; color: #555; text-align: center; margin-top: 0.8em; line-height: 1.55; }
+    /* Side-by-side pair rows */
+    .pair-cols { align-items: stretch; }
+    .pair-cols .column { display: flex; flex-direction: column; }
+    .pair-cols .column h2.title { margin-bottom: 0.8rem; }
+    .pair-cols .column video,
+    .pair-cols .column img { width: 100%; border-radius: 6px; display: block; }
+    .pair-cols .column .caption { flex-grow: 1; }
+    .pair-cols .column .pair-media-wrap {
+      display: flex; align-items: center; justify-content: center;
+      flex-grow: 1; min-height: 0;
+    }
     video.teaser-video { width: 100%; max-width: 900px; border-radius: 8px; }
     .embed-video {
       position: relative;
@@ -181,12 +194,10 @@
       <source src="static/images/teaser.mov" type="video/mp4">
     </video>
     <p class="caption">
-      <strong>HumanEgo</strong> learns robot policy from human egocentric videos.
-      A human wears Aria glasses and collects demonstrations (left);
-      the egocentric videos are converted into an interaction-centric representation
-      and used to train a flow matching policy (middle);
-      the policy transfers <em>zero-shot</em> to the robot&mdash;free of environment,
-      setup, or embodiment (right).
+      We introduce <strong>HumanEgo</strong>, a robot-data-free, hardware-agnostic,
+      and data-efficient pipeline that learns robot manipulation policies from minutes
+      of raw human egocentric videos&mdash;powered by a flow matching policy with dense
+      auxiliary objectives.
     </p>
   </div>
 </section>
@@ -256,104 +267,100 @@
   </div>
 </section>
 
-<!-- ================= GENERALIZATION ================= -->
+<!-- ================= GENERALIZATION (paired) ================= -->
 <section class="section">
-  <div class="container content">
-    <h2 class="title is-3 has-text-centered">Zero-Shot Cross-Condition Generalization</h2>
-    <video
-      class="scroll-play"
-      muted
-      playsinline
-      preload="auto"
-      disablepictureinpicture
-      style="width: 100%; border-radius: 6px; display: block;">
-      <source src="static/images/generalization.mov" type="video/mp4">
-    </video>
-    <p class="caption">
-      A single policy trained on human data transfers <em>zero-shot</em> across
-      novel embodiments, setups, and environments &mdash; all sectors stay above 85%.
-    </p>
+  <div class="container content wide">
+    <div class="columns pair-cols is-variable is-5">
+      <div class="column">
+        <h2 class="title is-4 has-text-centered">Zero-Shot Cross-Condition Generalization</h2>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/images/generalization.mov" type="video/mp4">
+          </video>
+        </div>
+        <p class="caption">
+          A single policy trained on human data transfers <em>zero-shot</em> across
+          novel embodiments, setups, and environments &mdash; all sectors stay above 85%.
+        </p>
+      </div>
+      <div class="column">
+        <h2 class="title is-4 has-text-centered">Evaluation Conditions</h2>
+        <div class="pair-media-wrap">
+          <img src="static/images/cross_condition.png" alt="Cross-condition evaluation scenes">
+        </div>
+        <p class="caption">
+          Nine test scenes spanning three robot embodiments, three novel setups
+          (height, viewpoint, camera) and three environment shifts (background,
+          lighting, distractors).
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ================= DATA EFFICIENCY ================= -->
+<!-- ================= DATA EFFICIENCY + DATA COMPARISON (paired) ================= -->
 <section class="section">
-  <div class="container content">
-    <h2 class="title is-3 has-text-centered">Data Efficiency</h2>
-    <video
-      class="scroll-play"
-      muted
-      playsinline
-      preload="auto"
-      disablepictureinpicture
-      style="width: 100%; border-radius: 6px; display: block;">
-      <source src="static/images/data_efficiency.mov" type="video/mp4">
-    </video>
-    <p class="caption">
-      HumanEgo reaches 75% success with just 20 minutes of human videos and 95% by
-      30 minutes &mdash; far surpassing what matched-time robot teleoperation achieves.
-    </p>
+  <div class="container content wide">
+    <div class="columns pair-cols is-variable is-5">
+      <div class="column">
+        <h2 class="title is-4 has-text-centered">Data Efficiency</h2>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/images/data_efficiency.mov" type="video/mp4">
+          </video>
+        </div>
+        <p class="caption">
+          HumanEgo reaches 75% success with just 20 minutes of human videos and 95%
+          by 30 minutes &mdash; far surpassing matched-time robot teleoperation.
+        </p>
+      </div>
+      <div class="column">
+        <h2 class="title is-4 has-text-centered">Human vs Robot Data</h2>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/images/data_comparison.mov" type="video/mp4">
+          </video>
+        </div>
+        <p class="caption">
+          Aria-recorded human demonstrations have higher image SNR, lower idle time,
+          and cover a wider spatial distribution than robot teleop &mdash; quality and
+          diversity both favor human data.
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- ================= DATA COMPARISON ================= -->
+<!-- ================= REPRESENTATION + AUX TRAINING (paired) ================= -->
 <section class="section">
-  <div class="container content">
-    <h2 class="title is-3 has-text-centered">Human vs Robot Data</h2>
-    <video
-      class="scroll-play"
-      muted
-      playsinline
-      preload="auto"
-      disablepictureinpicture
-      style="width: 100%; border-radius: 6px; display: block;">
-      <source src="static/images/data_comparison.mov" type="video/mp4">
-    </video>
-    <p class="caption">
-      Aria-recorded human demonstrations have higher image SNR, lower idle time, and
-      cover a wider spatial distribution than robot teleop &mdash; quality and diversity
-      both favor human data.
-    </p>
-  </div>
-</section>
-
-<!-- ================= REPRESENTATION STUDY ================= -->
-<section class="section">
-  <div class="container content">
-    <h2 class="title is-3 has-text-centered">Representation Study</h2>
-    <video
-      class="scroll-play"
-      muted
-      playsinline
-      preload="auto"
-      disablepictureinpicture
-      style="width: 100%; border-radius: 6px; display: block;">
-      <source src="static/images/representation.mov" type="video/mp4">
-    </video>
-    <p class="caption">
-      Moving from visual-only inputs to our Interaction-Centric Tokens (ICT) lifts
-      success rate from 32.5% to 95% &mdash; spatial structure matters far more than pixels.
-    </p>
-  </div>
-</section>
-
-<!-- ================= AUX TRAINING STUDY ================= -->
-<section class="section">
-  <div class="container content">
-    <h2 class="title is-3 has-text-centered">Auxiliary Training Study</h2>
-    <video
-      class="scroll-play"
-      muted
-      playsinline
-      preload="auto"
-      disablepictureinpicture
-      style="width: 100%; border-radius: 6px; display: block;">
-      <source src="static/images/aux_training.mov" type="video/mp4">
-    </video>
-    <p class="caption">
-      Each auxiliary objective contributes independently; combining all three
-      auxiliary losses takes success rate from 50% to 75% on Water Flowers.
-    </p>
+  <div class="container content wide">
+    <div class="columns pair-cols is-variable is-5">
+      <div class="column">
+        <h2 class="title is-4 has-text-centered">Representation Study</h2>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/images/representation.mov" type="video/mp4">
+          </video>
+        </div>
+        <p class="caption">
+          Moving from visual-only inputs to our Interaction-Centric Tokens (ICT)
+          lifts success rate from 32.5% to 95% &mdash; spatial structure matters far
+          more than pixels.
+        </p>
+      </div>
+      <div class="column">
+        <h2 class="title is-4 has-text-centered">Auxiliary Training Study</h2>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/images/aux_training.mov" type="video/mp4">
+          </video>
+        </div>
+        <p class="caption">
+          Each auxiliary objective contributes independently; combining all three
+          auxiliary losses takes success rate from 50% to 75% on Water Flowers.
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
