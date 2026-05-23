@@ -1453,19 +1453,48 @@
       <details class="faq-item">
         <summary>Why do dense auxiliary objectives work?</summary>
         <p class="faq-answer">
-          Each human demonstration encodes far more than the action label
-          alone &mdash; it implicitly tells us how objects will move, where
-          hands will appear in 2D, and how the scene's latent state evolves.
-          Our three auxiliary objectives &mdash;
-          <strong>Object Motion</strong>, <strong>2D Trace</strong>, and
-          <strong>Latent Consistency</strong> &mdash; forecast future scene
-          dynamics in complementary spaces (3D physical, 2D visual, and latent).
-          Sharing one encoder across these tasks forces the network to learn
-          the <strong>causal structure of manipulation</strong>, not just
-          memorize action sequences. The effect is largest in the low-data
-          regime: at 8 minutes of data, auxiliary losses lift success from
-          37.5% to 57.5% (+20 pp); they converge with the no-aux variant by
-          18 minutes once data becomes abundant.
+          Think about what supervision the policy actually receives from a
+          single demonstration: at each timestep, the model sees one image and
+          one set of ICTs, and is asked to regress one action chunk. That's a
+          single, narrow learning signal &mdash; <em>action in, action out</em>.
+          With only minutes of data, that's just <strong>not a lot of bits
+          flowing through the gradient</strong>.
+        </p>
+        <p class="faq-answer">
+          But each demonstration secretly carries <strong>far more information
+          than the action label alone</strong>. Where does the object end up?
+          Where do the hand and object project on the image over time? How does
+          the scene's internal state evolve? All of that signal is sitting
+          <em>for free</em> inside every trajectory &mdash; we just aren't
+          asking the model to predict it.
+        </p>
+        <p class="faq-answer">
+          So we add three auxiliary objectives, all sharing the same encoder as
+          the flow-matching head: <strong>Object Motion</strong> (forecast each
+          manipulated object's future 6-DoF trajectory),
+          <strong>2D Trace</strong> (forecast the image-plane projection of
+          hand and object &mdash; the path your eyes would follow watching the
+          video), and <strong>Latent Consistency</strong> (forecast the
+          encoder's own internal representation K steps ahead).
+        </p>
+        <p class="faq-answer">
+          Zoom out, and all three are asking the model to do the
+          <em>same thing</em>: <strong>forecast how the scene evolves over the
+          next few steps</strong>, in three complementary spaces &mdash; 3D
+          physical, 2D visual, and the encoder's own latent state. Together,
+          this turns the encoder into a <strong>lightweight world model of
+          hand&ndash;object interaction</strong>, sitting right inside the
+          policy for free.
+        </p>
+        <p class="faq-answer">
+          Because all three losses share the same encoder, the encoder is
+          forced to learn the <strong>causal structure of manipulation</strong>
+          &mdash; not just <em>what</em> action comes next, but <em>why</em>:
+          how the scene will respond. And critically, none of these targets
+          cost us anything to obtain &mdash; they are computed automatically
+          from the same perception pipeline that gave us the ICTs.
+          <strong>No extra annotation, no extra data &mdash; just more
+          questions asked of the same demonstration.</strong>
         </p>
       </details>
 
