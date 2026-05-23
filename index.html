@@ -409,12 +409,15 @@
          "Zero-Shot Robot Learning" + "from Minutes of Human Egocentric Videos"
          become 2 lines total instead of 3. */
       .title-line-2, .title-line-3 { font-size: 1.02rem; }
-      /* Author row: shrink font + margins aggressively so the four first
-         authors (separated by <br>) fit on a single line on phones,
-         leaving the remaining three on row 2. */
-      .author-list { font-size: 0.76rem; line-height: 1.7; }
-      .author-block { margin: 0.05em 0.18em; }
+      /* Author row on mobile: first author (lead) gets his own line,
+         followed by 3 + 3 below. Layout becomes 1 / 3 / 3. */
+      .author-list { font-size: 0.88rem; line-height: 1.7; }
+      .author-block { margin: 0.1em 0.25em; }
       .author-block a { white-space: nowrap; }
+      .author-list .author-block:first-child {
+        display: block;
+        margin-bottom: 0.4em;
+      }
       .umd-logo { height: 64px; }
       /* Reduce horizontal padding on every section so charts/videos
          can use more screen width on phones. */
