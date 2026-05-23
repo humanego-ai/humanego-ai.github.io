@@ -254,12 +254,21 @@
     .hero-quote-cite {
       display: block;
       margin-top: 1.4em;
-      font-size: 1.0em;
+      font-size: 1.05em;
       font-style: normal;
       font-weight: 600;
       color: #C45A0E;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      letter-spacing: 0.01em;
+    }
+    .hero-quote-cite a {
+      color: #C45A0E;
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s ease, color 0.15s ease;
+    }
+    .hero-quote-cite a:hover {
+      color: #9C3F00;
+      border-bottom-color: #9C3F00;
     }
     @media (max-width: 768px) {
       .hero-quote { padding: 2.2rem 2rem 2rem 2rem; }
@@ -584,7 +593,7 @@
         as its own simulator<br>
         and let the body directly interact with the physical physics.
       </p>
-      <cite class="hero-quote-cite">&mdash; Rodney Brooks</cite>
+      <cite class="hero-quote-cite">&mdash; <a href="https://people.csail.mit.edu/brooks/" target="_blank" rel="noopener">Rodney Brooks</a></cite>
     </blockquote>
   </div>
 </section>
