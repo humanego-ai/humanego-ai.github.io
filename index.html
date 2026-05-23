@@ -174,8 +174,15 @@
 <!-- ================= TEASER ================= -->
 <section class="section" style="padding-top: 1.5rem;">
   <div class="container has-text-centered">
-    <!-- Replace with teaser video once available -->
-    <img src="static/images/teaser.png" alt="HumanEgo teaser" class="teaser-figure">
+    <video
+      class="scroll-play teaser-figure"
+      muted
+      playsinline
+      preload="auto"
+      disablepictureinpicture
+      style="display: block; margin: 0 auto;">
+      <source src="static/images/teaser.mov" type="video/mp4">
+    </video>
     <p class="caption">
       <strong>HumanEgo</strong> learns robot policy from human egocentric videos.
       A human wears Aria glasses and collects demonstrations (left);
@@ -214,7 +221,15 @@
 <section class="section has-background-light">
   <div class="container content">
     <h2 class="title is-3 has-text-centered">Method</h2>
-    <img src="static/images/architecture.png" alt="System overview of HumanEgo" style="width: 100%; border-radius: 6px;">
+    <video
+      class="scroll-play"
+      muted
+      playsinline
+      preload="auto"
+      disablepictureinpicture
+      style="width: 100%; border-radius: 6px; display: block;">
+      <source src="static/images/architecture.mov" type="video/mp4">
+    </video>
     <p class="caption">
       <strong>System overview.</strong> Arm inpainting and visual keypoints bridge the
       visual gap; Interaction-Centric Tokens (ICT) encode spatial relationships among
