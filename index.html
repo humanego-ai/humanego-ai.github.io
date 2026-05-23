@@ -58,17 +58,19 @@
     }
     .content { max-width: 900px; margin: 0 auto; }
     .content.wide { max-width: 1200px; }
-    .content p { font-size: 1.30em; line-height: 1.7; }
+    /* Body paragraph (Abstract, FAQ answer, Acknowledge, etc.):
+       1.0rem on narrow phones → 1.30em on desktop. */
+    .content p { font-size: clamp(1.0rem, 3.5vw, 1.30em); line-height: 1.7; }
     .link-buttons { margin-top: 1.8em; }
     .link-buttons a {
       display: inline-block;
-      padding: 0.65em 1.35em;
-      margin: 0.3em;
+      padding: clamp(0.5em, 1.6vw, 0.65em) clamp(0.95em, 3vw, 1.35em);
+      margin: 0.25em;
       background: #363636;
       color: white !important;
       border-radius: 999px;
       text-decoration: none;
-      font-size: 1.10em;
+      font-size: clamp(0.92rem, 2.6vw, 1.10em);
       font-weight: 500;
       transition: background 0.15s;
     }
@@ -87,16 +89,19 @@
     .section h2.title.is-3 { margin-bottom: 1rem; }
 
     /* ---- Section titles ---- */
-    /* Top-level section title: left-aligned, dark orange, with a thin underline accent */
+    /* Top-level section title: left-aligned, dark orange, with a thin underline accent.
+       Font-size scales: 1.5rem on narrow phone → 2rem on desktop (matches Bulma .is-3). */
     .section-title {
       text-align: left !important;
       color: #C45A0E !important;
+      font-size: clamp(1.55rem, 5.5vw, 2rem) !important;
       font-weight: 800;
       letter-spacing: -0.01em;
       margin-bottom: 1.4rem !important;
       padding-bottom: 0.55rem;
       border-bottom: 2px solid #F4D3BB;
       position: relative;
+      line-height: 1.2;
     }
     .section-title::after {
       content: '';
@@ -108,9 +113,11 @@
     /* Results sub-section: "Results — Title" with orange prefix + black sub */
     .results-title {
       text-align: left !important;
+      font-size: clamp(1.55rem, 5.5vw, 2rem) !important;
       font-weight: 800;
       letter-spacing: -0.01em;
       margin-bottom: 1.3rem !important;
+      line-height: 1.2;
     }
     .results-title .res-prefix { color: #C45A0E; }
     .results-title .res-sep    { color: #C45A0E; margin: 0 0.35em; }
@@ -237,7 +244,7 @@
     }
     .hero-quote-text {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.65em;
+      font-size: clamp(1.15rem, 4.2vw, 1.65em);
       line-height: 1.55;
       font-style: italic;
       font-weight: 400;
@@ -258,7 +265,7 @@
       .hero-quote { padding: 2.2rem 2rem 2rem 2rem; }
       .hero-quote::before, .hero-quote::after { font-size: 7rem; }
       .hero-quote::after { bottom: -2rem; }
-      .hero-quote-text { font-size: 1.3em; }
+      .hero-quote-cite { font-size: 0.88em; }
     }
 
     /* Acknowledgement links — orange to match author + team styling */
@@ -279,7 +286,7 @@
        (Bulma .title.is-3 = 2rem). !important is needed because Bulma's
        `.content h3` rule has higher specificity than `.clip-title`. */
     .clip-title {
-      font-size: 2rem !important;
+      font-size: clamp(1.55rem, 5.5vw, 2rem) !important;
       font-weight: 800 !important;
       color: #C45A0E !important;
       text-align: left !important;
@@ -288,7 +295,7 @@
       padding-bottom: 0.55rem;
       border-bottom: 2px solid #F4D3BB;
       position: relative;
-      line-height: 1.15;
+      line-height: 1.2;
     }
     .clip-title::after {
       content: '';
@@ -313,13 +320,17 @@
       font-size: 1.0em;
     }
     .caption {
-      font-size: 1.28em;
+      font-size: clamp(1.0rem, 3.4vw, 1.28em);
       color: #555;
       text-align: left;
       margin-top: 1.0em;
       line-height: 1.65;
       padding-left: 1.2em;
       border-left: 9px solid #C45A0E;
+    }
+    /* On tiny screens trim the orange bar + padding so caption text isn't crowded */
+    @media (max-width: 480px) {
+      .caption { padding-left: 0.8em; border-left-width: 6px; }
     }
     /* Side-by-side pair rows */
     .pair-cols { align-items: stretch; }
@@ -392,9 +403,17 @@
       .hero-body { padding: 2.2rem 1rem 1.2rem 1rem; }
       .author-list { font-size: 1.05rem; }
       .umd-logo { height: 64px; }
+      /* Reduce horizontal padding on every section so charts/videos
+         can use more screen width on phones. */
+      .section { padding: 1.6rem 0.9rem; }
+      /* Slightly smaller team headshots */
+      .team-row { gap: 1.1rem 0.9rem; }
+      .team-member { width: 100px; }
+      .team-photo { width: 100px; height: 100px; }
+      .team-name { font-size: 0.95em; }
     }
     .author-list {
-      font-size: 1.28rem;
+      font-size: clamp(0.95rem, 3.2vw, 1.28rem);
       font-weight: 500;
       color: #333;
       margin-top: 0.5em;
