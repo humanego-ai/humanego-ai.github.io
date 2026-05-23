@@ -714,13 +714,20 @@
     .faq-item > summary {
       cursor: pointer; list-style: none;
       font-size: 1.22em; font-weight: 600; color: #333;
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 1em; outline: none;
+      outline: none;
+      position: relative;
+      padding-right: 2em;          /* room for the +/- marker on the right */
+      line-height: 1.4;
     }
     .faq-item > summary::-webkit-details-marker { display: none; }
     .faq-item > summary::after {
-      content: "+"; font-size: 1.3em; font-weight: 400;
-      color: #999; transition: transform 0.18s ease;
+      content: "+";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.3em; font-weight: 400;
+      color: #999; transition: color 0.18s ease;
       line-height: 1;
     }
     .faq-item[open] > summary::after {
