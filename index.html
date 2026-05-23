@@ -291,8 +291,9 @@
 </footer>
 
 <script>
-  // Play .scroll-play videos like GIFs: start when they enter the viewport,
-  // rewind and replay each time they re-enter, never show controls.
+  // Play .scroll-play videos once per page load: start the first time they
+  // enter the viewport, then let them run to the end and freeze on the last
+  // frame. Scrolling away and back does NOT replay — only a page refresh resets.
   (function () {
     const videos = document.querySelectorAll('video.scroll-play');
     if (!videos.length) return;
@@ -300,25 +301,23 @@
     videos.forEach(v => {
       v.controls = false;
       v.setAttribute('aria-hidden', 'false');
-      // pause and rewind initially so it starts from frame 0 on first reveal
+      // Start paused on frame 0 so the first reveal animates from the beginning.
       try { v.pause(); v.currentTime = 0; } catch (_) {}
     });
 
     if (!('IntersectionObserver' in window)) {
-      // Fallback: just autoplay once
+      // Fallback: just play once on load.
       videos.forEach(v => v.play().catch(() => {}));
       return;
     }
 
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
         const v = entry.target;
-        if (entry.isIntersecting) {
-          try { v.currentTime = 0; } catch (_) {}
-          v.play().catch(() => {});
-        } else {
-          v.pause();
-        }
+        try { v.currentTime = 0; } catch (_) {}
+        v.play().catch(() => {});
+        io.unobserve(v); // first encounter only — never trigger again this load
       });
     }, { threshold: 0.35 });
 
