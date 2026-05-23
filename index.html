@@ -49,12 +49,12 @@
       inset: 0;
       background: url("static/images/dual_arms.png") no-repeat center center;
       background-size: min(80%, 1024px) auto;
-      opacity: 0.32;
+      opacity: 0.48;
       pointer-events: none;
       z-index: 0;
     }
     @media (max-width: 768px) {
-      .hero::before { background-size: 112% auto; opacity: 0.22; }
+      .hero::before { background-size: 112% auto; opacity: 0.34; }
     }
     .content { max-width: 900px; margin: 0 auto; }
     .content.wide { max-width: 1200px; }
@@ -201,6 +201,65 @@
 
     /* Smooth scroll on anchor clicks */
     html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
+
+    /* ---- Pull-quote above Overview ---- */
+    .hero-quote-section {
+      padding: 3rem 1.5rem 0.5rem 1.5rem;
+    }
+    .hero-quote {
+      position: relative;
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 3rem 3.4rem 2.2rem 3.4rem;
+      text-align: center;
+    }
+    .hero-quote::before,
+    .hero-quote::after {
+      position: absolute;
+      font-family: "Times New Roman", Georgia, serif;
+      font-size: 11rem;
+      line-height: 1;
+      color: #C45A0E;
+      opacity: 0.38;
+      font-weight: 700;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hero-quote::before {
+      content: "\201C";
+      left: -0.2rem;
+      top: -0.6rem;
+    }
+    .hero-quote::after {
+      content: "\201D";
+      right: -0.2rem;
+      bottom: -3.3rem;
+    }
+    .hero-quote-text {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.65em;
+      line-height: 1.55;
+      font-style: italic;
+      font-weight: 400;
+      color: #2a2a2a;
+      margin: 0;
+    }
+    .hero-quote-cite {
+      display: block;
+      margin-top: 1.4em;
+      font-size: 1.0em;
+      font-style: normal;
+      font-weight: 600;
+      color: #C45A0E;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    @media (max-width: 768px) {
+      .hero-quote { padding: 2.2rem 2rem 2rem 2rem; }
+      .hero-quote::before, .hero-quote::after { font-size: 7rem; }
+      .hero-quote::after { bottom: -2rem; }
+      .hero-quote-text { font-size: 1.3em; }
+    }
 
     /* Acknowledgement links — orange to match author + team styling */
     .ack-link {
@@ -461,6 +520,19 @@
   </div>
 </section>
 
+<!-- ================= PULL-QUOTE ================= -->
+<section class="section hero-quote-section">
+  <div class="container">
+    <blockquote class="hero-quote">
+      <p class="hero-quote-text">
+        We have a brain for one reason and one reason only &mdash; to produce
+        adaptable and complex movements.
+      </p>
+      <cite class="hero-quote-cite">&mdash; Daniel Wolpert</cite>
+    </blockquote>
+  </div>
+</section>
+
 <!-- ================= OVERVIEW ================= -->
 <section class="section" id="overview" data-toc="overview" style="padding-top: 1.5rem;">
   <div class="container content">
@@ -540,7 +612,7 @@
 <section class="section" id="results-bridge" data-toc="results-bridge" data-toc-parent="results">
   <div class="container content">
     <h2 class="title is-3 results-title">
-      <span class="res-prefix">Results</span><span class="res-sep">&mdash;</span><span class="res-sub">Human Bridges the Embodiment Gap Efficiently</span>
+      <span class="res-prefix">Results</span><span class="res-sep">&mdash;</span><span class="res-sub">HumanEgo Bridges the Embodiment Gap Efficiently</span>
     </h2>
     <video
       class="scroll-play"
@@ -568,17 +640,6 @@
       <div class="column">
         <div class="pair-media-wrap">
           <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
-            <source src="static/images/data_efficiency.mov" type="video/mp4">
-          </video>
-        </div>
-        <p class="caption">
-          HumanEgo reaches 75% success with just 20 minutes of human videos and 95%
-          by 30 minutes &mdash; far surpassing matched-time robot teleoperation.
-        </p>
-      </div>
-      <div class="column">
-        <div class="pair-media-wrap">
-          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
             <source src="static/images/data_comparison.mov" type="video/mp4">
           </video>
         </div>
@@ -586,6 +647,17 @@
           Aria-recorded human demonstrations have higher image SNR, lower idle time,
           and cover a wider spatial distribution than robot teleop &mdash; quality and
           diversity both favor human data.
+        </p>
+      </div>
+      <div class="column">
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
+            <source src="static/images/data_efficiency.mov" type="video/mp4">
+          </video>
+        </div>
+        <p class="caption">
+          HumanEgo reaches 75% success with just 20 minutes of human videos and 95%
+          by 30 minutes &mdash; far surpassing matched-time robot teleoperation.
         </p>
       </div>
     </div>
@@ -601,6 +673,16 @@
     <div class="columns pair-cols is-variable is-5">
       <div class="column">
         <div class="pair-media-wrap">
+          <img src="static/images/cross_condition.png" alt="Cross-condition evaluation scenes">
+        </div>
+        <p class="caption">
+          Nine test scenes spanning three robot embodiments, three novel setups
+          (height, viewpoint, camera) and three environment shifts (background,
+          lighting, distractors).
+        </p>
+      </div>
+      <div class="column">
+        <div class="pair-media-wrap">
           <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture>
             <source src="static/images/generalization.mov" type="video/mp4">
           </video>
@@ -608,16 +690,6 @@
         <p class="caption">
           A single policy trained on human data transfers <em>zero-shot</em> across
           novel embodiments, setups, and environments &mdash; all sectors stay above 85%.
-        </p>
-      </div>
-      <div class="column">
-        <div class="pair-media-wrap">
-          <img src="static/images/cross_condition.png" alt="Cross-condition evaluation scenes">
-        </div>
-        <p class="caption">
-          Nine test scenes spanning three robot embodiments, three novel setups
-          (height, viewpoint, camera) and three environment shifts (background,
-          lighting, distractors).
         </p>
       </div>
     </div>
