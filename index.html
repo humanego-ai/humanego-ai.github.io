@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>HumanEgo: Efficient Robot Learning from Human Egocentric Videos</title>
+  <title>HumanEgo: Zero-Shot Robot Learning from Minutes of Human Egocentric Videos</title>
   <meta name="description" content="HumanEgo learns deployable robot manipulation policies from only minutes of human egocentric videos, without any robot data or internet-scale pretraining.">
 
   <!-- Open Graph / social -->
-  <meta property="og:title" content="HumanEgo: Efficient Robot Learning from Human Egocentric Videos">
+  <meta property="og:title" content="HumanEgo: Zero-Shot Robot Learning from Minutes of Human Egocentric Videos">
   <meta property="og:description" content="Zero-shot human-to-robot transfer from minutes of Aria egocentric demonstrations.">
   <meta property="og:image" content="static/images/teaser.png">
   <meta property="og:url" content="https://humanego-ai.github.io">
@@ -70,7 +70,15 @@
       width: 100%; height: 100%;
       border-radius: 8px;
     }
-    .brand-ego { color: #e63946; }
+    .brand-ego { color: #D46714; }
+    .title-logo {
+      height: 0.95em;
+      vertical-align: -0.18em;
+      margin: 0 0.05em 0 0.25em;
+    }
+    .publication-title { line-height: 1.25; }
+    .affiliation { margin-top: 1.1em; }
+    .umd-logo { height: 42px; width: auto; }
   </style>
 </head>
 <body>
@@ -80,17 +88,22 @@
   <div class="hero-body has-text-centered">
     <div class="container">
       <h1 class="title is-2 publication-title">
-        Human<span class="brand-ego">Ego</span>: Efficient Robot Learning<br>from Human Egocentric Videos
+        Human<span class="brand-ego">Ego</span><img src="static/images/humanego_logo_trim.png" class="title-logo" alt="HumanEgo logo">: Zero-Shot Robot Learning<br>from Minutes of Human Egocentric Videos
       </h1>
-      <h3 class="subtitle is-5" style="color:#666;">Anonymous submission &middot; CoRL 2026</h3>
+      <h3 class="subtitle is-5" style="color:#666;">CoRL 2026</h3>
 
       <div class="is-size-6" style="color:#444; margin-top: 0.5em;">
-        <span class="author-block">Anonymous Author 1</span>
-        <span class="author-block">Anonymous Author 2</span>
-        <span class="author-block">Anonymous Author 3</span><br>
-        <span class="author-block">Anonymous Author 4</span>
-        <span class="author-block">Anonymous Author 5</span>
-        <span class="author-block">Anonymous Author 6</span>
+        <span class="author-block">Zhi (Leo) Wang</span>
+        <span class="author-block">Botao He</span>
+        <span class="author-block">Kelin Yu</span>
+        <span class="author-block">Seungjae Lee</span><br>
+        <span class="author-block">Ruohan Gao</span>
+        <span class="author-block">Furong Huang</span>
+        <span class="author-block">Yiannis Aloimonos</span>
+      </div>
+
+      <div class="affiliation">
+        <img src="static/images/UMD-logo.png" alt="University of Maryland" class="umd-logo">
       </div>
 
       <div class="link-buttons">
@@ -195,12 +208,11 @@
         </video>
     -->
     <div class="embed-video">
-      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+      <iframe src="https://www.youtube.com/embed/rLd90ewhwgI"
               title="HumanEgo video" frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen></iframe>
     </div>
-    <p class="caption">Replace the YouTube embed URL in <code>index.html</code> with your actual video.</p>
   </div>
 </section>
 
@@ -209,8 +221,8 @@
   <div class="container content">
     <h2 class="title is-3">BibTeX</h2>
     <pre class="bibtex">@inproceedings{humanego2026,
-  title     = {HumanEgo: Efficient Robot Learning from Human Egocentric Videos},
-  author    = {Anonymous},
+  title     = {HumanEgo: Zero-Shot Robot Learning from Minutes of Human Egocentric Videos},
+  author    = {Wang, Zhi and He, Botao and Yu, Kelin and Lee, Seungjae and Gao, Ruohan and Huang, Furong and Aloimonos, Yiannis},
   booktitle = {Conference on Robot Learning (CoRL)},
   year      = {2026}
 }</pre>
