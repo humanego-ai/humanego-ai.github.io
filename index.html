@@ -194,13 +194,25 @@
     /* Smooth scroll on anchor clicks */
     html { scroll-behavior: smooth; scroll-padding-top: 1rem; }
 
-    /* Title above each clip in Real-World Video Clips */
+    /* Title above each clip in Real-World Video Clips — same dark-orange,
+       left-aligned look as the top-level section titles. */
     .clip-title {
-      font-size: 1.18em;
-      font-weight: 700;
-      color: #1a1a1a;
-      margin: 0.4em 0 0.7em 0;
-      letter-spacing: -0.005em;
+      font-size: 1.6em;
+      font-weight: 800;
+      color: #C45A0E;
+      text-align: left;
+      letter-spacing: -0.01em;
+      margin: 1.4em 0 0.9em 0;
+      padding-bottom: 0.45rem;
+      border-bottom: 2px solid #F4D3BB;
+      position: relative;
+    }
+    .clip-title::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 48px; height: 2px;
+      background: #C45A0E;
     }
 
     /* Empty-section placeholder */
@@ -305,10 +317,10 @@
       box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
     }
     .team-name {
-      margin-top: 0.75em; font-size: 1.0em; font-weight: 600;
-      color: #2E8B6F; text-align: center; line-height: 1.25;
+      margin-top: 0.75em; font-size: 1.05em; font-weight: 600;
+      color: #C45A0E; text-align: center; line-height: 1.25;
     }
-    .team-member:hover .team-name { color: #D46714; }
+    .team-member:hover .team-name { color: #9C3F00; }
     .team-aff {
       margin-top: 0.4em; font-size: 0.78em; color: #888;
       text-align: center; letter-spacing: 0.02em;
@@ -363,7 +375,7 @@
     </li>
     <li class="toc-item" data-target="real-world-videos"><a class="toc-link" href="#real-world-videos">Real-World Video Clips</a></li>
     <li class="toc-item" data-target="faq"><a class="toc-link" href="#faq">FAQ</a></li>
-    <li class="toc-item" data-target="team"><a class="toc-link" href="#team">Team</a></li>
+    <li class="toc-item" data-target="team"><a class="toc-link" href="#team">Our Team</a></li>
     <li class="toc-item" data-target="bibtex"><a class="toc-link" href="#bibtex">BibTeX</a></li>
   </ul>
 </nav>
@@ -492,7 +504,7 @@
 <section class="section" id="results-bridge" data-toc="results-bridge" data-toc-parent="results">
   <div class="container content">
     <h2 class="title is-3 results-title">
-      <span class="res-prefix">Results</span><span class="res-sep">&mdash;</span><span class="res-sub">HumanEgo Can Bridge the Embodiment Gap</span>
+      <span class="res-prefix">Results</span><span class="res-sep">&mdash;</span><span class="res-sub">Human Bridges the Embodiment Gap Efficiently</span>
     </h2>
     <video
       class="scroll-play"
@@ -648,7 +660,7 @@
 <!-- ================= TEAM ================= -->
 <section class="section" id="team" data-toc="team">
   <div class="container content">
-    <h2 class="title is-3 section-title">Team</h2>
+    <h2 class="title is-3 section-title">Our Team</h2>
     <div class="team-row">
       <a class="team-member" href="https://tx-leo.github.io" target="_blank" rel="noopener">
         <img class="team-photo" src="static/images/team/leo.jpg" alt="Zhi (Leo) Wang">
