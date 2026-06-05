@@ -1740,7 +1740,49 @@
 
       <details class="faq-item">
         <summary>What are the limitations of HumanEgo?</summary>
-        <p class="faq-answer"><em>Answer coming soon.</em></p>
+        <p class="faq-answer">
+          HumanEgo is built for <strong>coarse, large-motion
+          (&ldquo;broad-strokes&rdquo;) manipulation</strong> &mdash; the regime
+          where our ICT representation and architecture genuinely shine. It is
+          <strong>not</strong>, today, the right tool for everything. In
+          particular, it struggles with <strong>deformable objects</strong>,
+          <strong>very fine or precise manipulation</strong>, <strong>highly
+          dynamic motions</strong>, and <strong>in-hand manipulation</strong>
+          &mdash; and it carries a hard <strong>precision ceiling of roughly
+          1&nbsp;cm</strong>. If a task needs sub-centimeter accuracy or tight
+          reactive control, HumanEgo will not reliably solve it.
+        </p>
+        <p class="faq-answer">
+          These limits follow directly from how the system is built. Our
+          <strong>object tracking</strong> leans on off-the-shelf foundation
+          models for pose estimation, and their error
+          <strong>accumulates</strong> &mdash; that is what sets the ~1&nbsp;cm
+          floor and rules out high-precision insertion. The <strong>ICT</strong>
+          representation describes each entity by a <em>rigid</em> 6-DoF pose,
+          so a <strong>deformable object</strong> &mdash; cloth, rope, a soft
+          bag &mdash; has no well-defined pose to encode, and ICT construction
+          simply fails. And because the policy acts on a coarse spatial snapshot
+          rather than tight, high-frequency visual feedback, <strong>fast
+          dynamic tasks</strong> and <strong>in-hand reorientation</strong>
+          &mdash; which demand continuous reaction and fine per-finger contact
+          &mdash; sit outside what it can currently do.
+        </p>
+        <p class="faq-answer">
+          There is an intuition we like that draws the boundary cleanly. Recall
+          the idea behind ICTs: glance at a scene once, close your eyes, and you
+          can still complete many manipulation tasks from spatial memory alone.
+          <strong>HumanEgo can do almost exactly the set of tasks you could do
+          with your eyes closed after a single glance</strong> &mdash;
+          pick-and-place, pouring water, and the like. The tasks you
+          <em>couldn't</em> do blind &mdash; inserting a USB, threading a
+          needle, reacting to a moving object &mdash; are precisely the ones
+          HumanEgo can't do either. That is not a coincidence; it is the same
+          principle that makes ICTs work, seen from the other side.
+          Encouragingly, each boundary is tied to a specific, improvable
+          component &mdash; sharper trackers raise the precision ceiling, and
+          richer state or touch sensing could open up deformable and in-hand
+          tasks &mdash; so we expect this frontier to keep moving.
+        </p>
       </details>
     </div>
   </div>
