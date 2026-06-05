@@ -1740,7 +1740,44 @@
 
       <details class="faq-item">
         <summary>What role does the image actually play &mdash; does it matter much?</summary>
-        <p class="faq-answer"><em>Answer coming soon.</em></p>
+        <p class="faq-answer">
+          <strong>Less than you might expect.</strong> We worked hard to squeeze
+          performance out of the raw image &mdash; we tried
+          <strong>arm inpainting</strong> (masking out the demonstrator's arm to
+          close the human&ndash;robot appearance gap) and
+          <strong>keypoint rendering</strong> (drawing the tracked hand/object
+          keypoints back onto the frame), among other things. None of it moved
+          the needle much. What finally made the policy work was adding the
+          <strong>ICTs</strong> &mdash; the geometric, interaction-centric
+          tokens &mdash; not better pixels. That outcome
+          <strong>validated the thesis</strong> behind HumanEgo: for
+          manipulation, visual fidelity carries far less of the load than people
+          assume, much as a human can glance at a scene once and then finish the
+          task largely from spatial memory.
+        </p>
+        <p class="faq-answer">
+          <strong>This is <em>not</em> a claim that vision is useless.</strong>
+          Two things keep it firmly in the loop. First, with the ICTs held
+          fixed, a policy that <em>also</em> sees the image still
+          <strong>beats</strong> one that doesn't &mdash; the pixels contribute
+          real, if modest, signal on top of the geometry. Second, and more
+          fundamentally, <strong>building the ICTs requires a look in the first
+          place</strong>: that initial glance &mdash; localizing the hands and
+          objects in the scene &mdash; is itself a visual step. Vision is doing
+          genuine work here; it is simply not the dominant input it is so often
+          assumed to be.
+        </p>
+        <p class="faq-answer">
+          And we don't think this is the last word on vision &mdash; quite the
+          opposite. <strong>How best to <em>use</em> visual input deserves
+          serious study.</strong> People clearly rely on continuous vision for
+          <strong>dynamic and high-precision manipulation</strong> &mdash; the
+          very tasks that sit outside HumanEgo's current reach &mdash; and it is
+          only <em>within our task setting</em> that vision turns out to matter
+          less than expected. We'd be glad if this finding provokes more
+          thinking and research on exactly when, and how, vision should drive a
+          manipulation policy.
+        </p>
       </details>
 
       <details class="faq-item">
