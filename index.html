@@ -1625,7 +1625,35 @@
 
       <details class="faq-item">
         <summary>Have you tried dexterous hands?</summary>
-        <p class="faq-answer"><em>Answer coming soon.</em></p>
+        <p class="faq-answer">
+          <strong>Not yet on a real dexterous hand</strong> &mdash; every result
+          in the paper maps to a standard <strong>parallel-jaw gripper</strong>.
+          But supporting a multi-fingered hand is a <em>natural extension, not a
+          redesign</em>. Our pipeline already tracks the <strong>full
+          21-keypoint hand pose</strong> for every demonstration; the gripper
+          mapping simply collapses that rich hand configuration down to a single
+          open/close degree of freedom. Retargeting those <em>same</em>
+          keypoints onto a dexterous hand instead is
+          <strong>feasible in principle</strong> &mdash; the main change is that
+          the policy's action head now outputs a
+          <strong>higher-dimensional</strong> finger configuration rather than
+          one scalar.
+        </p>
+        <p class="faq-answer">
+          How well would it work? For the <strong>pick-and-place</strong> regime
+          HumanEgo targets, we'd expect it to transfer <strong>well</strong>
+          &mdash; grasping and transporting an object mostly needs the hand to
+          reach a good <em>global</em> pose and close, which keypoint
+          retargeting captures. For genuinely <strong>fine, finger-level
+          manipulation</strong> &mdash; in-hand reorientation, dexterous
+          regrasping, precise individual-finger control &mdash; we're more
+          cautious. Those skills demand tight per-finger coordination (and often
+          tactile feedback) that is far less forgiving of retargeting error and
+          much harder to learn from <em>minutes</em> of data. So dexterous hands
+          are <strong>squarely on our roadmap</strong>: we expect them to work
+          for coarse manipulation well before they work for the truly delicate
+          stuff.
+        </p>
       </details>
 
       <details class="faq-item">
