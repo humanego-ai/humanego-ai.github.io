@@ -1710,7 +1710,32 @@
 
       <details class="faq-item">
         <summary>Can I use other hardware &mdash; Meta Quest, Apple Vision Pro, iPhone, RealSense, etc.?</summary>
-        <p class="faq-answer"><em>Answer coming soon.</em></p>
+        <p class="faq-answer">
+          <strong>Absolutely &mdash; in principle, yes.</strong> HumanEgo
+          doesn't depend on Aria specifically; it depends on
+          <strong>three signals</strong>: raw <strong>RGB</strong>, the
+          <strong>camera's motion</strong> (head SLAM, for a worn or moving
+          device), and <strong>hand tracking</strong>. Give the pipeline those,
+          and everything else is unchanged &mdash; it builds the ICTs, cleans
+          the image, and trains the policy to output actions, exactly as in the
+          paper. Some devices provide these signals natively (a headset's
+          onboard inside-out tracking and hand tracking); for others you recover
+          them with <strong>off-the-shelf, open-source models</strong>. Either
+          way, a Quest, a Vision Pro, an iPhone, or a RealSense can all feed the
+          same pipeline.
+        </p>
+        <p class="faq-answer">
+          The one real caveat is <strong>precision</strong>. The accuracy of the
+          upstream SLAM and hand-tracking signal <strong>directly bounds</strong>
+          downstream policy performance &mdash; and that is exactly where Aria
+          shines, delivering clean, drift-free, calibrated signals out of the
+          box. Other devices can provide the same <em>kinds</em> of signals, but
+          often at <strong>lower accuracy</strong>, so the resulting policy may
+          not reach the same quality. Crucially, that's a matter of
+          <em>signal quality, not method compatibility</em> &mdash; and as
+          off-the-shelf trackers keep improving, the gap keeps shrinking. Well
+          worth a try.
+        </p>
       </details>
 
       <details class="faq-item">
