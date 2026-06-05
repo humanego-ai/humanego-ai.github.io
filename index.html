@@ -1577,7 +1577,50 @@
 
       <details class="faq-item">
         <summary>You already have ICTs &mdash; why not just use TAMP (Task-and-Motion Planning)?</summary>
-        <p class="faq-answer"><em>Answer coming soon.</em></p>
+        <p class="faq-answer">
+          <strong>You certainly could</strong> &mdash; TAMP is a perfectly
+          legitimate way to solve a manipulation task. But the two approaches
+          are nowhere near equal in <strong>cost</strong>. A learned policy
+          comes <strong>automatically</strong> out of a handful of
+          demonstrations: you perform the skill, and the network recovers the
+          controller. TAMP has to be <strong>hand-built for every task</strong>
+          &mdash; a symbolic domain, action operators, goal predicates, and a
+          motion-planning stack, each assembled and tuned by an expert. What
+          HumanEgo extracts from <em>minutes of data</em>, TAMP extracts from
+          <em>days of engineering</em>.
+        </p>
+        <p class="faq-answer">
+          <strong>Learning also generalizes where hand-engineered planning does
+          not.</strong> Swap the object, rearrange the clutter, or move to a new
+          scene, and a TAMP pipeline generally has to be <strong>re-modeled and
+          re-tuned</strong> &mdash; new geometry, new predicates, new
+          constraints. A HumanEgo policy instead learns the <em>general
+          way</em> to accomplish the task rather than a script for one instance
+          of it, so novel objects and novel environments are handled as a
+          matter of course, not as the next engineering ticket.
+        </p>
+        <p class="faq-answer">
+          One might object that ICTs already make the scene
+          <strong>structured</strong> &mdash; haven't we just smuggled TAMP's
+          modeling burden back in? No. <strong>Constructing the ICT
+          representation adds no new inputs:</strong> it falls out of the
+          <em>same</em> off-the-shelf pose estimation we already run &mdash;
+          just the 6-DoF poses of hands and objects, nothing more. TAMP's
+          required priors run <strong>far past</strong> that: object models,
+          symbolic predicates, operator definitions, explicit goal states,
+          collision geometry. ICTs buy structure essentially for free; TAMP
+          pays for it in hand-specified prior knowledge.
+        </p>
+        <p class="faq-answer">
+          So while TAMP remains a valid option, in the regime we actually care
+          about &mdash; many tasks, many objects, many environments, only
+          minutes of data &mdash; HumanEgo's learning-based route solves the
+          problem <strong>more efficiently, more generally, and with far less
+          hand-engineering</strong>. The result is a controller that is
+          <strong>fast to obtain, robust to run, and general by
+          construction</strong> &mdash; without ever committing to a
+          task-specific planning pipeline.
+        </p>
       </details>
 
       <details class="faq-item">
