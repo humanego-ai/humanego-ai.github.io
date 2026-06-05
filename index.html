@@ -1683,7 +1683,29 @@
 
       <details class="faq-item">
         <summary>Does third-person (exocentric) video data also work?</summary>
-        <p class="faq-answer"><em>Answer coming soon.</em></p>
+        <p class="faq-answer">
+          <strong>Yes &mdash; and it may even work better.</strong> Egocentric
+          capture is what we built HumanEgo around, but nothing about the method
+          requires a first-person view. We tried it directly: we recorded human
+          demonstrations with a <strong>fixed third-person ZED camera</strong>,
+          ran them through the <em>exact same pipeline</em>, and the learned
+          policy came out <strong>just as strong</strong>.
+        </p>
+        <p class="faq-answer">
+          If anything, the exocentric setting is <strong>simpler</strong>. A
+          head-mounted camera moves with the demonstrator, so egocentric data
+          needs a <strong>SLAM</strong> step to recover that camera motion
+          before anything else. A fixed third-person camera doesn't move
+          &mdash; so that whole step <strong>disappears</strong>, and you only
+          need <strong>hand (and object) tracking</strong> to build the ICTs.
+          Everything downstream &mdash; the ICT representation, the
+          architecture, the training objectives &mdash; stays
+          <strong>identical</strong>. Dropping SLAM also removes one of the
+          biggest sources of upstream error, which is plausibly why the
+          third-person policies look at least as good. In short, HumanEgo
+          <strong>transfers to exocentric video almost for free</strong>.
+          <em>Give it a try.</em>
+        </p>
       </details>
 
       <details class="faq-item">
