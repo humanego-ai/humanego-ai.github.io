@@ -529,6 +529,13 @@
       }
     }
     video.teaser-video { width: 100%; max-width: 900px; border-radius: 28px; }
+    .gallery-embed {
+      position: relative; width: 100%; height: 680px;
+      border-radius: 28px; overflow: hidden; background: #0a0c10;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12); border: 1px solid #ececec;
+    }
+    .gallery-embed iframe { width: 100%; height: 100%; border: 0; display: block; }
+    @media (max-width: 768px) { .gallery-embed { height: 520px; } }
     .embed-video {
       position: relative;
       aspect-ratio: 16 / 9;
@@ -800,6 +807,7 @@
     <li class="toc-item" data-target="abstract"><a class="toc-link" href="#abstract">Abstract</a></li>
     <li class="toc-item" data-target="architecture"><a class="toc-link" href="#architecture">Architecture</a></li>
     <li class="toc-item" data-target="data-collection"><a class="toc-link toc-link-2line" href="#data-collection">Data Collection<br>&amp; Preprocessing</a></li>
+    <li class="toc-item" data-target="dataset"><a class="toc-link" href="#dataset">Dataset</a></li>
     <li class="toc-item has-sub" data-target="results" data-group="results">
       <a class="toc-link" href="#results-bridge">Results</a>
       <ul class="toc-sub">
@@ -856,6 +864,8 @@
         <a href="https://arxiv.org/pdf/2605.24934" target="_blank" rel="noopener"><i class="fas fa-file-pdf"></i>&nbsp;Paper</a>
         <a href="https://arxiv.org/abs/2605.24934" target="_blank" rel="noopener"><i class="ai ai-arxiv"></i>&nbsp;arXiv</a>
         <a href="https://github.com/TX-Leo/HumanEgo" target="_blank" rel="noopener"><i class="fab fa-github"></i>&nbsp;Code</a>
+        <a href="https://huggingface.co/datasets/Leo-TX/HumanEgo" target="_blank" rel="noopener"><i class="fas fa-database"></i>&nbsp;Dataset</a>
+        <a href="https://huggingface.co/spaces/Leo-TX/humanego-gallery" target="_blank" rel="noopener"><i class="fas fa-images"></i>&nbsp;Data Gallery</a>
         <a href="https://youtu.be/pdL46diijuY" target="_blank" rel="noopener"><i class="fab fa-youtube"></i>&nbsp;Video</a>
         <a href="https://x.com/TX_Leo_Wang/status/2059320921228546220" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="0.85em" height="0.85em" fill="currentColor" style="vertical-align:-0.05em;" aria-hidden="true"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg>&nbsp;X</a>
         <a href="#bibtex"><i class="fas fa-quote-right"></i>&nbsp;BibTeX</a>
@@ -1180,6 +1190,29 @@
           <strong class="cap-label">Hand-to-gripper mapping.</strong>
         </p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DATASET ================= -->
+<section class="section" id="dataset" data-toc="dataset">
+  <div class="container content wide">
+    <h2 class="title is-3 section-title">Dataset</h2>
+    <p style="text-align:center; max-width:820px; margin:0 auto 1.6rem;">
+      We publicly release the <strong>HumanEgo</strong> dataset on
+      <a href="https://huggingface.co/datasets/Leo-TX/HumanEgo" target="_blank" rel="noopener">🤗&nbsp;Leo&#8209;TX/HumanEgo</a>
+      &mdash; <strong>122 recordings</strong> across <strong>two tasks</strong>
+      (<code>serve_bread</code>, <code>water_flowers</code>), with the raw Aria recordings,
+      MPS annotations, and the full preprocessing output. Browse every recording's
+      visualization below, or open the gallery full&#8209;screen.
+    </p>
+    <div class="gallery-embed">
+      <iframe src="https://leo-tx-humanego-gallery.static.hf.space" title="HumanEgo Data Gallery"
+              loading="lazy" allow="fullscreen"></iframe>
+    </div>
+    <div class="link-buttons" style="justify-content:center; margin-top:1.4rem;">
+      <a href="https://huggingface.co/datasets/Leo-TX/HumanEgo" target="_blank" rel="noopener"><i class="fas fa-database"></i>&nbsp;Dataset</a>
+      <a href="https://leo-tx-humanego-gallery.static.hf.space" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i>&nbsp;Open Gallery</a>
     </div>
   </div>
 </section>
