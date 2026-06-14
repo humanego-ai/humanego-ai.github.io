@@ -178,6 +178,41 @@
     .link-buttons a:hover { background: #111; }
     .link-buttons a.disabled { background: #b5b5b5; cursor: not-allowed; }
 
+    /* ---- Live stat badge inside a link pill (GitHub stars, X views) ----
+       A pill-within-pill: a translucent chip pinned to the right of the label,
+       with a tinted icon + live number that counts up on first reveal. Stays
+       [hidden] until data resolves, so a dead API never leaves a stray "0". */
+    .pill-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.34em;
+      margin-left: 0.55em;
+      padding: 0.14em 0.62em;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      font-size: 0.8em;
+      font-weight: 600;
+      line-height: 1;
+      vertical-align: middle;
+      transition: background 0.15s;
+    }
+    .link-buttons a:hover .pill-stat { background: rgba(255, 255, 255, 0.26); }
+    .pill-stat .stat-ico { font-size: 0.94em; line-height: 1; }
+    .pill-stat.is-star  .stat-ico { color: #ffc83d; }
+    .pill-stat.is-views .stat-ico { color: #7fc9ff; }
+    .pill-stat .stat-num {
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.01em;
+      min-width: 1ch;
+    }
+    .pill-stat[hidden] { display: none; }
+    @keyframes pill-stat-pop {
+      0%   { transform: scale(0.6); opacity: 0; }
+      60%  { transform: scale(1.08); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .pill-stat.pop { animation: pill-stat-pop 0.42s ease-out; }
+
     /* ---- Press / media-coverage row (sits below the main link buttons) ----
        Same dark-capsule language as .link-buttons, but each pill leads with the
        outlet's logo on a small white chip, so three very different marks (grey
@@ -953,7 +988,7 @@
       <div class="link-buttons">
         <a href="https://arxiv.org/pdf/2605.24934" target="_blank" rel="noopener"><i class="fas fa-file-pdf"></i>&nbsp;Paper</a>
         <a href="https://arxiv.org/abs/2605.24934" target="_blank" rel="noopener"><i class="ai ai-arxiv"></i>&nbsp;arXiv</a>
-        <a href="https://github.com/TX-Leo/HumanEgo" target="_blank" rel="noopener"><i class="fab fa-github"></i>&nbsp;Code</a>
+        <a href="https://github.com/TX-Leo/HumanEgo" target="_blank" rel="noopener" id="code-pill"><i class="fab fa-github"></i>&nbsp;Code<span class="pill-stat is-star" id="gh-stars" hidden><i class="fas fa-star stat-ico" aria-hidden="true"></i><span class="stat-num" id="gh-stars-num">0</span></span></a>
         <a href="https://huggingface.co/datasets/Leo-TX/HumanEgo" target="_blank" rel="noopener"><i class="fas fa-database"></i>&nbsp;Dataset</a>
         <a href="https://huggingface.co/spaces/Leo-TX/humanego-gallery" target="_blank" rel="noopener"><i class="fas fa-images"></i>&nbsp;Data Gallery</a>
         <a href="https://youtu.be/pdL46diijuY" target="_blank" rel="noopener"><i class="fab fa-youtube"></i>&nbsp;Video</a>
@@ -2173,6 +2208,58 @@
     }
 
     tryNext(0);
+  })();
+
+  // ------- live GitHub star count on the Code pill -------
+  // Public GitHub API (CORS-enabled, no auth needed). Cached in localStorage
+  // for 10 min so reloads don't burn the 60-req/hr unauthenticated budget
+  // (the limit is per-visitor IP, so traffic scales fine). The badge stays
+  // hidden if the API is unreachable and nothing is cached.
+  (function () {
+    const badge = document.getElementById('gh-stars');
+    const numEl = document.getElementById('gh-stars-num');
+    if (!badge || !numEl) return;
+    const REPO = 'TX-Leo/HumanEgo';
+    const KEY  = 'humanego_gh_stars';
+    const TTL  = 10 * 60 * 1000;
+
+    function reveal() {
+      if (!badge.hidden) return;
+      badge.hidden = false;
+      badge.classList.add('pop');
+    }
+    function countUp(target) {
+      const dur = 850, t0 = performance.now();
+      (function frame(now) {
+        const t = Math.min(1, (now - t0) / dur);
+        const e = 1 - Math.pow(1 - t, 3);
+        numEl.textContent = Math.round(target * e).toLocaleString();
+        if (t < 1) requestAnimationFrame(frame);
+        else numEl.textContent = target.toLocaleString();
+      })(t0);
+    }
+
+    let shown = false;
+    try {
+      const c = JSON.parse(localStorage.getItem(KEY) || 'null');
+      if (c && typeof c.n === 'number') {
+        reveal(); countUp(c.n); shown = true;
+        if (Date.now() - c.t < TTL) return; // fresh enough — skip the network
+      }
+    } catch (_) {}
+
+    fetch('https://api.github.com/repos/' + REPO, {
+      headers: { 'Accept': 'application/vnd.github+json' }, cache: 'no-store'
+    })
+      .then(r => r.ok ? r.json() : Promise.reject())
+      .then(d => {
+        const n = d && d.stargazers_count;
+        if (typeof n !== 'number') throw new Error('bad payload');
+        if (!shown) { reveal(); countUp(n); }
+        else numEl.textContent = n.toLocaleString();
+        try { localStorage.setItem(KEY, JSON.stringify({ n: n, t: Date.now() })); } catch (_) {}
+      })
+      .catch(() => { /* keep cached value or stay hidden */ });
   })();
 
   // Play .scroll-play videos like GIFs: start (or restart) every time they
