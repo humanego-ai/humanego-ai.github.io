@@ -992,7 +992,7 @@
         <a href="https://huggingface.co/datasets/Leo-TX/HumanEgo" target="_blank" rel="noopener"><i class="fas fa-database"></i>&nbsp;Dataset</a>
         <a href="https://huggingface.co/spaces/Leo-TX/humanego-gallery" target="_blank" rel="noopener"><i class="fas fa-images"></i>&nbsp;Data Gallery</a>
         <a href="https://youtu.be/pdL46diijuY" target="_blank" rel="noopener"><i class="fab fa-youtube"></i>&nbsp;Video</a>
-        <a href="https://x.com/TX_Leo_Wang/status/2059320921228546220" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="0.85em" height="0.85em" fill="currentColor" style="vertical-align:-0.05em;" aria-hidden="true"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg>&nbsp;X</a>
+        <a href="https://x.com/TX_Leo_Wang/status/2059320921228546220" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="0.85em" height="0.85em" fill="currentColor" style="vertical-align:-0.05em;" aria-hidden="true"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg>&nbsp;X<span class="pill-stat is-views" id="x-views" data-views="106000" hidden><i class="fas fa-eye stat-ico" aria-hidden="true"></i><span class="stat-num" id="x-views-num">0</span></span></a>
         <a href="#bibtex"><i class="fas fa-quote-right"></i>&nbsp;BibTeX</a>
       </div>
 
@@ -2260,6 +2260,36 @@
         try { localStorage.setItem(KEY, JSON.stringify({ n: n, t: Date.now() })); } catch (_) {}
       })
       .catch(() => { /* keep cached value or stay hidden */ });
+  })();
+
+  // ------- manual X view count on the X pill -------
+  // X has no free public metrics API and a token can't live in static JS, so
+  // this number is set by hand: edit data-views="N" on #x-views and redeploy.
+  // Empty / non-positive => the badge stays hidden (no fake number ships).
+  // The raw integer is formatted compactly (12,800 -> 12.8K, 1.2M) and counts up.
+  (function () {
+    const badge = document.getElementById('x-views');
+    const numEl = document.getElementById('x-views-num');
+    if (!badge || !numEl) return;
+    const raw = parseInt(badge.dataset.views || '', 10);
+    if (!Number.isFinite(raw) || raw <= 0) return; // no number set — stay hidden
+
+    function fmt(n) {
+      if (n >= 1e6) return (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
+      if (n >= 1e3) return (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'K';
+      return String(n);
+    }
+
+    badge.hidden = false;
+    badge.classList.add('pop');
+    const dur = 900, t0 = performance.now();
+    (function frame(now) {
+      const t = Math.min(1, (now - t0) / dur);
+      const e = 1 - Math.pow(1 - t, 3);
+      numEl.textContent = fmt(Math.round(raw * e));
+      if (t < 1) requestAnimationFrame(frame);
+      else numEl.textContent = fmt(raw);
+    })(t0);
   })();
 
   // Play .scroll-play videos like GIFs: start (or restart) every time they
