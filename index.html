@@ -177,6 +177,95 @@
     }
     .link-buttons a:hover { background: #111; }
     .link-buttons a.disabled { background: #b5b5b5; cursor: not-allowed; }
+
+    /* ---- Press / media-coverage row (sits below the main link buttons) ----
+       Same dark-capsule language as .link-buttons, but each pill leads with the
+       outlet's logo on a small white chip, so three very different marks (grey
+       Synced figure, dark EAI tile, red UMD block) read cleanly and uniformly
+       on the dark pill. Two-line label = Chinese outlet name + English byline. */
+    .media-coverage { margin-top: 1.7em; }
+    .media-coverage-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.85em;
+      margin: 0 auto 1em;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #9b9b9b;
+    }
+    .media-coverage-label::before,
+    .media-coverage-label::after {
+      content: "";
+      height: 1px;
+      width: clamp(26px, 9vw, 64px);
+      background: linear-gradient(to right, rgba(0, 0, 0, 0), #d6d6d6);
+    }
+    .media-coverage-label::after { transform: scaleX(-1); }
+    .media-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6em;
+    }
+    .media-buttons a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.62em;
+      padding: 0.34em 1.2em 0.34em 0.36em;
+      background: #363636;
+      color: #fff !important;
+      border-radius: 999px;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+    .media-buttons a:hover {
+      background: #111;
+      transform: translateY(-2px);
+      box-shadow: 0 7px 20px rgba(0, 0, 0, 0.20);
+    }
+    .media-logo {
+      flex: 0 0 auto;
+      height: 2.25em;
+      min-width: 2.25em;
+      max-width: 5.4em;
+      padding: 0.16em 0.4em;
+      background: #fff;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+    }
+    .media-logo img {
+      max-height: 100%;
+      max-width: 100%;
+      width: auto;
+      object-fit: contain;
+      border-radius: 5px;
+      display: block;
+    }
+    .media-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      line-height: 1.14;
+      text-align: left;
+    }
+    .media-name {
+      font-size: clamp(0.95rem, 2.6vw, 1.08rem);
+      font-weight: 600;
+      letter-spacing: 0.005em;
+    }
+    .media-sub {
+      font-size: 0.68em;
+      font-weight: 500;
+      color: #bdbdbd;
+      letter-spacing: 0.02em;
+    }
     pre.bibtex {
       background: #f5f5f5;
       padding: 1em 1.3em;
@@ -869,6 +958,25 @@
         <a href="https://youtu.be/pdL46diijuY" target="_blank" rel="noopener"><i class="fab fa-youtube"></i>&nbsp;Video</a>
         <a href="https://x.com/TX_Leo_Wang/status/2059320921228546220" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="0.85em" height="0.85em" fill="currentColor" style="vertical-align:-0.05em;" aria-hidden="true"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg>&nbsp;X</a>
         <a href="#bibtex"><i class="fas fa-quote-right"></i>&nbsp;BibTeX</a>
+      </div>
+
+      <!-- Press / media coverage: same dark-capsule style, logo-led pills. -->
+      <div class="media-coverage">
+        <div class="media-coverage-label">As Featured In</div>
+        <div class="media-buttons">
+          <a href="https://mp.weixin.qq.com/s/C7rvC5-3WDndJJYTHEIIGA" target="_blank" rel="noopener">
+            <span class="media-logo"><img src="static/images/media/synced.png" alt="机器之心 Synced"></span>
+            <span class="media-text"><span class="media-name">机器之心</span><span class="media-sub">Synced</span></span>
+          </a>
+          <a href="https://mp.weixin.qq.com/s/Y_OWaBTAeaYyOZf3l5V8mA" target="_blank" rel="noopener">
+            <span class="media-logo"><img src="static/images/media/eai-times.png" alt="具身纪元 EAI Times"></span>
+            <span class="media-text"><span class="media-name">具身纪元</span><span class="media-sub">EAI Times</span></span>
+          </a>
+          <a href="https://today.umd.edu/umd-researchers-enable-robots-to-learn-from-human-experience" target="_blank" rel="noopener">
+            <span class="media-logo"><img src="static/images/media/umd.png" alt="UMD Today"></span>
+            <span class="media-text"><span class="media-name">UMD Today</span><span class="media-sub">University of Maryland</span></span>
+          </a>
+        </div>
       </div>
 
       <div class="view-counter" id="view-counter" aria-hidden="true"
