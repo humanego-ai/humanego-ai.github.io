@@ -284,6 +284,39 @@
       border-radius: 5px;
       display: block;
     }
+    /* ---- Follow-up work card (ForceBand) ---- */
+    .followup { margin-top: 1.7em; text-align: center; }
+    .followup-label {
+      display: flex; align-items: center; justify-content: center; gap: 0.85em;
+      margin: 0 auto 1em; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; color: #9b9b9b;
+    }
+    .followup-label::before, .followup-label::after {
+      content: ""; height: 1px; width: clamp(26px, 9vw, 64px);
+      background: linear-gradient(to right, rgba(0,0,0,0), #d6d6d6);
+    }
+    .followup-label::after { transform: scaleX(-1); }
+    .followup-card {
+      display: inline-flex; align-items: center; gap: 0.9em; text-align: left;
+      max-width: 620px; padding: 0.55em 1.5em 0.55em 0.55em;
+      background: #363636; color: #fff !important; border-radius: 18px;
+      text-decoration: none; border: 1px solid rgba(255,255,255,0.07);
+      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+    .followup-card:hover {
+      background: #111; transform: translateY(-2px);
+      box-shadow: 0 7px 20px rgba(0,0,0,0.20);
+    }
+    .followup-img {
+      flex: 0 0 auto; height: 3.2em; width: auto;
+      background: #fff; border-radius: 11px; padding: 0.3em 0.5em;
+    }
+    .followup-text { display: flex; flex-direction: column; gap: 0.12em; }
+    .followup-name { font-weight: 700; font-size: 1.16rem; line-height: 1.15; }
+    .followup-desc { font-size: 0.85rem; color: #cfcfcf; line-height: 1.28; }
+    @media (max-width: 520px) {
+      .followup-card { flex-direction: column; text-align: center; }
+    }
     .media-text {
       display: flex;
       flex-direction: column;
@@ -995,8 +1028,6 @@
         <a href="https://huggingface.co/datasets/Leo-TX/HumanEgo" target="_blank" rel="noopener"><i class="fas fa-database"></i>&nbsp;Dataset</a>
         <a href="https://huggingface.co/spaces/Leo-TX/humanego-gallery" target="_blank" rel="noopener"><i class="fas fa-images"></i>&nbsp;Data Gallery</a>
         <a href="https://youtu.be/pdL46diijuY" target="_blank" rel="noopener"><i class="fab fa-youtube"></i>&nbsp;Video</a>
-        <a href="https://meeting.tencent.com/crm/NX6E4Xx7e7" target="_blank" rel="noopener"><i class="fas fa-chalkboard-teacher"></i>&nbsp;Shanghai AI Lab Talk</a>
-        <a href="https://forceband-emg.github.io/" target="_blank" rel="noopener"><i class="fas fa-wave-square"></i>&nbsp;ForceBand</a>
         <a href="https://x.com/TX_Leo_Wang/status/2059320921228546220" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="0.85em" height="0.85em" fill="currentColor" style="vertical-align:-0.05em;" aria-hidden="true"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg>&nbsp;X<span class="pill-stat is-views" id="x-views" data-views="107000" hidden><i class="fas fa-eye stat-ico" aria-hidden="true"></i><span class="stat-num" id="x-views-num">0</span></span></a>
         <a href="static/images/WeChat.jpg" target="_blank" rel="noopener"><i class="fab fa-weixin"></i>&nbsp;HumanEgo WeChat Group</a>
         <a href="#bibtex"><i class="fas fa-quote-right"></i>&nbsp;BibTeX</a>
@@ -1026,7 +1057,23 @@
             <span class="media-logo"><img src="static/images/media/techbeat.png" alt="TechBeat"></span>
             <span class="media-text"><span class="media-name">TechBeat</span><span class="media-sub">将门技术社区</span></span>
           </a>
+          <a href="https://meeting.tencent.com/crm/NX6E4Xx7e7" target="_blank" rel="noopener">
+            <span class="media-logo"><img src="static/images/media/shanghai-ai-lab.png" alt="Shanghai AI Lab"></span>
+            <span class="media-text"><span class="media-name">Shanghai AI Lab</span><span class="media-sub">Talk</span></span>
+          </a>
         </div>
+      </div>
+
+      <!-- ================= FOLLOW-UP WORK ================= -->
+      <div class="followup">
+        <div class="followup-label">Follow-up Work</div>
+        <a class="followup-card" href="https://forceband-emg.github.io/" target="_blank" rel="noopener">
+          <img class="followup-img" src="static/images/forceband_band.png" alt="ForceBand sEMG wristband">
+          <span class="followup-text">
+            <span class="followup-name">ForceBand <span class="brand-ego">&mdash; Forceful Manipulation with sEMG</span></span>
+            <span class="followup-desc">A low-cost wrist-worn sEMG band that turns muscle activity into per-finger force labels &mdash; for force-aware robot manipulation.</span>
+          </span>
+        </a>
       </div>
 
       <div class="view-counter" id="view-counter" aria-hidden="true"

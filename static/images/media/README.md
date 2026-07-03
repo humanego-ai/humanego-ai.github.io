@@ -13,3 +13,4 @@ chip at a fixed height):
 | `umd.png`               | UMD Today           | https://today.umd.edu/umd-researchers-enable-robots-to-learn-from-human-experience |
 | `saturday-robotics.png` | Saturday Robotics   | https://x.com/junfanzhu98/status/2068605511549743127 |
 | `techbeat.png`          | TechBeat            | https://www.techbeat.net/talk-info?id=1057 |
+| `shanghai-ai-lab.png`   | Shanghai AI Lab     | https://meeting.tencent.com/crm/NX6E4Xx7e7 (talk) |
