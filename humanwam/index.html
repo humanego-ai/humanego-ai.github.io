@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HumanWAM · 手-物交互数据集总览</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;850&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#070b16; --bg2:#0b1122; --panel:rgba(20,27,48,.62); --panel2:rgba(28,37,64,.55);
+  --line:rgba(120,140,190,.16); --line2:rgba(120,140,190,.28);
+  --tx:#e8ecf6; --tx2:#a6b0c8; --tx3:#6f7a97;
+  --acc:#7c5cff; --acc2:#22d3ee; --good:#34d399; --warn:#fbbf24;
+  --r:16px; --shadow:0 18px 50px -20px rgba(0,0,0,.7);
+  --oak:#f59e0b; --hot:#a78bfa; --h2o:#22d3ee; --taco:#fb7185; --hoi:#34d399; --arc:#60a5fa; --giga:#f472b6;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:
+    radial-gradient(1200px 700px at 78% -8%, rgba(124,92,255,.16), transparent 60%),
+    radial-gradient(1000px 600px at 8% 4%, rgba(34,211,238,.12), transparent 55%),
+    linear-gradient(180deg,#070b16,#080d1a 40%,#070a13);
+  color:var(--tx); font:15px/1.55 "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue","PingFang SC","Microsoft YaHei",Roboto,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased; min-height:100vh; overflow-x:hidden;
+}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+a{color:inherit;text-decoration:none}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
+  background:linear-gradient(180deg,rgba(7,11,22,.86),rgba(7,11,22,.5));border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:16px;height:62px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.3px}
+.brand .mk{width:30px;height:30px;border-radius:9px;background:conic-gradient(from 210deg,var(--acc),var(--acc2),var(--giga),var(--acc));
+  box-shadow:0 6px 18px -4px rgba(124,92,255,.6);position:relative}
+.brand .mk::after{content:"";position:absolute;inset:6px;border-radius:5px;background:#0a0f1e}
+.brand small{display:block;font-weight:600;color:var(--tx3);font-size:11px;letter-spacing:.6px;margin-top:-2px}
+.spacer{flex:1}
+.navbtn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:10px;border:1px solid var(--line2);
+  background:var(--panel);color:var(--tx2);font-weight:600;font-size:13px;cursor:pointer;transition:.18s}
+.navbtn:hover{color:var(--tx);border-color:var(--acc);transform:translateY(-1px)}
+.langtoggle{display:flex;border:1px solid var(--line2);border-radius:11px;overflow:hidden;background:var(--panel)}
+.langtoggle button{padding:8px 13px;background:transparent;border:0;color:var(--tx3);font-weight:700;font-size:13px;cursor:pointer;transition:.18s}
+.langtoggle button.on{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff}
+
+/* hero */
+.hero{padding:66px 0 30px;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 13px;border-radius:999px;border:1px solid var(--line2);
+  background:var(--panel);color:var(--tx2);font-size:12.5px;font-weight:600;letter-spacing:.4px}
+.eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 10px var(--good)}
+h1{font-size:clamp(30px,5vw,52px);line-height:1.06;margin:20px 0 14px;font-weight:850;letter-spacing:-.5px}
+h1 .grad{background:linear-gradient(100deg,#fff 10%,var(--acc2) 45%,var(--giga) 90%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:clamp(15px,2vw,18px);color:var(--tx2);max-width:760px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(188px,1fr));gap:16px;margin:38px 0 8px}
+.kpi{padding:20px 20px 18px;border-radius:var(--r);border:1px solid var(--line);background:var(--panel);position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:linear-gradient(90deg,var(--acc),var(--acc2))}
+.kpi .v{font-size:34px;font-weight:850;letter-spacing:-.5px}
+.kpi .l{color:var(--tx2);font-size:13px;margin-top:3px;font-weight:600}
+.kpi .s{color:var(--tx3);font-size:11.5px;margin-top:6px}
+
+section{padding:34px 0}
+.shead{display:flex;align-items:baseline;gap:14px;margin-bottom:20px;flex-wrap:wrap}
+.shead h2{font-size:23px;font-weight:800;margin:0;letter-spacing:-.3px}
+.shead p{margin:0;color:var(--tx3);font-size:13.5px}
+
+/* charts */
+.charts{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow)}
+.card h3{margin:0 0 4px;font-size:15px;font-weight:750}
+.card .sub{color:var(--tx3);font-size:12px;margin-bottom:14px}
+.donutwrap{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.legend{display:flex;flex-direction:column;gap:7px;flex:1;min-width:170px}
+.lg{display:flex;align-items:center;gap:9px;font-size:13px;padding:5px 8px;border-radius:8px;cursor:default;transition:.15s}
+.lg:hover{background:var(--panel2)}
+.lg .sw{width:11px;height:11px;border-radius:3px;flex:none}
+.lg .nm{flex:1;color:var(--tx2);font-weight:600}
+.lg .vl{color:var(--tx);font-weight:700}
+.lg .pc{color:var(--tx3);font-size:11.5px;width:44px;text-align:right}
+.bars{display:flex;flex-direction:column;gap:12px}
+.bar{display:grid;grid-template-columns:112px 1fr auto;align-items:center;gap:12px}
+.bar .bn{font-size:13px;font-weight:700;color:var(--tx2)}
+.bar .track{height:12px;border-radius:7px;background:rgba(255,255,255,.05);overflow:hidden;position:relative}
+.bar .fill{height:100%;border-radius:7px;transform-origin:left;animation:grow 1.1s cubic-bezier(.2,.8,.2,1) both}
+.bar .bv{font-size:12px;font-weight:700;color:var(--tx);font-variant-numeric:tabular-nums;min-width:64px;text-align:right}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* feature matrix */
+.matrix{overflow-x:auto}
+table.mx{border-collapse:collapse;width:100%;min-width:760px}
+table.mx th,table.mx td{padding:9px 6px;text-align:center;font-size:12.5px;border-bottom:1px solid var(--line)}
+table.mx th{color:var(--tx3);font-weight:700;position:sticky;top:0}
+table.mx td.name{text-align:left;font-weight:750;white-space:nowrap;padding-left:4px}
+table.mx td.name .cd{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:8px;vertical-align:middle}
+.chk{display:inline-block;width:16px;height:16px;border-radius:50%;line-height:16px;font-size:11px}
+.chk.y{background:rgba(52,211,153,.16);color:var(--good)}
+.chk.n{color:var(--tx3);opacity:.4}
+
+/* comparison table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--panel)}
+table.cmp{border-collapse:collapse;width:100%;min-width:1080px}
+table.cmp thead th{position:sticky;top:0;background:rgba(12,18,34,.96);backdrop-filter:blur(6px);
+  text-align:left;font-size:11.5px;letter-spacing:.4px;text-transform:uppercase;color:var(--tx3);font-weight:700;padding:14px 14px;border-bottom:1px solid var(--line2);z-index:2}
+table.cmp tbody td{padding:15px 14px;border-bottom:1px solid var(--line);vertical-align:top;font-size:13px}
+table.cmp tbody tr.row{cursor:pointer;transition:.15s}
+table.cmp tbody tr.row:hover{background:var(--panel2)}
+.dsname{display:flex;align-items:center;gap:10px;font-weight:800;font-size:14.5px}
+.dsname .bar3{width:4px;height:30px;border-radius:3px;flex:none}
+.dsname .cap{color:var(--tx3);font-weight:600;font-size:11.5px;margin-top:2px}
+.badge{display:inline-block;padding:3px 8px;border-radius:7px;font-size:11px;font-weight:700;white-space:nowrap}
+.badge.lic{background:rgba(124,92,255,.14);color:#c4b5fd;border:1px solid rgba(124,92,255,.25)}
+.badge.ven{background:rgba(34,211,238,.12);color:#67e8f9;border:1px solid rgba(34,211,238,.22)}
+.badge.view{background:rgba(255,255,255,.05);color:var(--tx2);border:1px solid var(--line2)}
+.mini{color:var(--tx3);font-size:11.5px}
+.cov{margin-top:7px}
+.cov .cbar{height:7px;border-radius:5px;background:rgba(255,255,255,.06);overflow:hidden;width:120px}
+.cov .cbar i{display:block;height:100%;border-radius:5px}
+.chip{display:inline-block;padding:2px 7px;margin:2px 3px 2px 0;border-radius:6px;font-size:11px;background:rgba(255,255,255,.05);color:var(--tx2);border:1px solid var(--line)}
+.exp{display:none}
+.exp.open{display:table-row}
+.exp td{background:rgba(9,13,25,.66);padding:0}
+.expinner{padding:22px 26px;display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:26px}
+.expinner h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--acc2)}
+.expinner p{margin:0 0 12px;color:var(--tx2);font-size:13px;line-height:1.6}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:12.5px}
+.kv b{color:var(--tx3);font-weight:600}
+.kv span{color:var(--tx);font-weight:700;text-align:right}
+.openbtn{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:8px 14px;border-radius:9px;
+  background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;font-weight:700;font-size:12.5px;cursor:pointer;border:0}
+.caret{transition:.2s;color:var(--tx3);font-size:12px}
+tr.row.open .caret{transform:rotate(90deg);color:var(--acc2)}
+
+footer{padding:40px 0 60px;color:var(--tx3);font-size:12.5px;text-align:center;border-top:1px solid var(--line);margin-top:30px}
+.note{color:var(--tx3);font-size:12px;margin-top:14px}
+.tip{position:fixed;pointer-events:none;z-index:99;background:rgba(10,15,28,.97);border:1px solid var(--line2);border-radius:9px;
+  padding:8px 11px;font-size:12px;color:var(--tx);box-shadow:var(--shadow);opacity:0;transition:opacity .12s;max-width:220px}
+@media(max-width:960px){.charts{grid-template-columns:1fr}.expinner{grid-template-columns:1fr}}
+@media(max-width:560px){.kpis{grid-template-columns:1fr 1fr}.hero{padding:40px 0 20px}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="brand" href="#top"><span class="mk"></span><span>HumanWAM<small data-i="brand_sub">世界-动作模型 · 数据底座</small></span></a>
+  <span class="spacer"></span>
+  <a class="navbtn" id="browseNav" href="/browse"><span data-i="nav_browse">打开可视化浏览器</span> →</a>
+  <div class="langtoggle">
+    <button id="zh" class="on" onclick="setLang('zh')">中文</button>
+    <button id="en" onclick="setLang('en')">EN</button>
+  </div>
+</div></nav>
+
+<div id="top" class="wrap">
+  <header class="hero">
+    <span class="eyebrow"><span class="dot"></span><span data-i="eyebrow">7 个世界级第一/多视角手-物交互数据集 · 统一可视化</span></span>
+    <h1 data-i="h1"></h1>
+    <p class="lead" data-i="lead"></p>
+    <div class="kpis" id="kpis"></div>
+    <div class="note" data-i="kpi_note"></div>
+  </header>
+
+  <section>
+    <div class="shead"><h2 data-i="sec_charts">数据集构成一览</h2><p data-i="sec_charts_sub"></p></div>
+    <div class="charts">
+      <div class="card">
+        <h3 data-i="ch_donut">本地序列构成</h3><div class="sub" data-i="ch_donut_sub"></div>
+        <div class="donutwrap"><div id="donut"></div><div class="legend" id="donutleg"></div></div>
+      </div>
+      <div class="card">
+        <h3 data-i="ch_bar">官方数据规模(帧数)</h3><div class="sub" data-i="ch_bar_sub"></div>
+        <div class="bars" id="framebars"></div>
+      </div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <h3 data-i="ch_hours">录制时长(小时)</h3><div class="sub" data-i="ch_hours_sub"></div>
+      <div class="bars" id="hourbars"></div>
+    </div>
+    <div class="card" style="margin-top:18px">
+      <h3 data-i="ch_mx">能力覆盖矩阵</h3><div class="sub" data-i="ch_mx_sub"></div>
+      <div class="matrix"><table class="mx" id="mx"></table></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead"><h2 data-i="sec_table">数据集详细对比</h2><p data-i="sec_table_sub"></p></div>
+    <div class="tablewrap"><table class="cmp" id="cmp"></table></div>
+    <div class="note" data-i="tbl_note"></div>
+  </section>
+</div>
+
+<footer><div class="wrap"><span data-i="footer"></span></div></footer>
+<div class="tip" id="tip"></div>
+
+<script>
+/* ---------------- dataset data (numbers from official papers/pages; prose bilingual) --------------- */
+const DS = [
+ {key:"OAKINK2",color:"var(--oak)",hex:"#f59e0b",venue:"CVPR 2024",inst:{zh:"上海交通大学",en:"Shanghai Jiao Tong Univ."},
+  lead:"Xinyu Zhan, Lixin Yang, Cewu Lu", lic:"CC BY-SA 4.0",
+  seqs:"627", frames:4.01e6, subj:"9", nobj:"75", view:{zh:"1第一视角+3机位",en:"1 Ego + 3 allo"},
+  cam:{zh:"4× 同步RGB(848×480)",en:"4× synced RGB (848×480)"},
+  local:39, overlay:39, fps:30, views:4, hours:9.3, hsrc:"derived",
+  hand:{zh:"双手 MANO(pose+shape,四元数)+ SMPL-X 全身 →21关键点+778网格",en:"Two-hand MANO (pose+shape, quat) + SMPL-X body → 21 kpts + 778-vert mesh"},
+  obj:{zh:"物体网格 + 逐帧6DoF位姿 + 关节参数;可解算手-物接触",en:"Object mesh + per-frame 6DoF pose + articulation; hand-object contact"},
+  extra:{zh:"人体姿态、任务三级分解(功能/基元/复杂)、依赖图与文本",en:"Body pose, 3-level task decomposition (affordance/primitive/complex), dependency graphs & text"},
+  feat:["ego","multiview","bimanual","mano","objmesh","objpose","artic","contact","text"],
+  url:"https://oakink.net/v2/",
+  desc:{zh:"面向复杂日常任务的双手-物体操作数据集,强调长时程、多物体、可组合的任务结构。",
+        en:"Bimanual hand-object manipulation for complex, long-horizon daily tasks with compositional task structure."}},
+
+ {key:"HOT3D",color:"var(--hot)",hex:"#a78bfa",venue:"CVPR 2025",inst:{zh:"Meta Reality Labs",en:"Meta Reality Labs"},
+  lead:"Prithviraj Banerjee, Sindi Shkodrani", lic:{zh:"HOT3D 许可(研究)",en:"HOT3D License (research)"},
+  seqs:"3,832", frames:3.7e6, subj:"19", nobj:"33", view:{zh:"第一视角(Aria/Quest3)",en:"Egocentric (Aria/Quest3)"},
+  cam:{zh:"Aria 鱼眼624 + Quest3",en:"Aria fisheye624 + Quest3"},
+  local:424, overlay:198, fps:30, views:null, hours:13.9, hsrc:"paper",
+  hand:{zh:"双手 MANO + UmeTrack,含形状 betas(Aria 已投影验证)",en:"Two-hand MANO + UmeTrack with shape betas"},
+  obj:{zh:"33个物体 6DoF位姿 + 高精度 GLB 3D模型",en:"6DoF pose for 33 objects + high-quality GLB 3D models"},
+  extra:{zh:"眼动视线、IMU/SLAM 轨迹、点云、头戴多摄",en:"Eye gaze, IMU/SLAM trajectories, point clouds, headset multi-cam"},
+  feat:["ego","multiview","bimanual","mano","objmesh","objpose","gaze"],
+  url:"https://facebookresearch.github.io/hot3d/",
+  desc:{zh:"Aria 与 Quest3 头显采集的第一视角手-物3D追踪基准,自带眼动与设备轨迹。",
+        en:"Egocentric 3D hand+object tracking from Aria & Quest3 headsets, with gaze and device trajectories."}},
+
+ {key:"H2O",color:"var(--h2o)",hex:"#22d3ee",venue:"ICCV 2021",inst:{zh:"苏黎世联邦理工 ETH",en:"ETH Zürich"},
+  lead:"Taein Kwon, Bugra Tekin, Marc Pollefeys", lic:{zh:"ETH 学术许可(非商用)",en:"ETH academic (non-commercial)"},
+  seqs:"191", frames:0.571e6, subj:"4", nobj:"8", view:{zh:"1第一视角+4机位",en:"1 Ego + 4 allo"},
+  cam:{zh:"5× Azure Kinect RGB-D",en:"5× Azure Kinect RGB-D"},
+  local:184, overlay:184, fps:30, views:5, hours:1.1, hsrc:"derived",
+  hand:{zh:"双手 3D 关键点(相机系,21点/手)+ MANO(betas),像素级对齐",en:"Two-hand 3D joints (camera frame, 21/hand) + MANO (betas), pixel-accurate"},
+  obj:{zh:"物体 6DoF位姿 + 扫描网格(8类)+ 接触图",en:"Object 6DoF pose + scanned mesh (8 objects) + contact maps"},
+  extra:{zh:"深度、相机位姿、眼动、动作标签、场景点云",en:"Depth, camera pose, eye gaze, action labels, scene point cloud"},
+  feat:["ego","multiview","bimanual","mano","j3d","objmesh","objpose","contact","depth","gaze"],
+  url:"https://taeinkwon.com/projects/h2o/",
+  desc:{zh:"首个双手操作物体的第一视角交互识别数据集,提供多视角与丰富传感。",
+        en:"First-person two-hand object-manipulation dataset for interaction recognition, multi-view + rich sensing."}},
+
+ {key:"TACO",color:"var(--taco)",hex:"#fb7185",venue:"CVPR 2024",inst:{zh:"清华大学",en:"Tsinghua University"},
+  lead:"Yun Liu, Li Yi", lic:"CC BY 4.0",
+  seqs:"2.5K", frames:5.2e6, subj:"14", nobj:{zh:"20类/196模型",en:"20 cats / 196 models"}, view:{zh:"1第一视角+12机位",en:"1 Ego + 12 allo"},
+  cam:{zh:"12× FLIR + RealSense L515",en:"12× FLIR + RealSense L515"},
+  local:244, overlay:206, fps:30, views:13, hours:3.7, hsrc:"derived",
+  hand:{zh:"双手 MANO(48轴角+shape)→21关键点",en:"Two-hand MANO (48 axis-angle + shape) → 21 kpts"},
+  obj:{zh:"工具+目标物体网格(cm) + 逐帧6DoF;接触可解算",en:"Tool + target object meshes + per-frame 6DoF; contact"},
+  extra:{zh:"深度、12路第三视角、131种 工具-动作-物体 三元组",en:"Depth, 12 allocentric views, 131 tool-action-object triplets"},
+  feat:["ego","multiview","bimanual","mano","objmesh","objpose","contact","depth"],
+  url:"https://taco2024.github.io/",
+  desc:{zh:"可泛化双手工具-动作-物体理解基准,覆盖丰富的工具使用组合。",
+        en:"Generalizable bimanual tool-action-object benchmark spanning many tool-use compositions."}},
+
+ {key:"HOI4D",color:"var(--hoi)",hex:"#34d399",venue:"CVPR 2022",inst:{zh:"北京大学 等",en:"Peking Univ. et al."},
+  lead:"Yunze Liu et al.", lic:"CC BY-NC 4.0",
+  seqs:"~4K", frames:2.4e6, subj:"9", nobj:{zh:"800实例/16类",en:"800 inst / 16 cats"}, view:{zh:"第一视角 RGB-D",en:"Egocentric RGB-D"},
+  cam:{zh:"针孔 + 深度",en:"pinhole + depth"},
+  local:2973, overlay:2973, fps:15, views:2, hours:22.2, hsrc:"derived",
+  hand:{zh:"MANO 参数 + 2D关键点(直接可画)",en:"MANO params + 2D keypoints (direct draw)"},
+  obj:{zh:"6DoF位姿 + 3D有向包围盒 + CAD模型 + 关节/部件",en:"6DoF pose + 3D oriented bbox + CAD + articulation/parts"},
+  extra:{zh:"深度、全景分割、动作分割、类别级、610个房间",en:"Depth, panoptic seg, action seg, category-level, 610 rooms"},
+  feat:["ego","mano","j3d","objmesh","objpose","bbox","artic","depth","contact"],
+  url:"https://hoi4d.github.io/",
+  desc:{zh:"大规模第一视角 4D RGB-D 类别级人-物交互数据集,含物体3D框与关节。",
+        en:"Large egocentric 4D RGB-D category-level HOI dataset with 3D boxes and articulation."}},
+
+ {key:"ARCTIC",color:"var(--arc)",hex:"#60a5fa",venue:"CVPR 2023",inst:{zh:"ETH + MPI",en:"ETH Zürich + MPI"},
+  lead:"Zicong Fan et al.", lic:"CC BY-NC-SA 4.0",
+  seqs:"339", frames:2.1e6, subj:"10", nobj:"11", view:{zh:"第一视角+8机位",en:"Ego + 8 allo"},
+  cam:{zh:"8参数畸变(cv2.projectPoints)",en:"8-param distortion"},
+  local:339, overlay:301, fps:30, views:9, hours:2.2, hsrc:"derived",
+  hand:{zh:"双手 MANO(rot+45pose+shape,flat_hand_mean=False)",en:"Two-hand MANO (rot+45 pose+shape, mean-relative)"},
+  obj:{zh:"关节物体(两部件)网格 + 6DoF + 关节角 + 稠密接触",en:"Articulated (2-part) mesh + 6DoF + articulation + dense contact"},
+  extra:{zh:"SMPL-X 全身、高帧率、手-物接触距离场",en:"SMPL-X body, high fps, hand-object contact fields"},
+  feat:["ego","multiview","bimanual","mano","objmesh","objpose","artic","contact"],
+  url:"https://arctic.is.tue.mpg.de/",
+  desc:{zh:"面向灵巧双手操作关节物体的数据集,提供关节角与稠密接触标注。",
+        en:"Dexterous bimanual manipulation of articulated objects, with articulation and dense contact."}},
+
+ {key:"GigaHands",color:"var(--giga)",hex:"#f472b6",venue:"CVPR 2025",inst:{zh:"布朗大学 Brown",en:"Brown University"},
+  lead:"Rao Fu, Srinath Sridhar et al.", lic:{zh:"研究许可(非商用)",en:"Research (non-commercial)"},
+  seqs:"14K", frames:183e6, subj:"56", nobj:"417", view:{zh:"51机位环拍(BRICS)",en:"51-cam rig (BRICS)"},
+  cam:{zh:"COLMAP标定(四元数+畸变)",en:"COLMAP (quat + distortion)"},
+  local:1500, overlay:5, fps:30, views:51, hours:34, hsrc:"paper",
+  hand:{zh:"双手 3D关键点(多视重建)+ MANO,21点",en:"Two-hand 3D keypoints (multi-view) + MANO, 21 pts"},
+  obj:{zh:"扫描网格 + 6DoF位姿(3.3K物体运动序列);接触可解算",en:"Scanned meshes + 6DoF pose (3.3K object seqs); contact"},
+  extra:{zh:"84K 文本语言标注、34小时、点云;当前最大规模手部数据集",en:"84K text annotations, 34 hours, point clouds; largest hand dataset to date"},
+  feat:["multiview","bimanual","mano","j3d","objmesh","objpose","text","contact"],
+  url:"https://ivl.cs.brown.edu/research/gigahands.html",
+  desc:{zh:"迄今最大规模双手活动数据集,51机位环拍、34小时、183M帧、84K文本。",
+        en:"The largest bimanual hand-activity dataset: 51-cam rig, 34h, 183M frames, 84K text annotations."}},
+];
+
+const FEATS=[
+ {k:"ego",zh:"第一视角",en:"Egocentric"},
+ {k:"multiview",zh:"多视角",en:"Multi-view"},
+ {k:"bimanual",zh:"双手",en:"Bimanual"},
+ {k:"mano",zh:"MANO参数",en:"MANO params"},
+ {k:"j3d",zh:"3D关键点",en:"3D keypoints"},
+ {k:"objmesh",zh:"物体网格",en:"Object mesh"},
+ {k:"objpose",zh:"6DoF位姿",en:"6DoF pose"},
+ {k:"bbox",zh:"3D包围盒",en:"3D bbox"},
+ {k:"artic",zh:"关节物体",en:"Articulated"},
+ {k:"contact",zh:"接触",en:"Contact"},
+ {k:"depth",zh:"深度",en:"Depth"},
+ {k:"gaze",zh:"眼动",en:"Gaze"},
+ {k:"text",zh:"语言标注",en:"Text"},
+];
+
+/* -------------- i18n static strings -------------- */
+const I18N = {
+ zh:{ brand_sub:"世界-动作模型 · 数据底座", nav_browse:"打开可视化浏览器",
+   eyebrow:"7 个世界级第一/多视角手-物交互数据集 · 统一可视化",
+   h1_a:"手-物交互", h1_b:"数据全景",
+   lead:"HumanWAM 汇聚 7 个顶会级手-物交互数据集,统一了 3D 手(MANO/21关键点)、物体(网格/位姿/关节/包围盒)与手-物接触标注,并全部叠加到原始视频帧,用于世界-动作模型训练。",
+   kpi_note:"“已可视化”指本地已实现「3D手 + 物体 + 接触」逐帧叠加的序列数;帧数为各官方论文口径(GigaHands 为 51 视角多视合计)。时长为“去重录制时长”= 帧数 ÷ 视角数 ÷ 帧率;HOT3D(833 分钟)与 GigaHands(34 小时)采用论文口径。",
+   sec_charts:"数据集构成一览", sec_charts_sub:"本地覆盖与官方规模、能力对比",
+   ch_donut:"本地序列构成", ch_donut_sub:"我们已下载/索引的序列在各数据集间的分布",
+   ch_bar:"官方数据规模(帧数)", ch_bar_sub:"对数刻度;数值为各数据集官方帧数",
+   ch_hours:"录制时长(小时)", ch_hours_sub:"去重后实际时长 = 帧数 ÷ 视角数 ÷ 帧率;标 * 者为论文口径",
+   ch_mx:"能力覆盖矩阵", ch_mx_sub:"每个数据集所包含的标注模态一览",
+   sec_table:"数据集详细对比", sec_table_sub:"点击任意一行展开完整信息",
+   tbl_note:"数值来源于各数据集官方论文/项目主页;License 以官方发布为准,商用前请核对原始条款。",
+   footer:"HumanWAM · 手-物交互数据可视化底座 · 数据版权归各原始数据集作者所有,此处仅作研究可视化整理。",
+   c_ds:"数据集", c_ven:"会议/机构", c_lic:"许可", c_scale:"规模", c_view:"视角", c_hand:"手部追踪", c_obj:"物体追踪", c_cov:"本地覆盖",
+   e_about:"简介", e_hand:"手部信息", e_obj:"物体信息", e_extra:"其他标注", e_facts:"关键指标", e_open:"在浏览器中查看",
+   f_seqs:"官方序列", f_frames:"官方帧数", f_subj:"被试", f_obj:"物体", f_cam:"相机", f_local:"本地序列", f_over:"已可视化", f_authors:"作者", f_inst:"机构", f_fps:"帧率", f_views:"视角", f_hours:"录制时长",
+   units_frames:"帧", units_hours:"小时", per_sub:"本地" },
+ en:{ brand_sub:"World-Action Model · Data Foundation", nav_browse:"Open Visual Browser",
+   eyebrow:"7 world-class ego / multi-view hand-object datasets · unified visualization",
+   h1_a:"Hand-Object", h1_b:"Data Panorama",
+   lead:"HumanWAM unifies 7 top-tier hand-object interaction datasets — 3D hands (MANO/21 keypoints), objects (mesh/pose/articulation/bbox) and hand-object contact — all overlaid on the raw video frames for world-action model training.",
+   kpi_note:"“Visualized” = sequences with per-frame 3D-hand + object + contact overlay implemented locally; frame counts follow each official paper (GigaHands is the 51-view multi-view total). Hours = de-duplicated wall-clock time = frames ÷ views ÷ fps; HOT3D (833 min) and GigaHands (34 h) use the figures reported in their papers.",
+   sec_charts:"Collection at a glance", sec_charts_sub:"Local coverage vs official scale & capabilities",
+   ch_donut:"Local sequence mix", ch_donut_sub:"How our downloaded/indexed sequences split across datasets",
+   ch_bar:"Official scale (frames)", ch_bar_sub:"Log scale; values are official frame counts",
+   ch_hours:"Recording hours", ch_hours_sub:"De-duplicated wall-clock = frames ÷ views ÷ fps; * = figure from paper",
+   ch_mx:"Capability matrix", ch_mx_sub:"Annotation modalities contained in each dataset",
+   sec_table:"Detailed comparison", sec_table_sub:"Click any row to expand full details",
+   tbl_note:"Figures are from each dataset's official paper / project page; verify the original license terms before any commercial use.",
+   footer:"HumanWAM · Hand-object visualization foundation · All data © original dataset authors; organized here for research visualization only.",
+   c_ds:"Dataset", c_ven:"Venue / Lab", c_lic:"License", c_scale:"Scale", c_view:"Views", c_hand:"Hand tracking", c_obj:"Object tracking", c_cov:"Local coverage",
+   e_about:"About", e_hand:"Hand info", e_obj:"Object info", e_extra:"Other annotations", e_facts:"Key facts", e_open:"View in browser",
+   f_seqs:"Official seqs", f_frames:"Official frames", f_subj:"Subjects", f_obj:"Objects", f_cam:"Camera", f_local:"Local seqs", f_over:"Visualized", f_authors:"Authors", f_inst:"Institution", f_fps:"Frame rate", f_views:"views", f_hours:"Duration",
+   units_frames:"frames", units_hours:"h", per_sub:"local" }
+};
+
+let LANG = new URLSearchParams(location.search).get("lang") || localStorage.getItem("hw_lang") || "zh";
+// When this static overview is served from GitHub Pages, the live browser backend lives on the
+// Tailscale Funnel URL of the capture machine; when served locally by Flask, use the relative path.
+const BROWSER_BASE = location.hostname.endsWith("github.io") ? "https://leo-alienware.tail1ab202.ts.net" : "";
+const browseUrl = (ds)=> `${BROWSER_BASE}/browse?lang=${LANG}` + (ds?`&ds=${encodeURIComponent(ds)}`:"");
+const gv=(o)=> (o&&typeof o==="object"&&("zh"in o||"en"in o))? (o[LANG]??o.zh) : o;
+const fmt=(n)=> n>=1e6? (n/1e6).toFixed(n>=1e7?0:2)+"M" : n>=1e3? (n/1e3).toFixed(0)+"K" : ""+n;
+
+const sum=(f)=>DS.reduce((a,d)=>a+f(d),0);
+const comma=(n)=>Math.round(n).toLocaleString('en-US');
+const KPI=()=>{
+  const localSeq=sum(d=>d.local), overSeq=sum(d=>d.overlay), frames=sum(d=>d.frames), hours=sum(d=>d.hours);
+  return [
+   {v:DS.length, F:n=>Math.round(n), l:{zh:"数据集",en:"Datasets"}, s:{zh:"顶会级手-物交互",en:"top-tier HOI"}},
+   {v:localSeq, F:comma, l:{zh:"本地序列",en:"Local sequences"}, s:{zh:"已下载/索引",en:"downloaded / indexed"}},
+   {v:overSeq, F:comma, l:{zh:"已可视化序列",en:"Visualized"}, s:{zh:"手+物体+接触叠加",en:"hand+object+contact"}},
+   {v:frames, F:fmt, l:{zh:"标注帧(合计)",en:"Annotated frames"}, s:{zh:"各官方口径合计",en:"official totals combined"}},
+   {v:hours, F:n=>Math.round(n)+"h", l:{zh:"录制总时长",en:"Total hours"}, s:{zh:"去重后实际时长",en:"de-duplicated wall-clock"}},
+  ];
+};
+
+const tip=document.getElementById("tip");
+function showTip(e,html){tip.innerHTML=html;tip.style.opacity=1;moveTip(e);}
+function moveTip(e){const p=12;let x=e.clientX+p,y=e.clientY+p;if(x+230>innerWidth)x=e.clientX-230;tip.style.left=x+"px";tip.style.top=y+"px";}
+function hideTip(){tip.style.opacity=0;}
+
+const NOANIM = new URLSearchParams(location.search).get("static")==="1" || matchMedia("(prefers-reduced-motion: reduce)").matches;
+function renderKPIs(){
+  const items=KPI();
+  document.getElementById("kpis").innerHTML = items.map((k,i)=>
+    `<div class="kpi"><div class="v tnum" id="kpi${i}">${k.F(k.v)}</div><div class="l">${gv(k.l)}</div><div class="s">${gv(k.s)}</div></div>`).join("");
+  if(NOANIM) return;
+  items.forEach((k,i)=>{ const el=document.getElementById("kpi"+i), target=k.v; el.textContent="0"; let t0=null, dur=1100;
+    const step=(ts)=>{ if(!t0)t0=ts; const p=Math.min(1,(ts-t0)/dur), e=1-Math.pow(1-p,3);
+      el.textContent=k.F(target*e); if(p<1)requestAnimationFrame(step); else el.textContent=k.F(target); };
+    requestAnimationFrame(step);
+  });
+}
+
+function renderDonut(){
+  const total=sum(d=>d.local), R=78, r=48, cx=90, cy=90; let a0=-Math.PI/2;
+  const arcs=DS.map(d=>{ const frac=d.local/total, a1=a0+frac*2*Math.PI;
+    const x0=cx+R*Math.cos(a0),y0=cy+R*Math.sin(a0),x1=cx+R*Math.cos(a1),y1=cy+R*Math.sin(a1);
+    const xi1=cx+r*Math.cos(a1),yi1=cy+r*Math.sin(a1),xi0=cx+r*Math.cos(a0),yi0=cy+r*Math.sin(a0);
+    const large=frac>0.5?1:0; a0=a1;
+    return `<path d="M${x0} ${y0} A${R} ${R} 0 ${large} 1 ${x1} ${y1} L${xi1} ${yi1} A${r} ${r} 0 ${large} 0 ${xi0} ${yi0} Z"
+      fill="${d.hex}" opacity=".9" data-k="${d.key}" style="cursor:default;transition:.15s"/>`; }).join("");
+  document.getElementById("donut").innerHTML =
+    `<svg width="180" height="180" viewBox="0 0 180 180">${arcs}
+     <text x="90" y="86" text-anchor="middle" fill="var(--tx)" font-size="26" font-weight="800">${fmt(total)}</text>
+     <text x="90" y="104" text-anchor="middle" fill="var(--tx3)" font-size="11">${gv({zh:"本地序列",en:"local seqs"})}</text></svg>`;
+  document.getElementById("donutleg").innerHTML = DS.map(d=>{
+    const pc=(100*d.local/total).toFixed(d.local/total<0.1?1:0);
+    return `<div class="lg" data-k="${d.key}"><span class="sw" style="background:${d.hex}"></span>
+      <span class="nm">${d.key}</span><span class="vl tnum">${d.local}</span><span class="pc tnum">${pc}%</span></div>`; }).join("");
+  const hl=(k,on)=>{ document.querySelectorAll(`#donut path`).forEach(p=>p.style.opacity=(!k||p.dataset.k===k)?".95":".25");
+    if(!on)document.querySelectorAll(`#donut path`).forEach(p=>p.style.opacity=".9"); };
+  document.querySelectorAll("#donutleg .lg").forEach(l=>{ l.onmouseenter=()=>hl(l.dataset.k,1); l.onmouseleave=()=>hl(null,0); });
+  document.querySelectorAll("#donut path").forEach(p=>{
+    p.onmouseenter=e=>{hl(p.dataset.k,1);const d=DS.find(x=>x.key===p.dataset.k);showTip(e,`<b>${d.key}</b><br>${d.local} ${gv({zh:'本地序列',en:'local seqs'})} · ${d.overlay} ${gv({zh:'已可视化',en:'visualized'})}`);};
+    p.onmousemove=moveTip; p.onmouseleave=()=>{hl(null,0);hideTip();}; });
+}
+
+function renderFrameBars(){
+  const maxL=Math.log10(Math.max(...DS.map(d=>d.frames))), minL=Math.log10(Math.min(...DS.map(d=>d.frames)));
+  document.getElementById("framebars").innerHTML = DS.slice().sort((a,b)=>b.frames-a.frames).map((d,i)=>{
+    const w=8+92*(Math.log10(d.frames)-minL)/(maxL-minL);
+    return `<div class="bar"><div class="bn">${d.key}</div>
+      <div class="track"><div class="fill" style="width:${w}%;background:linear-gradient(90deg,${d.hex}bb,${d.hex});animation-delay:${i*70}ms"></div></div>
+      <div class="bv">${fmt(d.frames)}</div></div>`; }).join("");
+}
+
+function renderHourBars(){
+  const maxH=Math.max(...DS.map(d=>d.hours));
+  document.getElementById("hourbars").innerHTML = DS.slice().sort((a,b)=>b.hours-a.hours).map((d,i)=>{
+    const w=6+94*(d.hours/maxH), star=d.hsrc==="paper"?'<span style="color:var(--tx3)"> *</span>':'';
+    return `<div class="bar"><div class="bn">${d.key}</div>
+      <div class="track"><div class="fill" style="width:${w}%;background:linear-gradient(90deg,${d.hex}bb,${d.hex});animation-delay:${i*70}ms"></div></div>
+      <div class="bv">${d.hours} h${star}</div></div>`; }).join("");
+}
+
+function renderMatrix(){
+  const t=I18N[LANG];
+  let head=`<thead><tr><th style="text-align:left" class="name">${t.c_ds}</th>${FEATS.map(f=>`<th>${f[LANG]}</th>`).join("")}</tr></thead>`;
+  let body="<tbody>"+DS.map(d=>{
+    const cells=FEATS.map(f=>{ const y=d.feat.includes(f.k); return `<td>${y?'<span class="chk y">●</span>':'<span class="chk n">–</span>'}</td>`; }).join("");
+    return `<tr><td class="name"><span class="cd" style="background:${d.hex}"></span>${d.key}</td>${cells}</tr>`;
+  }).join("")+"</tbody>";
+  document.getElementById("mx").innerHTML=head+body;
+}
+
+function renderTable(){
+  const t=I18N[LANG];
+  const cols=[t.c_ds,t.c_ven,t.c_lic,t.c_scale,t.c_view,t.c_hand,t.c_obj,t.c_cov];
+  let html=`<thead><tr>${cols.map(c=>`<th>${c}</th>`).join("")}<th></th></tr></thead><tbody>`;
+  DS.forEach((d,i)=>{
+    const covpc=Math.round(100*d.overlay/d.local);
+    html+=`<tr class="row" data-row="${i}" data-key="${d.key}">
+      <td><div class="dsname"><span class="bar3" style="background:${d.hex}"></span><div><div>${d.key}</div><div class="cap">${gv(d.inst)}</div></div></div></td>
+      <td><span class="badge ven">${d.venue}</span></td>
+      <td><span class="badge lic">${gv(d.lic)}</span></td>
+      <td><b class="tnum">${fmt(d.frames)}</b> <span class="mini">${t.units_frames}</span>
+        <div class="mini" style="margin-top:2px">≈ <b class="tnum" style="color:var(--tx)">${d.hours}</b> ${t.units_hours}${d.fps?` · ${d.fps}fps`:''}${d.views?` · ${d.views} ${t.f_views}`:''}</div>
+        <div class="mini">${d.seqs} ${gv({zh:'序列',en:'seqs'})} · ${d.subj} ${gv({zh:'人',en:'subj'})} · ${gv(d.nobj)} ${gv({zh:'物体',en:'obj'})}</div></td>
+      <td><span class="badge view">${gv(d.view)}</span></td>
+      <td style="max-width:230px">${gv(d.hand)}</td>
+      <td style="max-width:230px">${gv(d.obj)}</td>
+      <td><div><b class="tnum">${d.overlay}</b><span class="mini"> / ${d.local} ${t.per_sub}</span></div>
+        <div class="cov"><div class="cbar"><i style="width:${covpc}%;background:${d.hex}"></i></div></div></td>
+      <td><span class="caret">▸</span></td></tr>
+    <tr class="exp" data-e="${i}"><td colspan="9"><div class="expinner">
+      <div><h4>${t.e_about}</h4><p>${gv(d.desc)}</p>
+        <h4>${t.e_hand}</h4><p>${gv(d.hand)}</p>
+        <h4>${t.e_obj}</h4><p>${gv(d.obj)}</p>
+        <h4>${t.e_extra}</h4><p>${gv(d.extra)}</p>
+        <div>${d.feat.map(k=>{const f=FEATS.find(x=>x.k===k);return `<span class="chip">${f?f[LANG]:k}</span>`}).join("")}</div>
+      </div>
+      <div><h4>${t.e_facts}</h4>
+        <div class="kv"><b>${t.f_inst}</b><span>${gv(d.inst)}</span></div>
+        <div class="kv"><b>${t.f_authors}</b><span>${d.lead}</span></div>
+        <div class="kv"><b>${t.f_seqs}</b><span>${d.seqs}</span></div>
+        <div class="kv"><b>${t.f_frames}</b><span class="tnum">${fmt(d.frames)}</span></div>
+        <div class="kv"><b>${t.f_hours}</b><span class="tnum">≈ ${d.hours} ${t.units_hours}${d.hsrc==='paper'?' *':''}</span></div>
+        <div class="kv"><b>${t.f_subj}</b><span>${d.subj}</span></div>
+        <div class="kv"><b>${t.f_obj}</b><span>${gv(d.nobj)}</span></div>
+        <div class="kv"><b>${t.f_cam}</b><span>${gv(d.cam)}</span></div>
+        <div class="kv"><b>${t.f_fps}</b><span>${d.fps} fps${d.views?` · ${d.views} ${t.f_views}`:''}</span></div>
+      </div>
+      <div><h4>${t.e_facts.replace(/.*/,gv({zh:'覆盖 & 链接',en:'Coverage & link'}))}</h4>
+        <div class="kv"><b>${t.f_local}</b><span class="tnum">${d.local}</span></div>
+        <div class="kv"><b>${t.f_over}</b><span class="tnum">${d.overlay} (${Math.round(100*d.overlay/d.local)}%)</span></div>
+        <div class="kv"><b>License</b><span>${gv(d.lic)}</span></div>
+        <div class="kv"><b>${t.c_ven}</b><span>${d.venue}</span></div>
+        <a class="openbtn" href="${browseUrl(d.key)}">${t.e_open} →</a>
+        <div class="mini" style="margin-top:10px"><a href="${d.url}" target="_blank" style="color:var(--acc2)">${d.url.replace(/^https?:\/\//,'')} ↗</a></div>
+      </div>
+    </div></td></tr>`;
+  });
+  html+="</tbody>";
+  const tb=document.getElementById("cmp"); tb.innerHTML=html;
+  const toggle=(r)=>{ const ex=tb.querySelector(`tr.exp[data-e="${r.dataset.row}"]`); const open=ex.classList.toggle("open"); r.classList.toggle("open",open); };
+  tb.querySelectorAll("tr.row").forEach(r=>{ r.onclick=()=>toggle(r); });
+  const openK=new URLSearchParams(location.search).get("open");
+  if(openK){ const r=tb.querySelector(`tr.row[data-key="${openK}"]`); if(r)toggle(r); }
+}
+
+function applyStatic(){
+  const t=I18N[LANG];
+  document.querySelectorAll("[data-i]").forEach(el=>{ const k=el.getAttribute("data-i"); if(t[k]!=null)el.textContent=t[k]; });
+  document.querySelector('[data-i="h1"]').innerHTML = `${t.h1_a} <span class="grad">${t.h1_b}</span>`;
+  document.documentElement.lang = LANG==="zh"?"zh":"en";
+  document.getElementById("zh").classList.toggle("on",LANG==="zh");
+  document.getElementById("en").classList.toggle("on",LANG==="en");
+  document.getElementById("browseNav").href = browseUrl();
+}
+
+function renderAll(){ applyStatic(); renderKPIs(); renderDonut(); renderFrameBars(); renderHourBars(); renderMatrix(); renderTable(); }
+function setLang(l){ LANG=l; localStorage.setItem("hw_lang",l); renderAll(); }
+renderAll();
+</script>
+</body>
+</html>
