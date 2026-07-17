@@ -154,7 +154,7 @@ footer{padding:40px 0 60px;color:var(--tx3);font-size:12.5px;text-align:center;b
 
 <div id="top" class="wrap">
   <header class="hero">
-    <span class="eyebrow"><span class="dot"></span><span data-i="eyebrow">7 个世界级第一/多视角手-物交互数据集 · 统一可视化</span></span>
+    <span class="eyebrow"><span class="dot"></span><span data-i="eyebrow">9 个世界级第一/多视角手-物交互数据集 · 统一可视化</span></span>
     <h1 data-i="h1"></h1>
     <p class="lead" data-i="lead"></p>
     <div class="kpis" id="kpis"></div>
@@ -239,7 +239,7 @@ const DS = [
   lead:"Yun Liu, Li Yi", lic:"CC BY 4.0",
   seqs:"2.5K", frames:5.2e6, subj:"14", nobj:{zh:"20类/196模型",en:"20 cats / 196 models"}, view:{zh:"1第一视角+12机位",en:"1 Ego + 12 allo"},
   cam:{zh:"12× FLIR + RealSense L515",en:"12× FLIR + RealSense L515"},
-  local:244, overlay:206, fps:30, views:13, hours:3.7, hsrc:"derived",
+  local:2335, overlay:2311, fps:30, views:13, hours:3.7, hsrc:"derived",
   hand:{zh:"双手 MANO(48轴角+shape)→21关键点",en:"Two-hand MANO (48 axis-angle + shape) → 21 kpts"},
   obj:{zh:"工具+目标物体网格(cm) + 逐帧6DoF;接触可解算",en:"Tool + target object meshes + per-frame 6DoF; contact"},
   extra:{zh:"深度、12路第三视角、131种 工具-动作-物体 三元组",en:"Depth, 12 allocentric views, 131 tool-action-object triplets"},
@@ -278,7 +278,7 @@ const DS = [
   lead:"Rao Fu, Srinath Sridhar et al.", lic:{zh:"研究许可(非商用)",en:"Research (non-commercial)"},
   seqs:"14K", frames:183e6, subj:"56", nobj:"417", view:{zh:"51机位环拍(BRICS)",en:"51-cam rig (BRICS)"},
   cam:{zh:"COLMAP标定(四元数+畸变)",en:"COLMAP (quat + distortion)"},
-  local:1500, overlay:5, fps:30, views:51, hours:34, hsrc:"paper",
+  local:13792, overlay:13792, fps:30, views:51, hours:34, hsrc:"paper",
   hand:{zh:"双手 3D关键点(多视重建)+ MANO,21点",en:"Two-hand 3D keypoints (multi-view) + MANO, 21 pts"},
   obj:{zh:"扫描网格 + 6DoF位姿(3.3K物体运动序列);接触可解算",en:"Scanned meshes + 6DoF pose (3.3K object seqs); contact"},
   extra:{zh:"84K 文本语言标注、34小时、点云;当前最大规模手部数据集",en:"84K text annotations, 34 hours, point clouds; largest hand dataset to date"},
@@ -286,6 +286,34 @@ const DS = [
   url:"https://ivl.cs.brown.edu/research/gigahands.html",
   desc:{zh:"迄今最大规模双手活动数据集,51机位环拍、34小时、183M帧、84K文本。",
         en:"The largest bimanual hand-activity dataset: 51-cam rig, 34h, 183M frames, 84K text annotations."}},
+
+ {key:"EgoDex",color:"#fb923c",hex:"#fb923c",venue:"arXiv 2025",inst:{zh:"Apple",en:"Apple"},
+  lead:"Apple ML Research", lic:{zh:"研究许可 (Apple)",en:"Research (Apple)"},
+  seqs:"194 任务 / 829h", frames:89.5e6, subj:"—", nobj:{zh:"194 任务",en:"194 tasks"}, view:{zh:"第一视角 (Vision Pro)",en:"Egocentric (Vision Pro)"},
+  cam:{zh:"Vision Pro 30Hz 1080p",en:"Vision Pro 30Hz 1080p"},
+  fps:30, views:1, hours:829, hsrc:"paper",
+  local:12058, overlay:12058,
+  hand:{zh:"双手全指关节 SE(3) 位姿 + 上身/头 (ARKit)",en:"Full-finger both-hand SE(3) pose + upper body/head (ARKit)"},
+  obj:{zh:"桌面物体灵巧操作 (无显式物体位姿)",en:"Tabletop dexterous manipulation (no explicit object pose)"},
+  extra:{zh:"逐帧置信度、相机内外参、可逆任务的双向语言指令",en:"Per-frame confidences, camera intrinsics/extrinsics, bidirectional language for reversible tasks"},
+  feat:["ego","bimanual","j3d","text"],
+  url:"https://arxiv.org/abs/2505.11709",
+  desc:{zh:"Apple Vision Pro 采集的迄今最大规模第一视角灵巧操作数据集,829 小时、194 任务,带 3D 手/身体位姿与语言标注。",
+        en:"The largest egocentric dexterous-manipulation dataset to date, captured on Apple Vision Pro: 829h, 194 tasks, with 3D hand/body pose and language."}},
+
+ {key:"HoloAssist",color:"#2dd4bf",hex:"#2dd4bf",venue:"ICCV 2023",inst:{zh:"微软",en:"Microsoft"},
+  lead:"Microsoft Research", lic:"CDLA-Permissive-2.0",
+  seqs:"20 任务 / 166h", frames:17.9e6, subj:"222", nobj:{zh:"20 任务",en:"20 tasks"}, view:{zh:"第一视角 (HoloLens2)",en:"Egocentric (HoloLens2)"},
+  cam:{zh:"HoloLens2 RGB + 深度",en:"HoloLens2 RGB + depth"},
+  fps:30, views:1, hours:166, hsrc:"paper",
+  local:2111, overlay:2111,
+  hand:{zh:"双手 26 关节 (HoloLens) 位姿",en:"Both-hand 26-joint (HoloLens) pose"},
+  obj:{zh:"20 类物体操作任务 (无物体网格)",en:"20 object-manipulation tasks (no object mesh)"},
+  extra:{zh:"眼动、头姿、深度、IMU、动作/错误/干预标注、师徒对话语言",en:"Eye gaze, head pose, depth, IMU, action/mistake/intervention labels, instructor-performer dialogue"},
+  feat:["ego","bimanual","j3d","depth","gaze","text"],
+  url:"https://holoassist.github.io/",
+  desc:{zh:"微软 HoloLens2 采集的师徒协作操作数据集,166 小时,带细粒度动作、错误干预与对话式语言标注。",
+        en:"Microsoft HoloLens2 instructor-performer collaboration dataset: 166h, with fine-grained action, mistake/intervention and conversational language."}},
 ];
 
 const FEATS=[
@@ -307,9 +335,9 @@ const FEATS=[
 /* -------------- i18n static strings -------------- */
 const I18N = {
  zh:{ brand_sub:"世界-动作模型 · 数据底座", nav_browse:"打开可视化浏览器",
-   eyebrow:"7 个世界级第一/多视角手-物交互数据集 · 统一可视化",
+   eyebrow:"9 个世界级第一/多视角手-物交互数据集 · 统一可视化",
    h1_a:"手-物交互", h1_b:"数据全景",
-   lead:"HumanWAM 汇聚 7 个顶会级手-物交互数据集,统一了 3D 手(MANO/21关键点)、物体(网格/位姿/关节/包围盒)与手-物接触标注,并全部叠加到原始视频帧,用于世界-动作模型训练。",
+   lead:"HumanWAM 汇聚 9 个顶会级手-物交互数据集,统一了 3D 手(MANO/21关键点)、物体(网格/位姿/关节/包围盒)与手-物接触标注,并全部叠加到原始视频帧,用于世界-动作模型训练。",
    kpi_note:"“已可视化”指本地已实现「3D手 + 物体 + 接触」逐帧叠加的序列数;帧数为各官方论文口径(GigaHands 为 51 视角多视合计)。时长为“去重录制时长”= 帧数 ÷ 视角数 ÷ 帧率;HOT3D(833 分钟)与 GigaHands(34 小时)采用论文口径。",
    sec_charts:"数据集构成一览", sec_charts_sub:"本地覆盖与官方规模、能力对比",
    ch_donut:"本地序列构成", ch_donut_sub:"我们已下载/索引的序列在各数据集间的分布",
@@ -324,9 +352,9 @@ const I18N = {
    f_seqs:"官方序列", f_frames:"官方帧数", f_subj:"被试", f_obj:"物体", f_cam:"相机", f_local:"本地序列", f_over:"已可视化", f_authors:"作者", f_inst:"机构", f_fps:"帧率", f_views:"视角", f_hours:"录制时长",
    units_frames:"帧", units_hours:"小时", per_sub:"本地" },
  en:{ brand_sub:"World-Action Model · Data Foundation", nav_browse:"Open Visual Browser",
-   eyebrow:"7 world-class ego / multi-view hand-object datasets · unified visualization",
+   eyebrow:"9 world-class ego / multi-view hand-object datasets · unified visualization",
    h1_a:"Hand-Object", h1_b:"Data Panorama",
-   lead:"HumanWAM unifies 7 top-tier hand-object interaction datasets — 3D hands (MANO/21 keypoints), objects (mesh/pose/articulation/bbox) and hand-object contact — all overlaid on the raw video frames for world-action model training.",
+   lead:"HumanWAM unifies 9 top-tier hand-object interaction datasets — 3D hands (MANO/21 keypoints), objects (mesh/pose/articulation/bbox) and hand-object contact — all overlaid on the raw video frames for world-action model training.",
    kpi_note:"“Visualized” = sequences with per-frame 3D-hand + object + contact overlay implemented locally; frame counts follow each official paper (GigaHands is the 51-view multi-view total). Hours = de-duplicated wall-clock time = frames ÷ views ÷ fps; HOT3D (833 min) and GigaHands (34 h) use the figures reported in their papers.",
    sec_charts:"Collection at a glance", sec_charts_sub:"Local coverage vs official scale & capabilities",
    ch_donut:"Local sequence mix", ch_donut_sub:"How our downloaded/indexed sequences split across datasets",
