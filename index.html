@@ -218,6 +218,103 @@
        outlet's logo on a small white chip, so three very different marks (grey
        Synced figure, dark EAI tile, red UMD block) read cleanly and uniformly
        on the dark pill. Two-line label = Chinese outlet name + English byline. */
+    /* ---- IROS 2026 workshop awards ----
+       A gold laurel band that mirrors the "As Featured In" label treatment but
+       swaps the neutral rules for a warm award accent. Cards are links out to
+       each workshop. */
+    .awards { margin-top: 1.9em; }
+    .awards-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.85em;
+      margin: 0 auto 1.05em;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #A9873C;
+    }
+    .awards-label::before,
+    .awards-label::after {
+      content: "";
+      height: 1px;
+      width: clamp(26px, 9vw, 64px);
+      background: linear-gradient(to right, rgba(0, 0, 0, 0), #E2CE97);
+    }
+    .awards-label::after { transform: scaleX(-1); }
+
+    .award-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: stretch;   /* both cards match height regardless of subtitle length */
+      gap: 0.85em;
+    }
+    .award-card {
+      display: inline-flex;
+      align-items: center;
+      gap: clamp(0.5em, 1.8vw, 0.95em);
+      padding: 0.62em clamp(0.9em, 2.6vw, 1.35em);
+      border-radius: 14px;
+      text-decoration: none;
+      background: linear-gradient(180deg, #FFFCF4 0%, #FBF3DE 100%);
+      border: 1px solid #ECDCAE;
+      box-shadow: 0 1px 2px rgba(142, 110, 32, 0.07), 0 6px 18px rgba(142, 110, 32, 0.06);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+    }
+    .award-card:hover {
+      transform: translateY(-2px);
+      border-color: #DFC884;
+      box-shadow: 0 2px 4px rgba(142, 110, 32, 0.10), 0 12px 26px rgba(142, 110, 32, 0.12);
+    }
+    .award-laurel {
+      flex: 0 0 auto;
+      width: clamp(19px, 5vw, 26px);
+      color: #C2A24F;
+      line-height: 0;
+    }
+    .award-laurel svg { width: 100%; height: auto; display: block; }
+    .award-laurel.is-right { transform: scaleX(-1); }
+
+    .award-body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.16em;
+      text-align: center;
+    }
+    .award-name {
+      font-size: clamp(0.98rem, 2.7vw, 1.14rem);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      line-height: 1.15;
+      background: linear-gradient(92deg, #9A7420 0%, #C9A23F 45%, #8C691A 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: #9A7420;                 /* fallback where background-clip:text is unsupported */
+      -webkit-text-fill-color: transparent;
+    }
+    .award-venue {
+      font-size: clamp(0.76rem, 2.1vw, 0.84rem);
+      font-weight: 700;
+      color: #4A4A4A;
+      letter-spacing: 0.01em;
+    }
+    .award-sub {
+      font-size: clamp(0.66rem, 1.9vw, 0.73rem);
+      font-weight: 500;
+      color: #9A8F77;
+      max-width: 27ch;
+      line-height: 1.3;
+    }
+
+    @media (max-width: 560px) {
+      .award-list { flex-direction: column; align-items: stretch; }
+      .award-card { justify-content: center; }
+      .award-sub { max-width: none; }
+    }
+
     .media-coverage { margin-top: 1.7em; }
     .media-coverage-label {
       display: flex;
@@ -1021,6 +1118,91 @@
         <a href="https://www.umd.edu/" target="_blank" rel="noopener"><img src="static/images/UMD-logo.png" alt="University of Maryland" class="umd-logo"></a>
       </div>
 
+      <!-- IROS 2026 workshop awards. -->
+      <div class="awards">
+        <div class="awards-label">Awards</div>
+        <div class="award-list">
+          <a class="award-card" href="https://worlds-iros2026.github.io/" target="_blank" rel="noopener">
+            <span class="award-laurel"><svg viewBox="0 0 44 74" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<g fill="currentColor">
+<path d="M34.0 70.0 Q 9.0 40.0 21.0 3.0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<ellipse cx="25.07" cy="63.16" rx="6.68" ry="2.58" transform="rotate(-156.6 25.07 63.16)"/>
+<ellipse cx="30.38" cy="59.77" rx="6.68" ry="2.58" transform="rotate(-88.6 30.38 59.77)"/>
+<ellipse cx="20.18" cy="53.90" rx="6.35" ry="2.45" transform="rotate(-148.6 20.18 53.90)"/>
+<ellipse cx="25.62" cy="51.40" rx="6.35" ry="2.45" transform="rotate(-80.6 25.62 51.40)"/>
+<ellipse cx="16.79" cy="44.35" rx="6.03" ry="2.33" transform="rotate(-140.0 16.79 44.35)"/>
+<ellipse cx="22.26" cy="42.78" rx="6.03" ry="2.33" transform="rotate(-72.0 22.26 42.78)"/>
+<ellipse cx="14.93" cy="34.54" rx="5.71" ry="2.20" transform="rotate(-131.2 14.93 34.54)"/>
+<ellipse cx="20.27" cy="33.87" rx="5.71" ry="2.20" transform="rotate(-63.2 20.27 33.87)"/>
+<ellipse cx="14.59" cy="24.50" rx="5.38" ry="2.08" transform="rotate(-122.5 14.59 24.50)"/>
+<ellipse cx="19.67" cy="24.64" rx="5.38" ry="2.08" transform="rotate(-54.5 19.67 24.64)"/>
+<ellipse cx="15.76" cy="14.26" rx="5.06" ry="1.95" transform="rotate(-114.4 15.76 14.26)"/>
+<ellipse cx="20.46" cy="15.06" rx="5.06" ry="1.95" transform="rotate(-46.4 20.46 15.06)"/>
+</g></svg></span>
+            <span class="award-body">
+              <span class="award-name">Best Paper Award</span>
+              <span class="award-venue">WORLDS @ IROS 2026</span>
+              <span class="award-sub">World Models and Spatial Intelligence for Physical AI</span>
+            </span>
+            <span class="award-laurel is-right"><svg viewBox="0 0 44 74" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<g fill="currentColor">
+<path d="M34.0 70.0 Q 9.0 40.0 21.0 3.0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<ellipse cx="25.07" cy="63.16" rx="6.68" ry="2.58" transform="rotate(-156.6 25.07 63.16)"/>
+<ellipse cx="30.38" cy="59.77" rx="6.68" ry="2.58" transform="rotate(-88.6 30.38 59.77)"/>
+<ellipse cx="20.18" cy="53.90" rx="6.35" ry="2.45" transform="rotate(-148.6 20.18 53.90)"/>
+<ellipse cx="25.62" cy="51.40" rx="6.35" ry="2.45" transform="rotate(-80.6 25.62 51.40)"/>
+<ellipse cx="16.79" cy="44.35" rx="6.03" ry="2.33" transform="rotate(-140.0 16.79 44.35)"/>
+<ellipse cx="22.26" cy="42.78" rx="6.03" ry="2.33" transform="rotate(-72.0 22.26 42.78)"/>
+<ellipse cx="14.93" cy="34.54" rx="5.71" ry="2.20" transform="rotate(-131.2 14.93 34.54)"/>
+<ellipse cx="20.27" cy="33.87" rx="5.71" ry="2.20" transform="rotate(-63.2 20.27 33.87)"/>
+<ellipse cx="14.59" cy="24.50" rx="5.38" ry="2.08" transform="rotate(-122.5 14.59 24.50)"/>
+<ellipse cx="19.67" cy="24.64" rx="5.38" ry="2.08" transform="rotate(-54.5 19.67 24.64)"/>
+<ellipse cx="15.76" cy="14.26" rx="5.06" ry="1.95" transform="rotate(-114.4 15.76 14.26)"/>
+<ellipse cx="20.46" cy="15.06" rx="5.06" ry="1.95" transform="rotate(-46.4 20.46 15.06)"/>
+</g></svg></span>
+          </a>
+          <a class="award-card" href="https://openreview.net/group?id=IEEE.org/IROS/2026/Workshop/ScaleInfra" target="_blank" rel="noopener">
+            <span class="award-laurel"><svg viewBox="0 0 44 74" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<g fill="currentColor">
+<path d="M34.0 70.0 Q 9.0 40.0 21.0 3.0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<ellipse cx="25.07" cy="63.16" rx="6.68" ry="2.58" transform="rotate(-156.6 25.07 63.16)"/>
+<ellipse cx="30.38" cy="59.77" rx="6.68" ry="2.58" transform="rotate(-88.6 30.38 59.77)"/>
+<ellipse cx="20.18" cy="53.90" rx="6.35" ry="2.45" transform="rotate(-148.6 20.18 53.90)"/>
+<ellipse cx="25.62" cy="51.40" rx="6.35" ry="2.45" transform="rotate(-80.6 25.62 51.40)"/>
+<ellipse cx="16.79" cy="44.35" rx="6.03" ry="2.33" transform="rotate(-140.0 16.79 44.35)"/>
+<ellipse cx="22.26" cy="42.78" rx="6.03" ry="2.33" transform="rotate(-72.0 22.26 42.78)"/>
+<ellipse cx="14.93" cy="34.54" rx="5.71" ry="2.20" transform="rotate(-131.2 14.93 34.54)"/>
+<ellipse cx="20.27" cy="33.87" rx="5.71" ry="2.20" transform="rotate(-63.2 20.27 33.87)"/>
+<ellipse cx="14.59" cy="24.50" rx="5.38" ry="2.08" transform="rotate(-122.5 14.59 24.50)"/>
+<ellipse cx="19.67" cy="24.64" rx="5.38" ry="2.08" transform="rotate(-54.5 19.67 24.64)"/>
+<ellipse cx="15.76" cy="14.26" rx="5.06" ry="1.95" transform="rotate(-114.4 15.76 14.26)"/>
+<ellipse cx="20.46" cy="15.06" rx="5.06" ry="1.95" transform="rotate(-46.4 20.46 15.06)"/>
+</g></svg></span>
+            <span class="award-body">
+              <span class="award-name">Best Demo Paper Award</span>
+              <span class="award-venue">ScaleInfra @ IROS 2026</span>
+              <span class="award-sub">Building Scalable Infrastructure for Robot Learning: From Data Scaling to Real-World Deployment</span>
+            </span>
+            <span class="award-laurel is-right"><svg viewBox="0 0 44 74" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<g fill="currentColor">
+<path d="M34.0 70.0 Q 9.0 40.0 21.0 3.0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+<ellipse cx="25.07" cy="63.16" rx="6.68" ry="2.58" transform="rotate(-156.6 25.07 63.16)"/>
+<ellipse cx="30.38" cy="59.77" rx="6.68" ry="2.58" transform="rotate(-88.6 30.38 59.77)"/>
+<ellipse cx="20.18" cy="53.90" rx="6.35" ry="2.45" transform="rotate(-148.6 20.18 53.90)"/>
+<ellipse cx="25.62" cy="51.40" rx="6.35" ry="2.45" transform="rotate(-80.6 25.62 51.40)"/>
+<ellipse cx="16.79" cy="44.35" rx="6.03" ry="2.33" transform="rotate(-140.0 16.79 44.35)"/>
+<ellipse cx="22.26" cy="42.78" rx="6.03" ry="2.33" transform="rotate(-72.0 22.26 42.78)"/>
+<ellipse cx="14.93" cy="34.54" rx="5.71" ry="2.20" transform="rotate(-131.2 14.93 34.54)"/>
+<ellipse cx="20.27" cy="33.87" rx="5.71" ry="2.20" transform="rotate(-63.2 20.27 33.87)"/>
+<ellipse cx="14.59" cy="24.50" rx="5.38" ry="2.08" transform="rotate(-122.5 14.59 24.50)"/>
+<ellipse cx="19.67" cy="24.64" rx="5.38" ry="2.08" transform="rotate(-54.5 19.67 24.64)"/>
+<ellipse cx="15.76" cy="14.26" rx="5.06" ry="1.95" transform="rotate(-114.4 15.76 14.26)"/>
+<ellipse cx="20.46" cy="15.06" rx="5.06" ry="1.95" transform="rotate(-46.4 20.46 15.06)"/>
+</g></svg></span>
+          </a>
+        </div>
+      </div>
+
       <div class="link-buttons">
         <a href="https://arxiv.org/pdf/2605.24934" target="_blank" rel="noopener"><i class="fas fa-file-pdf"></i>&nbsp;Paper</a>
         <a href="https://arxiv.org/abs/2605.24934" target="_blank" rel="noopener"><i class="ai ai-arxiv"></i>&nbsp;arXiv</a>
@@ -1035,6 +1217,7 @@
         <a href="https://youtu.be/OyLIPKTkR7c" target="_blank" rel="noopener"><i class="fab fa-youtube"></i>&nbsp;5-min Talk (EN)</a>
         <a href="https://www.xiaohongshu.com/explore/6a518e1b000000001702c97a?xsec_token=ABG8M7-mOaTC-ZJUZdWsDslABs-DEcFouhytTD43Rxphs=&amp;xsec_source=pc_user" target="_blank" rel="noopener"><i class="fas fa-play-circle"></i>&nbsp;1h Talk (CN)</a>
         <a href="https://docs.google.com/presentation/d/1vJcPOh1DZwDVXBW2SXHRVrZTwEo1GuZPrejtP6qkeoU/edit?slide=id.g3d768adbbee_0_0#slide=id.g3d768adbbee_0_0" target="_blank" rel="noopener"><i class="fas fa-file-powerpoint"></i>&nbsp;Slides</a>
+        <a href="https://docs.google.com/presentation/d/176mPGtUklhS7h0wZ-SolEQj2gvUoeAjhBWJkmjrhvuw/edit?usp=sharing" target="_blank" rel="noopener"><i class="fas fa-scroll"></i>&nbsp;Poster</a>
         <a href="#bibtex"><i class="fas fa-quote-right"></i>&nbsp;BibTeX</a>
       </div>
 
