@@ -14,3 +14,5 @@ chip at a fixed height):
 | `saturday-robotics.png` | Saturday Robotics   | https://x.com/junfanzhu98/status/2068605511549743127 |
 | `techbeat.png`          | TechBeat            | https://www.techbeat.net/talk-info?id=1057 |
 | `shanghai-ai-lab.png`   | Shanghai AI Lab     | https://meeting.tencent.com/crm/NX6E4Xx7e7 (talk) |
+| `gim.png`               | General Intelligent Machines | https://www.gimai.io/ (talk) |
+| `gamma-lab.png`         | GAMMA Lab, UMD      | https://gamma.umd.edu/ (talk) |
