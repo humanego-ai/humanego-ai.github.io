@@ -1,0 +1,24 @@
+{
+ "clips": [
+  {
+   "src": "media/photo/compare_original.mp4",
+   "title": "Human video \u00b7 simulation \u00b7 generated",
+   "note": "the agent's episode, Blender Cycles composited on the clean plate"
+  },
+  {
+   "src": "media/photo/preview_0000.mp4",
+   "title": "Human camera \u00b7 right wrist \u00b7 robot ZED",
+   "note": "randomized layout 1 (ZED background: the human's table reprojected; outside it, room tone)"
+  },
+  {
+   "src": "media/photo/preview_0001.mp4",
+   "title": "Human camera \u00b7 right wrist \u00b7 robot ZED",
+   "note": "randomized layout 2 (ZED background: the human's table reprojected; outside it, room tone)"
+  },
+  {
+   "src": "media/photo/preview_0002.mp4",
+   "title": "Human camera \u00b7 right wrist \u00b7 robot ZED",
+   "note": "randomized layout 3 (ZED background: the human's table reprojected; outside it, room tone)"
+  }
+ ]
+}

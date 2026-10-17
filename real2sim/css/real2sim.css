@@ -1,0 +1,91 @@
+/* HumanEgo · Real2Sim — additions on top of the shared /sim/ design tokens */
+.hero .tag a{color:var(--txt); text-decoration:underline; text-decoration-color:rgba(255,140,43,.6); text-underline-offset:3px;}
+.hud-chip.phase{font-weight:500; color:#dfe4ec; max-width:420px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+.hud-chip.phase b{color:#fff; font-weight:700; margin-right:6px;}
+.pip.single video{aspect-ratio:4/3;}
+
+.legend .ph{display:inline-flex; align-items:center; gap:7px;}
+.legend .ph i{width:16px; height:6px; border-radius:3px; display:inline-block;}
+
+.minimap .tbl{fill:#16130f; stroke:#3a3026;}
+.minimap .grid{stroke:#262b33; stroke-width:1;}
+.minimap .ep{cursor:pointer;}
+.minimap .ep circle{transition:r .15s, opacity .15s;}
+.minimap .ep:hover circle.c{r:5.5;}
+.minimap .ep.on circle.c{fill:#ffae52; r:6;}
+.minimap .ep.on circle.p{stroke:#ffae52; stroke-width:2; opacity:1;}
+.minimap text{fill:var(--dim); font-size:10px; font-family:Inter,sans-serif;}
+
+.result{grid-template-columns:1fr 1fr;}
+.res-arm .v.ok{color:var(--ok);} .res-arm .v.bad{color:var(--bad);}
+
+/* ---------- pipeline cards ---------- */
+.stage-grid{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:18px;}
+.scard{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; display:flex; flex-direction:column;}
+.scard.wide{grid-column:1 / -1;}
+.scard-h{display:flex; align-items:center; gap:11px; padding:13px 16px; border-bottom:1px solid var(--line);}
+.scard-h .n{font-size:12px; font-weight:800; letter-spacing:.12em; color:var(--accent);}
+.scard-h h4{margin:0; font-size:15px; font-weight:700;}
+.badge{margin-left:auto; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; padding:4px 10px;
+  border-radius:999px; border:1px solid var(--line2); color:var(--mut);}
+.badge.ok{color:var(--ok); border-color:rgba(61,220,151,.45); background:rgba(61,220,151,.08);}
+.scard .media{display:block; width:100%; background:#05070a; border-bottom:1px solid var(--line);}
+.scard video.media{aspect-ratio:4/3; object-fit:cover;}
+.scard p{margin:0; padding:13px 16px 16px; color:var(--mut); font-size:13.5px; line-height:1.55;}
+.scard p b{color:var(--txt); font-weight:600;}
+.scard p a{color:var(--txt);}
+.scard code, .sec-h code{font-size:12px; background:rgba(255,255,255,.06); border:1px solid var(--line); border-radius:6px; padding:1px 5px;}
+
+.subgoals{display:flex; flex-direction:column; gap:7px; padding:13px 16px 0;}
+.sg{display:grid; grid-template-columns:92px 1fr; gap:10px; align-items:start; font-size:12.5px;}
+.sg .m{font-weight:700; color:var(--txt); text-transform:uppercase; font-size:11px; letter-spacing:.08em; padding-top:2px;}
+.sg .m small{display:block; color:var(--dim); font-weight:600; letter-spacing:0; text-transform:none; font-size:11px; margin-top:2px;}
+.sg .g{color:var(--mut); line-height:1.45;}
+.sgbar{position:relative; height:8px; margin:4px 16px 0; border-radius:4px; background:var(--card2); overflow:hidden;}
+.sgbar span{position:absolute; top:0; bottom:0; border-radius:4px;}
+
+.objtab{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px; padding:13px 16px 0;}
+.obj{background:var(--card2); border:1px solid var(--line); border-radius:11px; padding:10px 12px; font-size:12px; color:var(--mut); line-height:1.5;}
+.obj b{color:var(--txt); font-size:13px;}
+.obj .iou{float:right; color:var(--ok); font-weight:700; font-variant-numeric:tabular-nums;}
+
+.kpis{display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:10px; padding:4px 16px 16px;}
+.kpis.big{padding:0; margin-bottom:18px;}
+.kpi{background:var(--card2); border:1px solid var(--line); border-radius:12px; padding:12px 14px;}
+.kpis.big .kpi{background:var(--card);}
+.kpi .k{font-size:10.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--dim);}
+.kpi .v{font-size:22px; font-weight:800; margin-top:5px; font-variant-numeric:tabular-nums; letter-spacing:-.01em;}
+.kpi .v small{font-size:12px; font-weight:600; color:var(--mut); margin-left:3px;}
+.kpi .s{font-size:11.5px; color:var(--mut); margin-top:3px;}
+
+.sec-h.small{margin-top:26px;}
+.sec-h.small h3{margin:0 0 4px; font-size:17px;}
+.tools{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px;}
+.tool{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:14px 16px;}
+.tool .tn{font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13.5px; font-weight:700; color:#ffc58a;}
+.tool .tc{float:right; font-size:11px; font-weight:600; color:var(--dim);}
+.tool p{margin:8px 0 0; font-size:13px; color:var(--mut); line-height:1.55;}
+
+.clips{display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px;}
+.clip{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+.clip .pair{display:grid; grid-template-columns:3fr 2fr; gap:2px; background:#05070a; aspect-ratio:2.05/1;}
+.clip .pair video{height:100%; aspect-ratio:auto;}
+.clip video{display:block; width:100%; aspect-ratio:4/3; object-fit:cover; background:#05070a;}
+.clip .cap{display:flex; justify-content:space-between; gap:8px; padding:8px 12px; font-size:11.5px; color:var(--mut);}
+.clip .cap b{color:var(--txt); font-weight:600;}
+.clips.photo{grid-template-columns:repeat(2, minmax(0,1fr));}
+.clips.photo video{aspect-ratio:auto;}
+.empty{color:var(--mut); font-size:13px; padding:18px; border:1px dashed var(--line2); border-radius:var(--radius); text-align:center;}
+
+.charts{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px; margin-top:18px;}
+.charts canvas{display:block; width:100%; height:240px;}
+.card.fmt{margin-top:18px;}
+.card.fmt pre.code{margin:0; border:0;}
+
+@media(max-width:1080px){
+  .stage-grid, .tools, .charts{grid-template-columns:1fr;}
+  .clips{grid-template-columns:repeat(2, minmax(0,1fr));}
+}
+@media(max-width:560px){
+  .clips, .clips.photo, .objtab{grid-template-columns:1fr;}
+}

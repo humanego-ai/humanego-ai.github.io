@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HumanEgo Real2Sim</title>
+<meta name="description" content="One human egocentric video of serving bread, turned by the DexAgent agentic pipeline into a physics-verified simulation of a Tianji dual-arm robot with SharpaWave dexterous hands, and into hundreds of randomized robot episodes seen from the robot's ZED camera.">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/real2sim.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="kicker">Human → Sim → Robot · Agentic Real2Sim</div>
+  <h1 class="logo">Human<span>Ego</span><small>Real2Sim</small></h1>
+  <p class="tag">One <b>15-second human video</b> of serving bread, captured with Aria glasses, becomes a
+    <b>physics-verified simulation</b> of our <b>Tianji dual-arm robot with SharpaWave dexterous hands</b> &mdash; and then
+    <b>hundreds of randomized robot episodes</b> seen through the robot's own ZED camera. Built by an LLM agent running the
+    <a href="https://github.com/dexagent1/DexAgent" target="_blank" rel="noopener">DexAgent</a> pipeline end to end.</p>
+  <div class="links">
+    <a href="https://humanego-ai.github.io" target="_blank" rel="noopener">🌐 HumanEgo</a>
+    <a href="../sim/" target="_blank" rel="noopener">🤖 Policy Sim</a>
+    <a href="https://github.com/dexagent1/DexAgent" target="_blank" rel="noopener">🧩 DexAgent</a>
+    <a href="https://arxiv.org/abs/2609.35318" target="_blank" rel="noopener">📄 DexAgent paper</a>
+    <a href="#data">📦 Generated data</a>
+  </div>
+  <div class="stats" id="stats"></div>
+</section>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="grp"><span class="grp-l">Run</span><span id="pills-run" class="grp"></span></div>
+    <div class="grp"><span class="grp-l">Camera</span><span id="pills-cam" class="grp"></span></div>
+    <span class="spacer"></span>
+    <span class="count" id="count"></span>
+  </div>
+</div>
+
+<main>
+  <div class="stage">
+    <div>
+      <div class="viewport" id="viewport">
+        <div class="vp-loading" id="loading"><div><div class="spinner"></div><p id="loading-msg">Loading the Tianji + SharpaWave rig…</p></div></div>
+        <div class="hud hud-tl">
+          <div class="hud-chip" id="hud-title"><span class="dot"></span><span>—</span></div>
+          <div class="hud-chip phase" id="hud-phase">—</div>
+        </div>
+        <div class="hud hud-tr" id="pip-wrap">
+          <div class="pip single" id="pip">
+            <video id="pip-video" muted playsinline preload="auto"></video>
+            <div class="pip-cap"><b>Human demonstration</b><span id="pip-cap">Aria · time-normalized</span></div>
+          </div>
+        </div>
+        <div class="hud hud-br">
+          <button class="icon-btn on" data-cam="orbit" title="Orbit">ORB</button>
+          <button class="icon-btn" data-cam="top" title="Top view">TOP</button>
+          <button class="icon-btn" data-cam="zed" title="The robot's ZED 2i (what a policy sees)">ZED</button>
+          <button class="icon-btn" data-cam="wrist" title="Wrist camera of the acting hand">WR</button>
+          <button class="icon-btn" data-cam="human" title="The human's Aria camera">EYE</button>
+        </div>
+        <div class="timeline">
+          <button class="play-btn" id="play" aria-label="Play / pause"><svg viewBox="0 0 24 24" id="play-ico"><path d="M8 5v14l11-7z"/></svg></button>
+          <div class="track" id="track"><canvas id="track-canvas"></canvas><input id="scrub" type="range" min="0" max="1000" value="0" step="1"></div>
+          <div class="speed" id="speed"><button data-s="0.5">0.5×</button><button data-s="1" class="on">1×</button><button data-s="2">2×</button></div>
+          <div class="tlabel" id="tlabel">0.0 s</div>
+        </div>
+      </div>
+      <div class="legend" id="phase-legend"></div>
+    </div>
+
+    <aside class="side">
+      <div class="card">
+        <div class="card-h"><h3>Initial layout</h3><span class="meta" id="mm-meta"></span></div>
+        <svg class="minimap" id="minimap" viewBox="0 0 340 260"></svg>
+        <div class="mm-help">Each pair is one <b>physics-verified episode</b> (● croissant, ○ plate start). The ★ is the agent's
+          episode retargeted from the human video; the rest are DexAgent Stage 4 randomizations, every one re-simulated in
+          contact physics. Click to load.</div>
+        <div class="row-btns">
+          <button class="btn" id="btn-shuffle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>Shuffle</button>
+          <button class="btn primary" id="btn-orig"><svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>Original</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><h3>Outcome · recorded physics</h3><span class="meta" id="res-meta"></span></div>
+        <div class="result" id="result"></div>
+      </div>
+    </aside>
+  </div>
+
+  <section class="section" id="pipeline">
+    <div class="sec-h"><h2>From one human video to a robot simulation</h2>
+      <p>The four DexAgent stages, each run by an LLM agent with a tool library and judged by independent verifiers. Every artifact below is the actual output of this run.</p></div>
+    <div class="stage-grid">
+      <div class="scard">
+        <div class="scard-h"><span class="n">00</span><h4>Human demonstration</h4><span class="badge">input</span></div>
+        <video class="media" src="media/human_right.mp4" muted loop playsinline autoplay></video>
+        <p>HumanEgo <code>serve_bread</code> episode 040 &mdash; Aria glasses, 15.1 s, right hand. Converted to DexAgent's EgoDex format:
+          per-frame head-camera pose (MPS SLAM) and the 3D hand skeleton (MPS hand tracking) &mdash; the head moves only 2 cm / 3°.</p>
+      </div>
+      <div class="scard">
+        <div class="scard-h"><span class="n">01</span><h4>Semantic understanding</h4><span class="badge ok" id="b-s1">passed</span></div>
+        <img class="media" src="media/s1_sheet.jpg" alt="Stage 1 contact sheet" loading="lazy">
+        <div class="subgoals" id="subgoals"></div>
+        <p>The agent reads the video through contact sheets and writes <code>scene_semantics.json</code>: two rigid objects and three subgoals with measurable goals.</p>
+      </div>
+      <div class="scard">
+        <div class="scard-h"><span class="n">02</span><h4>Property-based reconstruction</h4><span class="badge ok" id="b-s2">passed</span></div>
+        <img class="media" src="media/s2_compare_right.jpg" alt="video | simulation | blend" loading="lazy">
+        <div class="objtab" id="objtab"></div>
+        <p>SAM 3 masks, the EgoDex camera, then objects built by library skills and placed where the video shows them on the
+          Tianji bench. The croissant needed a shape no skill had: the agent <b>wrote and tested a new one</b>.</p>
+      </div>
+      <div class="scard">
+        <div class="scard-h"><span class="n">03</span><h4>Robot trajectory generation</h4><span class="badge ok" id="b-s3">passed</span></div>
+        <video class="media" src="media/s3_sim_right.mp4" muted loop playsinline autoplay></video>
+        <p>Grasp synthesis, 7-DOF arm IK, and execution in contact physics with motor-torque arms and position-servoed fingers.
+          The human's whole-hand wrap did not survive the static screen; the agent converged on a <b>top-down thumb–index pinch
+          over the croissant's centre of mass</b> and removed a 30–85 N release spike by tracing six finger-geometry causes.</p>
+      </div>
+      <div class="scard wide">
+        <div class="scard-h"><span class="n">04</span><h4>Robot data generation</h4><span class="badge ok">running at scale</span></div>
+        <p>DexAgent Stage 4 re-draws the object layout (here ±7 cm, ±35°), anchors each hand segment to the object it acts on,
+          re-solves the arm, and keeps a layout only if a full <b>contact-physics replay</b> passes every subgoal check. The
+          accepted episodes are rendered from the robot's ZED and wrist cameras with domain randomization &mdash; see <a href="#data">Generated data</a>.</p>
+        <div class="kpis" id="s4-kpis"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="agent">
+    <div class="sec-h"><h2>The agent at work</h2><p>Rounds, tool calls and verifier verdicts per stage, for the original (right-arm) and the mirrored (left-arm, real-rig) runs. No API key: a Claude subagent answered DexAgent's own harness through its file transport.</p></div>
+    <div class="card"><table class="res" id="agent-table"></table>
+      <div class="note" id="agent-note"></div></div>
+    <div class="sec-h small"><h3>Self-evolving tool library</h3><p>Tools the agent created and tested through <code>library_create</code> during these runs; they are now part of the library.</p></div>
+    <div class="tools" id="tools"></div>
+  </section>
+
+  <section class="section" id="data">
+    <div class="sec-h"><h2>Generated data</h2><p>Every episode is a physics replay that passed DexAgent's checks; each is rendered twice with a different appearance draw. ZED 2i (robot head) + wrist camera, 640×480 @ 15 fps, with depth, 58-joint states and actions, hand and object poses, phase labels.</p></div>
+    <div class="kpis big" id="ds-kpis"></div>
+    <div class="clips" id="clips"></div>
+    <div class="charts">
+      <div class="card"><div class="card-h"><h3>Start layouts</h3><span class="meta">rig frame, top view</span></div><canvas id="ch-layout"></canvas></div>
+      <div class="card"><div class="card-h"><h3>Croissant start rotation</h3><span class="meta">randomized yaw offset, deg</span></div><canvas id="ch-lift"></canvas></div>
+      <div class="card"><div class="card-h"><h3>Final distance to plate centre</h3><span class="meta">cm</span></div><canvas id="ch-final"></canvas></div>
+      <div class="card"><div class="card-h"><h3>Action → next state</h3><span class="meta">max arm error, deg</span></div><canvas id="ch-track"></canvas></div>
+    </div>
+    <div class="card fmt"><pre class="code"><span class="c"># one episode of datasets/serve_bread_040_tianji/</span>
+ep_shard_01_0007_r0/
+  ego.mp4          <span class="c"># ZED 2i, 640x480 @ 15 fps</span>
+  wrist_right.mp4  <span class="c"># wrist camera of the acting hand</span>
+  depth_ego.npz    <span class="c"># uint16 depth (mm)</span>
+  data.npz         <span class="c"># qpos/qvel/action [T, 58] by joint name (14 arm + 44 hand), ee/* and object/* poses, labels</span>
+  meta.json        <span class="c"># source sample + layout, randomization draw, camera intrinsics/extrinsics, instruction</span></pre></div>
+  </section>
+
+  <section class="section" id="photoreal">
+    <div class="sec-h"><h2>Photoreal composites</h2><p>DexAgent's own Stage 4 render path: Blender Cycles renders of the robot and objects composited onto the human video's clean background plate, plus the wrist and ZED views.</p></div>
+    <div class="clips photo" id="photo"></div>
+  </section>
+
+  <section class="section" id="port">
+    <div class="sec-h"><h2>Porting DexAgent to our rig</h2><p>DexAgent ships for a 6-DOF YAM bench; everything needed for a 7-DOF Tianji torso with SharpaWave hands and a ZED head camera.</p></div>
+    <div class="pipe">
+      <div class="step"><div class="n">INPUT</div><h4>Aria → EgoDex</h4><p>MPS SLAM poses rotated z-up → y-up, the 21 MPS hand landmarks mapped to the 25 ARKit joints. A mirrored copy turns the right-hand demo into a left-hand one for the real rig.</p></div>
+      <div class="step"><div class="n">SETUP</div><h4>Tianji + Sharpa + ZED</h4><p>Generated from <code>far_dexbot.urdf</code>: arms in DexAgent's naming, the hand clocked 180° on the flange as on the real robot, the ZED from the hand-eye calibration, home pose by IK.</p></div>
+      <div class="step"><div class="n">LIBRARY</div><h4>7-DOF arms</h4><p>Motor caps 108/108/66/66/18/18/18 N·m, gains and inertias from the setup; a computed-torque feed-forward removes the 18–80 N contact spikes the heavy arm caused; MPC/RL residuals sized per arm.</p></div>
+      <div class="step"><div class="n">DATA</div><h4>Robot-camera renders</h4><p>Stage 4 samples rendered from the ZED and wrist with MuJoCo (ms per frame) and domain randomization; Cycles composites for the photoreal subset; a clean plate without VOID.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>HumanEgo · University of Maryland &nbsp;·&nbsp; Pipeline: <a href="https://github.com/dexagent1/DexAgent" target="_blank" rel="noopener">DexAgent</a> (Wang et al., 2026),
+  run by Claude &nbsp;·&nbsp; Robot: Tianji (TJ Marvin) + SharpaWave + ZED 2i &nbsp;·&nbsp; Physics: MuJoCo</footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
