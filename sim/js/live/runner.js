@@ -42,7 +42,8 @@ export class LiveEpisode {
     }
     this.arms = {};
     for (const s of this.sides) {
-      const arm = new SimArm(mj, model, data, s, spec.robot, spec.T_base_in_world[s], spec.T_base_in_cam[s], this.cc.tcp_offset || 0);
+      const arm = new SimArm(mj, model, data, s, spec.robot, spec.T_base_in_world[s], spec.T_base_in_cam[s], this.cc.tcp_offset || 0,
+                            this.cc.tool_pitch_deg || 0);
       arm.setJInstant(spec.robot.initial_joints[s], spec.robot.gripper_open);
       this.arms[s] = arm;
     }
@@ -185,11 +186,26 @@ export class LiveEpisode {
     return c;
   }
 
+  /** Lowest surface point of an object (soft bread: lowest flex vertex; else grid / body estimate). */
+  lowestZ(name) {
+    const d = this.data, m = this.model, o = this.spec.objects[name];
+    if (o.soft && d.flexvert_xpos && m.flex_vertadr && o.flex !== undefined) {
+      const a = m.flex_vertadr[o.flex], n = m.flex_vertnum[o.flex];
+      let z = Infinity;
+      for (let i = 0; i < n; i++) z = Math.min(z, d.flexvert_xpos[3 * (a + i) + 2]);
+      return z;
+    }
+    if (o.soft) { let z = Infinity; for (const b of o.nodes) z = Math.min(z, d.xpos[3 * b + 2]); return z; }
+    return this.objectPos(name)[2] - o.half_height;
+  }
+
+  /** Served = released and resting on the plate: centre over the plate, no part touching the table. */
   evaluate() {
     const sp = this.spec, out = {}, pl = this.objectPos('plate'), pp = [pl[0], pl[1]];
     for (const s of this.sides) {
-      const bp = this.objectPos(`bread_${s}`), dxy = Math.hypot(bp[0] - pp[0], bp[1] - pp[1]), z = bp[2];
-      out[s] = { success: dxy < sp.objects.plate.R - 0.02 && z > 0.004 && z < 0.12 && !this.arms[s].cmdClosed(), dist_to_plate_center: dxy };
+      const n = `bread_${s}`, bp = this.objectPos(n), dxy = Math.hypot(bp[0] - pp[0], bp[1] - pp[1]);
+      out[s] = { success: dxy < sp.objects.plate.R && this.lowestZ(n) > 0.003 && bp[2] < 0.12 && !this.arms[s].cmdClosed(),
+                 dist_to_plate_center: dxy };
     }
     return out;
   }

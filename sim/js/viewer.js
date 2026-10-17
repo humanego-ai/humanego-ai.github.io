@@ -32,7 +32,7 @@ export class SimViewer {
     this.loader = new GLTFLoader();
     this.texLoader = new THREE.TextureLoader();
     this.cache = new Map();
-    this.overlays = { traj: true, kpts: true, frames: false };
+    this.overlays = { traj: true, kpts: false, frames: false };   // keypoints / object frames off by default
     this.time = 0;
 
     const r = this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });

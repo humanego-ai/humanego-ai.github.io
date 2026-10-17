@@ -59,13 +59,18 @@ class JointInterp {
 }
 
 export class SimArm {
-  constructor(mj, model, data, side, R, T_base_in_world, T_base_in_cam, tcpOffset = 0) {
+  constructor(mj, model, data, side, R, T_base_in_world, T_base_in_cam, tcpOffset = 0, toolPitchDeg = 0) {
     Object.assign(this, { mj, model, data, side, R });
     this.pre = side + '/';
     this.Tbw = T_base_in_world; this.Twb = M.inv4(T_base_in_world); this.Tbc = T_base_in_cam;
     const Rt = R.R_tool_to_ee;   // 3x3 row-major
     const off = M.mul3v(Rt, [0, 0, tcpOffset]);
-    this.C = M.fromRp(Rt, off); this.Ci = M.inv4(this.C);
+    this.C = M.fromRp(Rt, off);
+    if (toolPitchDeg) {      // gripper held rotated about the EE spread axis (driver.py: tool_pitch_deg)
+      const a = toolPitchDeg * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+      this.C = M.mul4(this.C, [1, 0, 0, 0, 0, c, -s, 0, 0, s, c, 0, 0, 0, 0, 1]);
+    }
+    this.Ci = M.inv4(this.C);
     const jid = (n) => model.jnt(this.pre + n).id;
     this.jids = R.arm_joints.map(jid);
     this.qadr = this.jids.map((j) => model.jnt_qposadr[j]);
