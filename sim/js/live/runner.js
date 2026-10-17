@@ -85,7 +85,7 @@ export class LiveEpisode {
 
   /** runner.py _perceived_geometry: bread centre / long axis and a place height, from perception only. */
   _perceivedGeometry(side, o) {
-    const Tcw = this.spec.T_cam_in_world, pts = {}, out = {};
+    const sp = this.spec, Tcw = sp.T_cam_in_world, pts = {}, out = {};
     for (const [k, m] of Object.entries(o.meta || {})) {
       let Ts = m.T_static, kl = m.kpts_local;
       if (side === 'left') { Ts = mirrorPose(Ts); kl = kl.map((q) => [-q[0], q[1], q[2]]); }
@@ -94,6 +94,10 @@ export class LiveEpisode {
     const b = pts.obj1;
     if (b && b.length >= 3) {
       const c = [0, 1, 2].map((i) => b.reduce((acc, q) => acc + q[i], 0) / b.length);
+      if ((sp.perception?.bread_centre_height ?? 'half_top') === 'half_top') {   // half the top height (runner.py)
+        const top = b.map((q) => q[2]).sort((u, v) => u - v).slice(-3);
+        c[2] = 0.5 * top.reduce((acc, z) => acc + z, 0) / top.length;
+      }
       let sxx = 0, syy = 0, sxy = 0;
       for (const q of b) { const x = q[0] - c[0], y = q[1] - c[1]; sxx += x * x; syy += y * y; sxy += x * y; }
       const th = 0.5 * Math.atan2(2 * sxy, sxx - syy), a = [Math.cos(th), Math.sin(th), 0];
