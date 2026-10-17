@@ -29,7 +29,7 @@ export class LiveSession {
     if (!this.policy) this.policy = await LivePolicy.create('assets/policy/', this.status);
     this.cam = new PolicyCamera(this.viewer, this.viewer.model.policy_camera);
     this.key = key; this.mj = mj;
-    this.status(`Ready · ${this.policy.device === 'webgpu' ? 'WebGPU' : 'CPU (int8, slower)'}`);
+    this.status(`Ready · ${this.policy.device === 'webgpu' ? 'WebGPU · 20 flow steps' : 'CPU · 10 flow steps (slower)'}`);
   }
 
   async run(scene, seed = 0, onPolicy, onDone) {

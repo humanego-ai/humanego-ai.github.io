@@ -444,8 +444,11 @@ function renderTuning() {
     tun.batches.forEach((b, i) => {
       g.fillStyle = 'rgba(152,162,179,.35)';
       for (const v of b.scores) { g.beginPath(); g.arc(X(i) + (Math.random() - .5) * 8, Y(v), 2.6, 0, 7); g.fill(); }
-      g.fillStyle = '#6b7586'; g.fillText(`b${i}`, X(i) - 7, H - 12);
-      if (b.action) { g.fillStyle = b.action === 'revise_global' ? '#c084fc' : '#4b5363'; g.fillText(b.action.replace('_', ' '), X(i) - 26, H - 1); }
+      const tx = Math.min(Math.max(X(i), L + 30), W - R - 30);
+      g.textAlign = 'center';
+      g.fillStyle = '#6b7586'; g.fillText(`b${i}`, tx, H - 13);
+      if (b.action) { g.fillStyle = b.action === 'revise_global' ? '#c084fc' : '#4b5363'; g.fillText(b.action.replace('_', ' '), tx, H - 1); }
+      g.textAlign = 'start';
     });
     g.strokeStyle = '#ff8c2b'; g.lineWidth = 2.2; g.beginPath();
     let best = -1;
@@ -453,7 +456,7 @@ function renderTuning() {
     g.stroke();
   };
   draw(); window.addEventListener('resize', draw);
-  $('#tune-note').innerHTML = tun.note || '';
+  $('#tune-note').innerHTML = tun.note || `Search in progress: ${tun.batches.length} batches so far. Grey dots are candidate parameter sets (per-arm success on the batch's shared random scenes); orange is the best so far.`;
 }
 
 window.__sim = { viewer, state, syncVideo };
