@@ -10,6 +10,7 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { GTAOPass } from 'three/addons/postprocessing/GTAOPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { SoftBread } from './softbread.js';
 
 const TMP_M = new THREE.Matrix4(), TMP_M2 = new THREE.Matrix4();
 const TMP_Q = new THREE.Quaternion(), TMP_Q2 = new THREE.Quaternion();
@@ -187,7 +188,8 @@ export class SimViewer {
     });
     this.bodies = bodies;
     this.objectBodies = {};
-    const assets = [...new Set(model.geoms.filter(g => g.asset).map(g => g.asset))];
+    const assets = [...new Set([...model.geoms.filter(g => g.asset).map(g => g.asset),
+                                ...Object.values(model.soft || {}).map(sp => sp.asset)])];
     let done = 0;
     await Promise.all(assets.map(a => this._gltf(a).then(() => onProgress?.(++done / assets.length))));
     for (const g of model.geoms) {
@@ -207,8 +209,10 @@ export class SimViewer {
           obj.traverse(o => { if (o.isMesh && o.material && o.material.aoMap) { o.material.aoMapIntensity = 0.3; o.material.envMapIntensity = 1.35; } });
           const ms = g.material && model.materials[g.material];
           if (ms) {   // e.g. the ceramic plate: physically based override, double sided
-            const mat = new THREE.MeshPhysicalMaterial({ color: new THREE.Color(...ms.color), roughness: ms.roughness ?? 0.2,
-              metalness: 0, clearcoat: ms.clearcoat ?? 0.8, clearcoatRoughness: 0.06, side: THREE.DoubleSide });
+            // colours measured from photos are sRGB
+            const mat = new THREE.MeshPhysicalMaterial({ color: new THREE.Color().setRGB(...ms.color, THREE.SRGBColorSpace),
+              roughness: ms.roughness ?? 0.2, metalness: 0, clearcoat: ms.clearcoat ?? 0.8, clearcoatRoughness: 0.18,
+              side: THREE.DoubleSide });
             obj.traverse(o => { if (o.isMesh) { o.material = mat; o.geometry.computeVertexNormals(); } });
           }
           const wrap = new THREE.Group(); wrap.add(obj); obj = wrap;
@@ -230,6 +234,15 @@ export class SimViewer {
       b.grp.add(holder);
       if (b.name.startsWith('bread_') || b.name === 'plate') this.objectBodies[b.name] = b;
       if (b.name.includes('gripper')) { obj.userData.gripper = true; }
+    }
+    // soft breads: a deformable GLB in a group that carries the bread's rigid frame
+    this.soft = {};
+    for (const [name, sp] of Object.entries(model.soft || {})) {
+      const gl = await this._gltf(sp.asset);
+      const sb = new SoftBread(name, sp, gl.scene);
+      this.root.add(sb.group);
+      this.soft[name] = sb;
+      this.objectBodies[name] = { name, grp: sb.group, soft: sb, joints: [] };
     }
     // gripper finger meshes get their own material instance so they can glow when latched
     this.fingerMats = {};
@@ -292,6 +305,20 @@ export class SimViewer {
     this.t0 = ro.frames[0][0];
     this.t1 = ro.frames[ro.frames.length - 1][0];
     this.qbuf = new Float64Array(this.model.nq);
+    // frame columns: qpos[q_keep] then one pose (pos + wxyz) per soft bread (web_export.frame_layout)
+    const L = ro.frames[0].length - 1 === this.model.nq ? null : this.model.frame_layout;
+    this.qKeep = L ? L.q_keep : null;
+    this.softCols = {};
+    if (L) L.soft.forEach((n, i) => { this.softCols[n] = L.q_keep.length + 7 * i; });
+    this.vbuf = new Float64Array(ro.frames[0].length - 1);
+    this.quatCols = [];
+    for (const j of this.jlist) if (j.type === 'free') {
+      const c = this.qKeep ? this.qKeep.indexOf(j.qadr + 3) : j.qadr + 3;
+      if (c >= 0) this.quatCols.push(c);
+    }
+    for (const c of Object.values(this.softCols)) this.quatCols.push(c + 3);
+    this.deform = ro.deform || {};
+    this.dbuf = {};
     this.polTimes = ro.policy.map(p => p.t);
     this.appear = ro.appear || {};
     this._buildKpts();
@@ -307,23 +334,62 @@ export class SimViewer {
     }
     const a = F[lo], b = F[hi];
     const s = hi === lo ? 0 : (t - a[0]) / (b[0] - a[0]);
-    const q = this.qbuf;
-    for (let i = 0; i < q.length; i++) q[i] = a[i + 1] + (b[i + 1] - a[i + 1]) * s;
-    for (const j of this.jlist) {                       // slerp free-joint quaternions
-      if (j.type !== 'free') continue;
-      const k = j.qadr + 4;   // +1 for the time column, +3 for xyz
+    const v = this.vbuf;
+    for (let i = 0; i < v.length; i++) v[i] = a[i + 1] + (b[i + 1] - a[i + 1]) * s;
+    for (const c of this.quatCols) {                    // slerp free-joint / soft-bread quaternions (wxyz)
+      const k = c + 1;                                  // +1 for the time column
       TMP_Q.set(a[k + 1], a[k + 2], a[k + 3], a[k]);
       TMP_Q2.set(b[k + 1], b[k + 2], b[k + 3], b[k]);
       TMP_Q.slerp(TMP_Q2, s);
-      q[j.qadr + 3] = TMP_Q.w; q[j.qadr + 4] = TMP_Q.x; q[j.qadr + 5] = TMP_Q.y; q[j.qadr + 6] = TMP_Q.z;
+      v[c] = TMP_Q.w; v[c + 1] = TMP_Q.x; v[c + 2] = TMP_Q.y; v[c + 3] = TMP_Q.z;
     }
+    if (!this.qKeep) return v;
+    const q = this.qbuf, K = this.qKeep;
+    for (let i = 0; i < K.length; i++) q[K[i]] = v[i];
     return q;
   }
+
+  // soft-bread residuals at time t (sparse track, linear in time; absent = undeformed)
+  _deformAt(name, t) {
+    const tr = this.deform[name];
+    if (!tr || !tr.t.length || t < tr.t[0] || t > tr.t[tr.t.length - 1]) return null;
+    const T = tr.t;
+    let lo = 0, hi = T.length - 1;
+    while (hi - lo > 1) { const mid = (lo + hi) >> 1; if (T[mid] <= t) lo = mid; else hi = mid; }
+    const ra = tr.r[lo], rb = tr.r[hi];
+    if (!ra && !rb) return null;
+    const s = hi === lo ? 0 : (t - T[lo]) / (T[hi] - T[lo]);
+    const n = (ra || rb).length;
+    const D = (this.dbuf[name] ||= new Float32Array(n));
+    for (let i = 0; i < n; i++) D[i] = 1e-4 * ((ra ? ra[i] : 0) * (1 - s) + (rb ? rb[i] : 0) * s);
+    return D;
+  }
+
+  _applySoftReplay(t) {
+    const v = this.vbuf;
+    for (const [name, c] of Object.entries(this.softCols)) {
+      const sb = this.soft[name]; if (!sb) continue;
+      sb.setPose([v[c], v[c + 1], v[c + 2]], [v[c + 3], v[c + 4], v[c + 5], v[c + 6]]);
+      sb.setDisplacement(this._deformAt(name, t));
+    }
+  }
+
+  _applySoftLive() {
+    for (const sb of Object.values(this.soft || {})) {
+      const P = (sb._P ||= new Float32Array(3 * sb.nNode));
+      sb.nodes.forEach((bid, i) => { if (bid < 0) return; const e = this.bodies[bid].world.elements; P[3 * i] = e[12]; P[3 * i + 1] = e[13]; P[3 * i + 2] = e[14]; });
+      sb.fromNodes(P);
+    }
+  }
+
+  /** World matrix of an object's frame (soft breads: fitted frame of the deformation grid). */
+  objectMatrix(name) { const b = this.objectBodies[name]; return b ? b.grp.matrix : null; }
 
   setTime(t) {
     if (!this.frames) return;
     this.time = Math.min(Math.max(t, this.t0), this.t1);
     this._fk(this._interp(this.time));
+    this._applySoftReplay(this.time);
     // intro: objects pop in, then fall under the recorded physics
     for (const [name, b] of Object.entries(this.objectBodies)) {
       const ta = this.appear[name];
@@ -467,6 +533,7 @@ export class SimViewer {
   setLiveState(qpos, entries, t) {
     if (!this.live) return;
     this._fk(qpos);
+    this._applySoftLive();
     for (const b of Object.values(this.objectBodies)) b.grp.visible = true;
     this.time = t;
     this.model.sides.forEach((side, si) => {

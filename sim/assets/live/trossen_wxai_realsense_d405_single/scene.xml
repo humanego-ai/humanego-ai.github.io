@@ -1,7 +1,7 @@
 <mujoco model="humanego_serve_bread_trossen_wxai_single">
   <compiler angle="radian" meshdir="meshes"/>
 
-  <option impratio="10" integrator="implicitfast" cone="elliptic"/>
+  <option impratio="100" integrator="discrete" cone="elliptic"/>
 
   <size nkey="1"/>
 
@@ -9,7 +9,7 @@
 
   <visual>
     <global offwidth="1920" offheight="1440"/>
-    <headlight ambient="0.35 0.35 0.35" diffuse="0.45 0.45 0.45" specular="0 0 0"/>
+    <headlight ambient="0.22 0.22 0.22" diffuse="0.22 0.22 0.22" specular="0 0 0"/>
   </visual>
 
   <default>
@@ -28,12 +28,6 @@
   </default>
 
   <asset>
-    <mesh name="croissant_col0" file="croissant_col0.obj"/>
-    <mesh name="croissant_col1" file="croissant_col1.obj"/>
-    <mesh name="croissant_col2" file="croissant_col2.obj"/>
-    <mesh name="croissant_col3" file="croissant_col3.obj"/>
-    <mesh name="croissant_col4" file="croissant_col4.obj"/>
-    <mesh name="croissant_col5" file="croissant_col5.obj"/>
     <mesh name="right/base_link_collision" file="right__base_link_collision.obj" maxhullvert="64"/>
     <mesh name="right/base_link_collision.001" file="right__base_link_collision.001.obj" maxhullvert="64"/>
     <mesh name="right/base_link_collision.002" file="right__base_link_collision.002.obj" maxhullvert="64"/>
@@ -67,8 +61,8 @@
   <worldbody>
     <geom name="floor" size="4 4 0.05" pos="0.4 0 -0.76" type="plane"/>
     <camera name="policy_cam" quat="-0.632814 -0.31551 0.31551 0.632814" pos="0 0 0.436" fovy="57.2209"/>
-    <light name="key" pos="-0.6 0.8 2.5" dir="0.222834 -0.297113 -0.928477" diffuse="0.55 0.55 0.55" specular="0.15 0.15 0.15" type="directional"/>
-    <light name="fill" castshadow="false" pos="1.5 -1 2" dir="-0.557086 0.371391 -0.742781" diffuse="0.25 0.25 0.25" type="directional"/>
+    <light name="key" pos="-0.6 0.8 2.5" dir="0.222834 -0.297113 -0.928477" diffuse="0.48 0.48 0.48" specular="0.15 0.15 0.15" type="directional"/>
+    <light name="fill" castshadow="false" pos="1.5 -1 2" dir="-0.557086 0.371391 -0.742781" diffuse="0.16 0.16 0.16" type="directional"/>
     <body name="table">
       <geom name="table_top" size="0.665 0.75 0.0225" pos="0.315 0 -0.0225" type="box" friction="0.8"/>
     </body>
@@ -169,14 +163,275 @@
         </body>
       </body>
     </frame>
-    <body name="bread_right" pos="0.47 -0.15 0.0255" quat="0.67559 0 0 0.737277">
-      <joint name="bread_right_free" type="free"/>
-      <geom name="bread_right_col0" quat="1 0 0 0" type="mesh" condim="4" group="3" priority="1" friction="2 0.02 0.002" solref="0.008" rgba="0.8 0.5 0.2 0" density="239.801" mesh="croissant_col0"/>
-      <geom name="bread_right_col1" quat="1 0 0 0" type="mesh" condim="4" group="3" priority="1" friction="2 0.02 0.002" solref="0.008" rgba="0.8 0.5 0.2 0" density="239.801" mesh="croissant_col1"/>
-      <geom name="bread_right_col2" quat="1 0 0 0" type="mesh" condim="4" group="3" priority="1" friction="2 0.02 0.002" solref="0.008" rgba="0.8 0.5 0.2 0" density="239.801" mesh="croissant_col2"/>
-      <geom name="bread_right_col3" quat="1 0 0 0" type="mesh" condim="4" group="3" priority="1" friction="2 0.02 0.002" solref="0.008" rgba="0.8 0.5 0.2 0" density="239.801" mesh="croissant_col3"/>
-      <geom name="bread_right_col4" quat="1 0 0 0" type="mesh" condim="4" group="3" priority="1" friction="2 0.02 0.002" solref="0.008" rgba="0.8 0.5 0.2 0" density="239.801" mesh="croissant_col4"/>
-      <geom name="bread_right_col5" quat="1 0 0 0" type="mesh" condim="4" group="3" priority="1" friction="2 0.02 0.002" solref="0.008" rgba="0.8 0.5 0.2 0" density="239.801" mesh="croissant_col5"/>
+    <body name="bread_right_0_0_0" pos="0.401 -0.181 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_0_0_1" pos="0.401 -0.181 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_0_0_2" pos="0.401 -0.181 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_0_1_0" pos="0.401 -0.15 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_0_1_1" pos="0.401 -0.15 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_0_1_2" pos="0.401 -0.15 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_0_2_0" pos="0.401 -0.119 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_0_2_1" pos="0.401 -0.119 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_0_2_2" pos="0.401 -0.119 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_1_0_0" pos="0.4355 -0.181 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_1_0_1" pos="0.4355 -0.181 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_1_0_2" pos="0.4355 -0.181 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_1_1_0" pos="0.4355 -0.15 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_1_1_1" pos="0.4355 -0.15 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_1_1_2" pos="0.4355 -0.15 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_1_2_0" pos="0.4355 -0.119 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_1_2_1" pos="0.4355 -0.119 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_1_2_2" pos="0.4355 -0.119 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_2_0_0" pos="0.47 -0.181 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_2_0_1" pos="0.47 -0.181 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_2_0_2" pos="0.47 -0.181 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_2_1_0" pos="0.47 -0.15 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_2_1_1" pos="0.47 -0.15 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_2_1_2" pos="0.47 -0.15 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_2_2_0" pos="0.47 -0.119 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_2_2_1" pos="0.47 -0.119 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_2_2_2" pos="0.47 -0.119 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_3_0_0" pos="0.5045 -0.181 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_3_0_1" pos="0.5045 -0.181 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_3_0_2" pos="0.5045 -0.181 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_3_1_0" pos="0.5045 -0.15 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_3_1_1" pos="0.5045 -0.15 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_3_1_2" pos="0.5045 -0.15 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_3_2_0" pos="0.5045 -0.119 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_3_2_1" pos="0.5045 -0.119 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_3_2_2" pos="0.5045 -0.119 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_4_0_0" pos="0.539 -0.181 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_4_0_1" pos="0.539 -0.181 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_4_0_2" pos="0.539 -0.181 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_4_1_0" pos="0.539 -0.15 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_4_1_1" pos="0.539 -0.15 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_4_1_2" pos="0.539 -0.15 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_4_2_0" pos="0.539 -0.119 0.000799999">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_4_2_1" pos="0.539 -0.119 0.0258">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
+    </body>
+    <body name="bread_right_4_2_2" pos="0.539 -0.119 0.0508">
+      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <joint type="slide" axis="1 0 0"/>
+      <joint type="slide" axis="0 1 0"/>
+      <joint type="slide"/>
     </body>
     <body name="plate" pos="0.47 0.11 0.0005">
       <joint name="plate_free" type="free"/>
@@ -212,6 +467,13 @@
     </body>
   </worldbody>
 
+  <deformable>
+    <flex name="bread_right" group="3" radius="0.001" rgba="0.9 0.6 0.2 0" cellcount="4 2 2" dof="trilinear" body="world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world" vertex="0.402246 -0.153086 0.000799999 0.402246 -0.151922 0.000840169 0.402246 -0.151405 0.00096275 0.402246 -0.151156 0.00118772 0.402246 -0.151175 0.00166505 0.402246 -0.151553 0.00207675 0.402246 -0.152235 0.00236165 0.402246 -0.153086 0.00246333 0.402246 -0.153936 0.00236165 0.402246 -0.154619 0.00207675 0.402246 -0.154997 0.00166505 0.402246 -0.155015 0.00118772 0.402246 -0.154767 0.00096275 0.402246 -0.154249 0.00084017 0.404322 -0.1529 0.000799999 0.404322 -0.149931 0.000928589 0.404322 -0.14861 0.00132102 0.404322 -0.147976 0.00204121 0.404322 -0.148022 0.00356931 0.404322 -0.148988 0.00488726 0.404322 -0.150729 0.00579932 0.404322 -0.1529 0.00612483 0.404322 -0.15507 0.00579932 0.404322 -0.156811 0.00488726 0.404322 -0.157777 0.00356931 0.404322 -0.157823 0.00204121 0.404322 -0.157189 0.00132102 0.404322 -0.155868 0.000928589 0.407735 -0.152606 0.0008 0.407735 -0.147509 0.00104991 0.407735 -0.145241 0.00181259 0.407735 -0.144152 0.00321227 0.407735 -0.144232 0.00618212 0.407735 -0.14589 0.00874355 0.407735 -0.148879 0.0105161 0.407735 -0.152606 0.0111487 0.407735 -0.156333 0.0105161 0.407735 -0.159322 0.00874355 0.407735 -0.16098 0.00618212 0.407735 -0.16106 0.00321227 0.407735 -0.159971 0.00181259 0.407735 -0.157703 0.00104991 0.412415 -0.152229 0.0008 0.412415 -0.144819 0.00119351 0.412415 -0.141522 0.00239442 0.412415 -0.139938 0.00459833 0.412415 -0.140055 0.0092746 0.412415 -0.142466 0.0133078 0.412415 -0.146811 0.0160989 0.412415 -0.152229 0.017095 0.412415 -0.157647 0.0160989 0.412415 -0.161992 0.0133078 0.412415 -0.164403 0.0092746 0.412415 -0.16452 0.00459833 0.412415 -0.162936 0.00239442 0.412415 -0.159639 0.00119351 0.418268 -0.151799 0.000799999 0.418268 -0.14201 0.00134936 0.418268 -0.137655 0.00302589 0.418268 -0.135563 0.00610266 0.418268 -0.135716 0.012631 0.418268 -0.138902 0.0182615 0.418268 -0.144642 0.022158 0.418268 -0.151799 0.0235486 0.418268 -0.158956 0.022158 0.418268 -0.164696 0.0182615 0.418268 -0.167881 0.012631 0.418268 -0.168035 0.00610266 0.418268 -0.165943 0.00302589 0.418268 -0.161588 0.00134936 0.425174 -0.151351 0.0008 0.425174 -0.139237 0.00150758 0.425174 -0.133848 0.00366696 0.425174 -0.131259 0.00762987 0.425174 -0.13145 0.0160384 0.425174 -0.135391 0.0232906 0.425174 -0.142494 0.0283092 0.425174 -0.151351 0.0301004 0.425174 -0.160207 0.0283092 0.425174 -0.16731 0.0232906 0.425174 -0.171252 0.0160384 0.425174 -0.171442 0.00762987 0.425174 -0.168853 0.00366696 0.425174 -0.163464 0.00150758 0.432993 -0.150921 0.0008 0.432993 -0.136664 0.00165848 0.432993 -0.130322 0.0042784 0.432993 -0.127275 0.00908648 0.432993 -0.127499 0.0192883 0.432993 -0.132138 0.0280871 0.432993 -0.140497 0.0341762 0.432993 -0.150921 0.0363493 0.432993 -0.161344 0.0341762 0.432993 -0.169703 0.0280871 0.432993 -0.174342 0.0192883 0.432993 -0.174566 0.00908648 0.432993 -0.171519 0.0042784 0.432993 -0.165177 0.00165848 0.441564 -0.150544 0.000799999 0.441564 -0.134453 0.00179277 0.441564 -0.127294 0.00482252 0.441564 -0.123855 0.0103827 0.441564 -0.124108 0.0221804 0.441564 -0.129343 0.0323556 0.441564 -0.138778 0.0393971 0.441564 -0.150544 0.0419102 0.441564 -0.162309 0.0393971 0.441564 -0.171744 0.0323556 0.441564 -0.17698 0.0221804 0.441564 -0.177232 0.0103827 0.441564 -0.173793 0.00482252 0.441564 -0.166634 0.00179277 0.450715 -0.15025 0.0008 0.450715 -0.13275 0.00190166 0.450715 -0.124965 0.00526371 0.450715 -0.121224 0.0114338 0.450715 -0.121499 0.0245254 0.450715 -0.127194 0.0358167 0.450715 -0.137455 0.0436305 0.450715 -0.15025 0.0464192 0.450715 -0.163045 0.0436305 0.450715 -0.173306 0.0358167 0.450715 -0.179001 0.0245254 0.450715 -0.179276 0.0114338 0.450715 -0.175535 0.00526371 0.450715 -0.16775 0.00190166 0.460258 -0.150064 0.0008 0.460258 -0.131677 0.00197668 0.460258 -0.123496 0.00556769 0.460258 -0.119566 0.0121579 0.460258 -0.119855 0.0261411 0.460258 -0.125839 0.0382013 0.460258 -0.13662 0.0465472 0.460258 -0.150064 0.0495258 0.460258 -0.163508 0.0465472 0.460258 -0.174289 0.0382013 0.460258 -0.180272 0.0261411 0.460258 -0.180561 0.0121579 0.460258 -0.176631 0.00556769 0.460258 -0.168451 0.00197668 0.47 -0.15 0.000799999 0.47 -0.13131 0.00200745 0.47 -0.122995 0.00569236 0.47 -0.119 0.0124549 0.47 -0.119294 0.0268037 0.47 -0.125376 0.0391793 0.47 -0.136334 0.0477435 0.47 -0.15 0.0508 0.47 -0.163666 0.0477435 0.47 -0.174624 0.0391793 0.47 -0.180706 0.0268037 0.47 -0.181 0.0124549 0.47 -0.177005 0.00569236 0.47 -0.16869 0.00200745 0.479742 -0.150064 0.000799999 0.479742 -0.131677 0.00197668 0.479742 -0.123496 0.00556769 0.479742 -0.119566 0.0121579 0.479742 -0.119855 0.0261411 0.479742 -0.125839 0.0382013 0.479742 -0.13662 0.0465472 0.479742 -0.150064 0.0495258 0.479742 -0.163508 0.0465472 0.479742 -0.174289 0.0382013 0.479742 -0.180272 0.0261411 0.479742 -0.180561 0.0121579 0.479742 -0.176631 0.00556769 0.479742 -0.168451 0.00197668 0.489285 -0.15025 0.0008 0.489285 -0.13275 0.00190166 0.489285 -0.124965 0.00526371 0.489285 -0.121224 0.0114338 0.489285 -0.121499 0.0245254 0.489285 -0.127194 0.0358167 0.489285 -0.137455 0.0436305 0.489285 -0.15025 0.0464192 0.489285 -0.163045 0.0436305 0.489285 -0.173306 0.0358167 0.489285 -0.179001 0.0245254 0.489285 -0.179276 0.0114338 0.489285 -0.175535 0.00526371 0.489285 -0.16775 0.00190166 0.498436 -0.150544 0.0008 0.498436 -0.134453 0.00179277 0.498436 -0.127294 0.00482252 0.498436 -0.123855 0.0103827 0.498436 -0.124108 0.0221804 0.498436 -0.129343 0.0323556 0.498436 -0.138778 0.0393971 0.498436 -0.150544 0.0419102 0.498436 -0.162309 0.0393971 0.498436 -0.171744 0.0323556 0.498436 -0.17698 0.0221804 0.498436 -0.177232 0.0103827 0.498436 -0.173793 0.00482252 0.498436 -0.166634 0.00179277 0.507007 -0.150921 0.000799999 0.507007 -0.136664 0.00165848 0.507007 -0.130322 0.0042784 0.507007 -0.127275 0.00908648 0.507007 -0.127499 0.0192883 0.507007 -0.132138 0.0280871 0.507007 -0.140497 0.0341761 0.507007 -0.150921 0.0363493 0.507007 -0.161344 0.0341762 0.507007 -0.169703 0.0280872 0.507007 -0.174342 0.0192883 0.507007 -0.174566 0.00908648 0.507007 -0.171519 0.0042784 0.507007 -0.165177 0.00165848 0.514826 -0.151351 0.000799999 0.514826 -0.139237 0.00150758 0.514826 -0.133848 0.00366696 0.514826 -0.131259 0.00762987 0.514826 -0.13145 0.0160384 0.514826 -0.135391 0.0232906 0.514826 -0.142494 0.0283092 0.514826 -0.151351 0.0301004 0.514826 -0.160207 0.0283092 0.514826 -0.16731 0.0232906 0.514826 -0.171252 0.0160384 0.514826 -0.171442 0.00762987 0.514826 -0.168853 0.00366696 0.514826 -0.163464 0.00150758 0.521732 -0.151799 0.0008 0.521732 -0.14201 0.00134936 0.521732 -0.137655 0.00302589 0.521732 -0.135563 0.00610266 0.521732 -0.135716 0.012631 0.521732 -0.138902 0.0182615 0.521732 -0.144642 0.022158 0.521732 -0.151799 0.0235486 0.521732 -0.158956 0.022158 0.521732 -0.164696 0.0182615 0.521732 -0.167881 0.012631 0.521732 -0.168035 0.00610266 0.521732 -0.165943 0.00302589 0.521732 -0.161588 0.00134936 0.527585 -0.152229 0.000799999 0.527585 -0.144819 0.00119351 0.527585 -0.141522 0.00239442 0.527585 -0.139938 0.00459833 0.527585 -0.140055 0.0092746 0.527585 -0.142466 0.0133078 0.527585 -0.146811 0.0160989 0.527585 -0.152229 0.017095 0.527585 -0.157647 0.0160989 0.527585 -0.161992 0.0133078 0.527585 -0.164403 0.0092746 0.527585 -0.16452 0.00459833 0.527585 -0.162936 0.00239442 0.527585 -0.159639 0.00119351 0.532265 -0.152606 0.0008 0.532265 -0.147509 0.00104991 0.532265 -0.145241 0.00181259 0.532265 -0.144152 0.00321227 0.532265 -0.144232 0.00618212 0.532265 -0.14589 0.00874355 0.532265 -0.148879 0.0105161 0.532265 -0.152606 0.0111487 0.532265 -0.156333 0.0105161 0.532265 -0.159322 0.00874355 0.532265 -0.16098 0.00618212 0.532265 -0.16106 0.00321227 0.532265 -0.159971 0.00181259 0.532265 -0.157703 0.00104991 0.535678 -0.1529 0.0008 0.535678 -0.149931 0.000928589 0.535678 -0.14861 0.00132102 0.535678 -0.147976 0.00204121 0.535678 -0.148022 0.00356931 0.535678 -0.148988 0.00488726 0.535678 -0.150729 0.00579932 0.535678 -0.1529 0.00612483 0.535678 -0.15507 0.00579932 0.535678 -0.156811 0.00488726 0.535678 -0.157777 0.00356931 0.535678 -0.157823 0.00204121 0.535678 -0.157189 0.00132102 0.535678 -0.155868 0.000928588 0.537754 -0.153086 0.000799999 0.537754 -0.151922 0.000840169 0.537754 -0.151405 0.000962751 0.537754 -0.151156 0.00118772 0.537754 -0.151175 0.00166505 0.537754 -0.151553 0.00207675 0.537754 -0.152235 0.00236165 0.537754 -0.153086 0.00246333 0.537754 -0.153936 0.00236165 0.537754 -0.154619 0.00207675 0.537754 -0.154997 0.00166505 0.537754 -0.155015 0.00118772 0.537754 -0.154767 0.000962751 0.537754 -0.154249 0.000840169 0.401 -0.153086 0.00153225 0.539 -0.153086 0.00153225" element="0 1 14 1 15 14 1 2 15 2 16 15 2 3 16 3 17 16 3 4 17 4 18 17 4 5 18 5 19 18 5 6 19 6 20 19 6 7 20 7 21 20 7 8 21 8 22 21 8 9 22 9 23 22 9 10 23 10 24 23 10 11 24 11 25 24 11 12 25 12 26 25 12 13 26 13 27 26 13 0 27 0 14 27 14 15 28 15 29 28 15 16 29 16 30 29 16 17 30 17 31 30 17 18 31 18 32 31 18 19 32 19 33 32 19 20 33 20 34 33 20 21 34 21 35 34 21 22 35 22 36 35 22 23 36 23 37 36 23 24 37 24 38 37 24 25 38 25 39 38 25 26 39 26 40 39 26 27 40 27 41 40 27 14 41 14 28 41 28 29 42 29 43 42 29 30 43 30 44 43 30 31 44 31 45 44 31 32 45 32 46 45 32 33 46 33 47 46 33 34 47 34 48 47 34 35 48 35 49 48 35 36 49 36 50 49 36 37 50 37 51 50 37 38 51 38 52 51 38 39 52 39 53 52 39 40 53 40 54 53 40 41 54 41 55 54 41 28 55 28 42 55 42 43 56 43 57 56 43 44 57 44 58 57 44 45 58 45 59 58 45 46 59 46 60 59 46 47 60 47 61 60 47 48 61 48 62 61 48 49 62 49 63 62 49 50 63 50 64 63 50 51 64 51 65 64 51 52 65 52 66 65 52 53 66 53 67 66 53 54 67 54 68 67 54 55 68 55 69 68 55 42 69 42 56 69 56 57 70 57 71 70 57 58 71 58 72 71 58 59 72 59 73 72 59 60 73 60 74 73 60 61 74 61 75 74 61 62 75 62 76 75 62 63 76 63 77 76 63 64 77 64 78 77 64 65 78 65 79 78 65 66 79 66 80 79 66 67 80 67 81 80 67 68 81 68 82 81 68 69 82 69 83 82 69 56 83 56 70 83 70 71 84 71 85 84 71 72 85 72 86 85 72 73 86 73 87 86 73 74 87 74 88 87 74 75 88 75 89 88 75 76 89 76 90 89 76 77 90 77 91 90 77 78 91 78 92 91 78 79 92 79 93 92 79 80 93 80 94 93 80 81 94 81 95 94 81 82 95 82 96 95 82 83 96 83 97 96 83 70 97 70 84 97 84 85 98 85 99 98 85 86 99 86 100 99 86 87 100 87 101 100 87 88 101 88 102 101 88 89 102 89 103 102 89 90 103 90 104 103 90 91 104 91 105 104 91 92 105 92 106 105 92 93 106 93 107 106 93 94 107 94 108 107 94 95 108 95 109 108 95 96 109 96 110 109 96 97 110 97 111 110 97 84 111 84 98 111 98 99 112 99 113 112 99 100 113 100 114 113 100 101 114 101 115 114 101 102 115 102 116 115 102 103 116 103 117 116 103 104 117 104 118 117 104 105 118 105 119 118 105 106 119 106 120 119 106 107 120 107 121 120 107 108 121 108 122 121 108 109 122 109 123 122 109 110 123 110 124 123 110 111 124 111 125 124 111 98 125 98 112 125 112 113 126 113 127 126 113 114 127 114 128 127 114 115 128 115 129 128 115 116 129 116 130 129 116 117 130 117 131 130 117 118 131 118 132 131 118 119 132 119 133 132 119 120 133 120 134 133 120 121 134 121 135 134 121 122 135 122 136 135 122 123 136 123 137 136 123 124 137 124 138 137 124 125 138 125 139 138 125 112 139 112 126 139 126 127 140 127 141 140 127 128 141 128 142 141 128 129 142 129 143 142 129 130 143 130 144 143 130 131 144 131 145 144 131 132 145 132 146 145 132 133 146 133 147 146 133 134 147 134 148 147 134 135 148 135 149 148 135 136 149 136 150 149 136 137 150 137 151 150 137 138 151 138 152 151 138 139 152 139 153 152 139 126 153 126 140 153 140 141 154 141 155 154 141 142 155 142 156 155 142 143 156 143 157 156 143 144 157 144 158 157 144 145 158 145 159 158 145 146 159 146 160 159 146 147 160 147 161 160 147 148 161 148 162 161 148 149 162 149 163 162 149 150 163 150 164 163 150 151 164 151 165 164 151 152 165 152 166 165 152 153 166 153 167 166 153 140 167 140 154 167 154 155 168 155 169 168 155 156 169 156 170 169 156 157 170 157 171 170 157 158 171 158 172 171 158 159 172 159 173 172 159 160 173 160 174 173 160 161 174 161 175 174 161 162 175 162 176 175 162 163 176 163 177 176 163 164 177 164 178 177 164 165 178 165 179 178 165 166 179 166 180 179 166 167 180 167 181 180 167 154 181 154 168 181 168 169 182 169 183 182 169 170 183 170 184 183 170 171 184 171 185 184 171 172 185 172 186 185 172 173 186 173 187 186 173 174 187 174 188 187 174 175 188 175 189 188 175 176 189 176 190 189 176 177 190 177 191 190 177 178 191 178 192 191 178 179 192 179 193 192 179 180 193 180 194 193 180 181 194 181 195 194 181 168 195 168 182 195 182 183 196 183 197 196 183 184 197 184 198 197 184 185 198 185 199 198 185 186 199 186 200 199 186 187 200 187 201 200 187 188 201 188 202 201 188 189 202 189 203 202 189 190 203 190 204 203 190 191 204 191 205 204 191 192 205 192 206 205 192 193 206 193 207 206 193 194 207 194 208 207 194 195 208 195 209 208 195 182 209 182 196 209 196 197 210 197 211 210 197 198 211 198 212 211 198 199 212 199 213 212 199 200 213 200 214 213 200 201 214 201 215 214 201 202 215 202 216 215 202 203 216 203 217 216 203 204 217 204 218 217 204 205 218 205 219 218 205 206 219 206 220 219 206 207 220 207 221 220 207 208 221 208 222 221 208 209 222 209 223 222 209 196 223 196 210 223 210 211 224 211 225 224 211 212 225 212 226 225 212 213 226 213 227 226 213 214 227 214 228 227 214 215 228 215 229 228 215 216 229 216 230 229 216 217 230 217 231 230 217 218 231 218 232 231 218 219 232 219 233 232 219 220 233 220 234 233 220 221 234 221 235 234 221 222 235 222 236 235 222 223 236 223 237 236 223 210 237 210 224 237 224 225 238 225 239 238 225 226 239 226 240 239 226 227 240 227 241 240 227 228 241 228 242 241 228 229 242 229 243 242 229 230 243 230 244 243 230 231 244 231 245 244 231 232 245 232 246 245 232 233 246 233 247 246 233 234 247 234 248 247 234 235 248 235 249 248 235 236 249 236 250 249 236 237 250 237 251 250 237 224 251 224 238 251 238 239 252 239 253 252 239 240 253 240 254 253 240 241 254 241 255 254 241 242 255 242 256 255 242 243 256 243 257 256 243 244 257 244 258 257 244 245 258 245 259 258 245 246 259 246 260 259 246 247 260 247 261 260 247 248 261 248 262 261 248 249 262 249 263 262 249 250 263 250 264 263 250 251 264 251 265 264 251 238 265 238 252 265 252 253 266 253 267 266 253 254 267 254 268 267 254 255 268 255 269 268 255 256 269 256 270 269 256 257 270 257 271 270 257 258 271 258 272 271 258 259 272 259 273 272 259 260 273 260 274 273 260 261 274 261 275 274 261 262 275 262 276 275 262 263 276 263 277 276 263 264 277 264 278 277 264 265 278 265 279 278 265 252 279 252 266 279 266 267 280 267 281 280 267 268 281 268 282 281 268 269 282 269 283 282 269 270 283 270 284 283 270 271 284 271 285 284 271 272 285 272 286 285 272 273 286 273 287 286 273 274 287 274 288 287 274 275 288 275 289 288 275 276 289 276 290 289 276 277 290 277 291 290 277 278 291 278 292 291 278 279 292 279 293 292 279 266 293 266 280 293 294 1 0 295 280 281 294 2 1 295 281 282 294 3 2 295 282 283 294 4 3 295 283 284 294 5 4 295 284 285 294 6 5 295 285 286 294 7 6 295 286 287 294 8 7 295 287 288 294 9 8 295 288 289 294 10 9 295 289 290 294 11 10 295 290 291 294 12 11 295 291 292 294 13 12 295 292 293 294 0 13 295 293 280" node="bread_right_0_0_0 bread_right_0_0_1 bread_right_0_0_2 bread_right_0_1_0 bread_right_0_1_1 bread_right_0_1_2 bread_right_0_2_0 bread_right_0_2_1 bread_right_0_2_2 bread_right_1_0_0 bread_right_1_0_1 bread_right_1_0_2 bread_right_1_1_0 bread_right_1_1_1 bread_right_1_1_2 bread_right_1_2_0 bread_right_1_2_1 bread_right_1_2_2 bread_right_2_0_0 bread_right_2_0_1 bread_right_2_0_2 bread_right_2_1_0 bread_right_2_1_1 bread_right_2_1_2 bread_right_2_2_0 bread_right_2_2_1 bread_right_2_2_2 bread_right_3_0_0 bread_right_3_0_1 bread_right_3_0_2 bread_right_3_1_0 bread_right_3_1_1 bread_right_3_1_2 bread_right_3_2_0 bread_right_3_2_1 bread_right_3_2_2 bread_right_4_0_0 bread_right_4_0_1 bread_right_4_0_2 bread_right_4_1_0 bread_right_4_1_1 bread_right_4_1_2 bread_right_4_2_0 bread_right_4_2_1 bread_right_4_2_2">
+      <contact condim="4" priority="1" friction="0.915613 0.01 0.001" solref="0.004" selfcollide="none"/>
+      <elasticity young="17179.2" poisson="0.25" damping="0.00344381"/>
+    </flex>
+  </deformable>
+
   <contact>
     <exclude body1="right/base_link" body2="right/link_1"/>
     <exclude body1="right/link_3" body2="right/link_5"/>
@@ -228,12 +490,10 @@
     <general name="right/joint_3" joint="right/joint_3" ctrlrange="-1.5708 1.5708" forcerange="-44 44" input="pos" biastype="affine" gainprm="183.89" biasprm="0 -183.89 -14.7112"/>
     <general name="right/joint_4" joint="right/joint_4" ctrlrange="-1.5708 1.5708" forcerange="-70 70" input="pos" biastype="affine" gainprm="45.4585" biasprm="0 -45.4585 -3.63668"/>
     <general name="right/joint_5" joint="right/joint_5" ctrlrange="-3.14159 3.14159" forcerange="-70 70" input="pos" biastype="affine" gainprm="17.5554" biasprm="0 -17.5554 -1.40443"/>
-    <general name="right/right_carriage_joint" joint="right/right_carriage_joint" ctrlrange="-0.002 0.045" forcelimited="true" forcerange="-12 12" input="pos" biastype="affine" gainprm="339.018" biasprm="0 -339.018"/>
-    <general name="right/adhesion_gripper_left" body="right/gripper_left" ctrlrange="0 1" ctrllimited="true" gainprm="6"/>
-    <general name="right/adhesion_gripper_right" body="right/gripper_right" ctrlrange="0 1" ctrllimited="true" gainprm="6"/>
+    <general name="right/right_carriage_joint" joint="right/right_carriage_joint" ctrlrange="-0.002 0.045" forcelimited="true" forcerange="-12.6701 12.6701" input="pos" biastype="affine" gainprm="339.018" biasprm="0 -339.018"/>
   </actuator>
 
   <keyframe>
-    <key name="right/" time="199.554" qpos="0 -0.00231776 1.10539 0.652472 -0.000250995 0.000167313 0.02178 0.0217803 0.47 -0.15 0.0255 0.67559 0 0 0.737277 0.47 0.11 0.0005 1 0 0 0" ctrl="0 0 1.10741 0.644028 0 0 0.02178 0 0"/>
+    <key name="right/" time="199.554" qpos="0 -0.00231776 1.10539 0.652472 -0.000250995 0.000167313 0.02178 0.0217803 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.47 0.11 0.0005 1 0 0 0" ctrl="0 0 1.10741 0.644028 0 0 0.02178"/>
   </keyframe>
 </mujoco>

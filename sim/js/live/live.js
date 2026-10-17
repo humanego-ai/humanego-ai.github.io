@@ -65,9 +65,16 @@ export class LiveSession {
       if (out[body]) continue;
       let Ts = m.T_static, kl = m.kpts_local;
       if (side === 'left') { Ts = mirrorPose(Ts); kl = kl.map((p) => [-p[0], p[1], p[2]]); }
-      const b = this.spec.objects[body].body;
-      const q = [d.xquat[4 * b + 1], d.xquat[4 * b + 2], d.xquat[4 * b + 3], d.xquat[4 * b]];
-      const Tb = M.fromRp(M.quatToMat(q), [d.xpos[3 * b], d.xpos[3 * b + 1], d.xpos[3 * b + 2]]), Tbi = M.inv4(Tb);
+      let Tb;
+      if (this.spec.objects[body].soft) {     // soft bread: the viewer's fitted frame of the deformation grid
+        const e = this.viewer.objectMatrix(body).elements;   // column-major
+        Tb = [e[0], e[4], e[8], e[12], e[1], e[5], e[9], e[13], e[2], e[6], e[10], e[14], 0, 0, 0, 1];
+      } else {
+        const b = this.spec.objects[body].body;
+        const q = [d.xquat[4 * b + 1], d.xquat[4 * b + 2], d.xquat[4 * b + 3], d.xquat[4 * b]];
+        Tb = M.fromRp(M.quatToMat(q), [d.xpos[3 * b], d.xpos[3 * b + 1], d.xpos[3 * b + 2]]);
+      }
+      const Tbi = M.inv4(Tb);
       out[body] = { pts: kl.map((p) => M.xform(Tbi, M.xform(Tcw, M.xform(Ts, p)))), color: colors[k],
                     frame: M.mul4(Tbi, M.mul4(Tcw, Ts)) };
     }

@@ -26,6 +26,15 @@ export class LiveEpisode {
     this.t = 0;
     for (const [name, [x, y, yaw]] of Object.entries(scene)) {
       const o = spec.objects[name]; if (!o) continue;
+      if (o.soft) {     // soft bread: place the deformation grid rigidly (short drop-in)
+        const c = Math.cos(yaw * Math.PI / 180), s = Math.sin(yaw * Math.PI / 180), z = o.half_height + 0.0008 + 0.05;
+        for (let i = 0; i < o.nodes.length; i++) {
+          const lx = o.local[3 * i], ly = o.local[3 * i + 1], lz = o.local[3 * i + 2];
+          const w = [x + c * lx - s * ly, y + s * lx + c * ly, z + lz];
+          for (let k = 0; k < 3; k++) data.qpos[o.qidx[3 * i + k]] = w[k] - o.p0[3 * i + k];
+        }
+        continue;
+      }
       const a = o.qadr, z = name === 'plate' ? 0.0005 : o.half_height + 0.0008;
       const q = yawQuat(yaw);
       data.qpos[a] = x; data.qpos[a + 1] = y; data.qpos[a + 2] = z + (name === 'plate' ? 0.02 : 0.05);   // short drop-in
@@ -167,11 +176,19 @@ export class LiveEpisode {
     }
   }
 
+  /** Object centre in world: a rigid body's origin, or a soft bread's grid centroid. */
+  objectPos(name) {
+    const d = this.data, o = this.spec.objects[name];
+    if (!o.soft) return [d.xpos[3 * o.body], d.xpos[3 * o.body + 1], d.xpos[3 * o.body + 2]];
+    const c = [0, 0, 0];
+    for (const b of o.nodes) for (let k = 0; k < 3; k++) c[k] += d.xpos[3 * b + k] / o.nodes.length;
+    return c;
+  }
+
   evaluate() {
-    const d = this.data, sp = this.spec, b = (n) => sp.objects[n].body;
-    const pp = [d.xpos[3 * b('plate')], d.xpos[3 * b('plate') + 1]], out = {};
+    const sp = this.spec, out = {}, pl = this.objectPos('plate'), pp = [pl[0], pl[1]];
     for (const s of this.sides) {
-      const k = b(`bread_${s}`), dxy = Math.hypot(d.xpos[3 * k] - pp[0], d.xpos[3 * k + 1] - pp[1]), z = d.xpos[3 * k + 2];
+      const bp = this.objectPos(`bread_${s}`), dxy = Math.hypot(bp[0] - pp[0], bp[1] - pp[1]), z = bp[2];
       out[s] = { success: dxy < sp.objects.plate.R - 0.02 && z > 0.004 && z < 0.12 && !this.arms[s].cmdClosed(), dist_to_plate_center: dxy };
     }
     return out;

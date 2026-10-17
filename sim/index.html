@@ -120,7 +120,7 @@
       <div class="step"><div class="n">03 · ACT</div><h4>Released policy</h4>
         <p><code>ICTPolicy</code> loads the public checkpoint and solves the flow ODE (20 Euler steps) for a 50-step hand trajectory. The left arm sees a mirrored world.</p></div>
       <div class="step"><div class="n">04 · MOVE</div><h4>Production controller</h4>
-        <p>Temporal ensembling, safety cage, EMA/Slerp, look-ahead → a Trossen-driver emulator (quintic re-targeting + IK) → MuJoCo.</p></div>
+        <p>Temporal ensembling, safety cage, EMA/Slerp, look-ahead → a Trossen-driver emulator (quintic re-targeting + IK) → MuJoCo, where the bread is a <b>soft body</b> that squashes in the gripper and is held by friction alone.</p></div>
     </div>
   </section>
 
@@ -155,7 +155,7 @@ python simulation/scripts/autotune.py --name my_rig</pre></div>
 </main>
 
 <footer>HumanEgo · University of Maryland &nbsp;·&nbsp; Robot models from <a href="https://github.com/google-deepmind/mujoco_menagerie" target="_blank" rel="noopener">MuJoCo Menagerie</a>,
-  bread photoscans from <a href="https://polyhaven.com" target="_blank" rel="noopener">Poly Haven</a> (CC0) &nbsp;·&nbsp; <a href="https://github.com/TX-Leo/HumanEgo" target="_blank" rel="noopener">github.com/TX-Leo/HumanEgo</a></footer>
+  procedural soft breads (MuJoCo flex) &nbsp;·&nbsp; <a href="https://github.com/TX-Leo/HumanEgo" target="_blank" rel="noopener">github.com/TX-Leo/HumanEgo</a></footer>
 
 <script type="module" src="js/app.js"></script>
 </body>
