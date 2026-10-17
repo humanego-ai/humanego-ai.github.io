@@ -164,6 +164,13 @@ export class SimArm {
   closeGripper(goal = 1) { this.setGripper(this.R.gripper_closed, goal); }
   openGripper(goal = 1) { this.setGripper(this.R.gripper_open, goal); }
   gripperQ() { const r = this.R, g = this.data.qpos[this.gq]; return Math.min(Math.max((g - r.gripper_joint_closed) / (r.gripper_joint_open - r.gripper_joint_closed), 0), 1); }
+  /** Gap between the finger pads (m) from the finger bodies (driver.py finger_opening). */
+  fingerOpening() {
+    if (!this._fid) this._fid = this.R.finger_bodies.map((b) => this.model.body(this.pre + b).id);
+    const [a, b] = this._fid, x = this.data.xpos;
+    return Math.hypot(x[3 * a] - x[3 * b], x[3 * a + 1] - x[3 * b + 1], x[3 * a + 2] - x[3 * b + 2]) - (this.R.finger_gap_closed || 0);
+  }
+  holdingNothing(qEmpty, gapEmpty = 0.015) { return this.R.grip_sense === 'gap' ? this.fingerOpening() < gapEmpty : this.gripperQ() < qEmpty; }
   cmdClosed() { return Math.abs(this.gTo - this.R.gripper_closed) < Math.abs(this.gTo - this.R.gripper_open); }
   settledClosed() {
     if (!this.cmdClosed() || this.t - this.gT0 < this.gT) return false;

@@ -72,10 +72,43 @@ export class LiveEpisode {
       hand: { grasping: false, latched: null, lock: null, released: false, ever: false }, done: false, wrap: null, wrapT: 0,
       graspT: null, lift: 0, liftAnchor: null, doneReason: '' };
     this.ctl = new SimController(this.arms, c);
+    this.geoms = {};
+    for (const s of this.sides) {
+      this.geoms[s] = this._perceivedGeometry(s, this.objs[s]);
+      if (this.geoms[s].bread) this.ctl.setGeometry(s, this.geoms[s].bread, sp.T_cam_in_world);
+    }
     this.P = c.policy_period ?? 0.3; this.Tc = 1 / (c.control_freq ?? 10);
     this.nextPol = 0; this.nextCtl = 0; this.pending = null;
     this.t = 0; for (const a of Object.values(this.arms)) { a.t = 0; a.gT0 = 0; }
     this.phase = 'run';
+  }
+
+  /** runner.py _perceived_geometry: bread centre / long axis and a place height, from perception only. */
+  _perceivedGeometry(side, o) {
+    const Tcw = this.spec.T_cam_in_world, pts = {}, out = {};
+    for (const [k, m] of Object.entries(o.meta || {})) {
+      let Ts = m.T_static, kl = m.kpts_local;
+      if (side === 'left') { Ts = mirrorPose(Ts); kl = kl.map((q) => [-q[0], q[1], q[2]]); }
+      pts[k] = kl.map((q) => M.xform(Tcw, M.xform(Ts, q)));
+    }
+    const b = pts.obj1;
+    if (b && b.length >= 3) {
+      const c = [0, 1, 2].map((i) => b.reduce((acc, q) => acc + q[i], 0) / b.length);
+      let sxx = 0, syy = 0, sxy = 0;
+      for (const q of b) { const x = q[0] - c[0], y = q[1] - c[1]; sxx += x * x; syy += y * y; sxy += x * y; }
+      const th = 0.5 * Math.atan2(2 * sxy, sxx - syy), a = [Math.cos(th), Math.sin(th), 0];
+      out.bread = { c, a };
+      const pl = pts.obj2;
+      const floor = pl ? pl.reduce((acc, q) => acc + q[2], 0) / pl.length - 0.0135 : 0.0085;
+      out.placeZ = c[2] + Math.max(floor, 0);
+    }
+    return out;
+  }
+
+  /** Lower (dz < 0) or raise the end effector by dz in world, keeping its orientation. */
+  _moveWorldZ(arm, z, dur) {
+    const Tw = M.mul4(arm.Tbw, arm.getTeeInBase()), T2 = M.setP(Tw, [Tw[3], Tw[7], z]);
+    arm.moveP(M.T_to_p(M.mul4(arm.Twb, T2)), dur, this.ctl.safeZ);
   }
 
   graspVal(arm) {
@@ -148,8 +181,14 @@ export class LiveEpisode {
     this.nextPol += this.P;
     for (const [s, ctx] of Object.entries(this.ctx)) {
       if (ctx.active && ctx.done && !ctx.wrap) {
-        ctx.wrap = 'open'; ctx.wrapT = this.t; this.ctl.muted[s] = true; this.ctl.clear(s);
-        const a = this.arms[s]; a.moveP(a.getP(), 0.05); a.openGripper(0.5);
+        ctx.wrapT = this.t; this.ctl.muted[s] = true; this.ctl.clear(s);
+        const a = this.arms[s], rel = this.cc.release || {}, g = this.geoms[s] || {};
+        a.moveP(a.getP(), 0.05);
+        if (rel.place_down && a.cmdClosed() && g.placeZ !== undefined) {     // set the bread down before opening
+          const zg = g.placeZ + (rel.margin ?? 0.012), Tw = M.mul4(a.Tbw, a.getTeeInBase());
+          if (Tw[11] > zg + 0.005) { this._moveWorldZ(a, zg, rel.place_time ?? 0.9); ctx.wrap = 'place'; }
+        }
+        if (!ctx.wrap) { ctx.wrap = 'open'; a.openGripper(0.5); }
         delete this.entries[s];
       }
     }
@@ -166,7 +205,14 @@ export class LiveEpisode {
       }
       if (this.t >= this.nextPol - 1e-9) { await this._policyTick(); continue; }
       for (const [s, ctx] of Object.entries(this.ctx)) {
-        if (ctx.wrap === 'open' && this.t - ctx.wrapT >= 0.8) { ctx.wrap = 'home'; ctx.wrapT = this.t; this.arms[s].goHome(3); }
+        const rel = this.cc.release || {}, a = this.arms[s];
+        if (ctx.wrap === 'place' && this.t - ctx.wrapT >= (rel.place_time ?? 0.9) + 0.15) { ctx.wrap = 'open'; ctx.wrapT = this.t; a.openGripper(0.5); }
+        else if (ctx.wrap === 'open' && this.t - ctx.wrapT >= 0.8) {
+          ctx.wrapT = this.t;
+          if ((rel.lift ?? 0) > 0) {                      // lift the open hand straight up before going home
+            const Tw = M.mul4(a.Tbw, a.getTeeInBase()); this._moveWorldZ(a, Tw[11] + rel.lift, 0.8); ctx.wrap = 'retreat';
+          } else { ctx.wrap = 'home'; a.goHome(3); }
+        } else if (ctx.wrap === 'retreat' && this.t - ctx.wrapT >= 0.9) { ctx.wrap = 'home'; ctx.wrapT = this.t; a.goHome(3); }
         else if (ctx.wrap === 'home' && this.t - ctx.wrapT >= 3.1) ctx.wrap = 'finished';
       }
       if (this.t >= this.nextCtl - 1e-9) { this.ctl.tick(); this.nextCtl += this.Tc; }
