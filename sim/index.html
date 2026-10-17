@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HumanEgo Sim</title>
+<meta name="description" content="The released HumanEgo serve_bread policy, trained only on human egocentric video, running closed-loop on a physics replica of the real robot. Interactive 3D rollouts.">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="css/style.css">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="kicker">Simulation · Policy Rollouts</div>
+  <h1 class="logo">Human<span>Ego</span><small>Sim</small></h1>
+  <p class="tag">The <b>released serve_bread policy</b> &mdash; trained only on minutes of human egocentric video &mdash;
+    running <b>closed-loop</b> on a physics replica of the real robot. Every motion below is produced by the network.</p>
+  <div class="links">
+    <a href="https://humanego-ai.github.io" target="_blank" rel="noopener">🌐 Website</a>
+    <a href="https://arxiv.org/abs/2605.24934" target="_blank" rel="noopener">📄 Paper</a>
+    <a href="https://github.com/TX-Leo/HumanEgo/tree/main/simulation" target="_blank" rel="noopener">💻 Code</a>
+    <a href="https://huggingface.co/Leo-TX/HumanEgo" target="_blank" rel="noopener">🤗 Checkpoint</a>
+    <a href="https://leo-tx-humanego-gallery.static.hf.space" target="_blank" rel="noopener">🖼️ Data Gallery</a>
+  </div>
+  <div class="stats" id="stats"></div>
+</section>
+
+<div class="bar">
+  <div class="bar-in">
+    <div class="grp"><span class="grp-l">Mode</span><span id="pills-run" class="grp"></span></div>
+    <div class="grp"><span class="grp-l">Robot</span><span id="pills-robot" class="grp"></span></div>
+    <div class="grp"><span class="grp-l">Camera</span><span id="pills-camera" class="grp"></span></div>
+    <div class="grp"><span class="grp-l">Arms</span><span id="pills-mode" class="grp"></span></div>
+    <span class="spacer"></span>
+    <span class="count" id="count"></span>
+  </div>
+</div>
+
+<main>
+  <div class="stage">
+    <div>
+      <div class="viewport" id="viewport">
+        <div class="vp-loading" id="loading"><div><div class="spinner"></div><p id="loading-msg">Loading the robot…</p></div></div>
+        <div class="hud hud-tl">
+          <div class="hud-chip" id="hud-title"><span class="dot"></span><span>—</span></div>
+          <div class="arm-state" id="arm-state"></div>
+        </div>
+        <div class="hud hud-tr" id="pip-wrap">
+          <div class="pip" id="pip">
+            <video id="pip-video" muted playsinline preload="auto"></video>
+            <canvas id="pip-canvas" width="512" height="192" style="display:none; width:100%; aspect-ratio:8/3"></canvas>
+            <div class="pip-cap"><b>Policy input</b><span id="pip-cap">clean image + keypoints</span></div>
+          </div>
+        </div>
+        <div class="hud hud-br">
+          <button class="icon-btn" data-cam="orbit" title="Cinematic orbit">ORB</button>
+          <button class="icon-btn" data-cam="front" title="Front">FR</button>
+          <button class="icon-btn" data-cam="side" title="Side">SD</button>
+          <button class="icon-btn" data-cam="top" title="Top">TOP</button>
+          <button class="icon-btn" data-cam="policy" title="Policy camera (what the network sees)">CAM</button>
+        </div>
+        <div class="timeline">
+          <button class="play-btn" id="play" aria-label="Play / pause"><svg viewBox="0 0 24 24" id="play-ico"><path d="M8 5v14l11-7z"/></svg></button>
+          <div class="track" id="track"><canvas id="track-canvas"></canvas><input id="scrub" type="range" min="0" max="1000" value="0" step="1"></div>
+          <div class="speed" id="speed"><button data-s="0.5">0.5×</button><button data-s="1" class="on">1×</button><button data-s="2">2×</button><button data-s="4">4×</button></div>
+          <div class="tlabel" id="tlabel">0.0 s</div>
+        </div>
+      </div>
+      <div class="legend">
+        <span><i style="background:linear-gradient(90deg,#ff6a00,#ffd36b)"></i>predicted 50-step hand trajectory (look-ahead marked)</span>
+        <span><i style="background:#22d3ee"></i>bread keypoints</span>
+        <span><i style="background:#3ddc97"></i>plate keypoints</span>
+        <span><i style="background:#c084fc"></i>gripper closed (latched)</span>
+      </div>
+    </div>
+
+    <aside class="side">
+      <div class="card">
+        <div class="card-h"><h3>Initial condition</h3><span class="meta" id="mm-meta"></span></div>
+        <svg class="minimap" id="minimap" viewBox="0 0 340 300"></svg>
+        <div class="mm-help" id="mm-help">Each dot is a <b>pre-computed policy rollout</b> (green = served, red = failed).
+          Click a dot or <b>drag the bread</b> to snap to the nearest initial condition.</div>
+        <div class="row-btns">
+          <button class="btn" id="btn-shuffle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M16 3h5v5M4 20 21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>Shuffle</button>
+          <button class="btn primary" id="btn-replay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg><span id="btn-replay-l">Replay</span></button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-h"><h3>Outcome</h3><span class="meta" id="res-meta"></span></div>
+        <div class="result" id="result"></div>
+      </div>
+      <div class="card">
+        <div class="card-h"><h3>Overlays</h3></div>
+        <div class="row-btns" style="padding-top:12px; flex-wrap:wrap">
+          <button class="pill on" data-ov="traj">Prediction</button>
+          <button class="pill on" data-ov="kpts">Keypoints</button>
+          <button class="pill on" data-ov="pip">Policy input</button>
+          <button class="pill" data-ov="frames">Frames</button>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <section class="section" id="how">
+    <div class="sec-h"><h2>How it runs</h2><p>The real inference stack, with the hardware swapped for physics.</p></div>
+    <div class="pipe">
+      <div class="step"><div class="n">01 · SENSE</div><h4>Calibrated RGB-D camera</h4>
+        <p>A virtual RealSense D405 at the <b>real hand-eye calibration</b> renders 640×480 RGB-D, cropped exactly like <code>CamRS</code>.</p></div>
+      <div class="step"><div class="n">02 · PERCEIVE</div><h4>Released perception</h4>
+        <p>Masks → <code>KptsSelector</code> → multi-frame depth lift → PCA object frames → <code>VisualKpts</code>. The arm is removed and a virtual gripper is drawn, as on the robot.</p></div>
+      <div class="step"><div class="n">03 · ACT</div><h4>Released policy</h4>
+        <p><code>ICTPolicy</code> loads the public checkpoint and solves the flow ODE (20 Euler steps) for a 50-step hand trajectory. The left arm sees a mirrored world.</p></div>
+      <div class="step"><div class="n">04 · MOVE</div><h4>Production controller</h4>
+        <p>Temporal ensembling, safety cage, EMA/Slerp, look-ahead → a Trossen-driver emulator (quintic re-targeting + IK) → MuJoCo.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="results">
+    <div class="sec-h"><h2>Success rates</h2><p>Randomized initial conditions following the paper's protocol.</p></div>
+    <div class="card"><table class="res" id="res-table"></table>
+      <div class="note" id="res-note"></div></div>
+  </section>
+
+  <section class="section" id="tuning">
+    <div class="sec-h"><h2>Self-tuning loop</h2><p>Simulator and low-level controller parameters, optimized by an agent-in-the-loop population search.</p></div>
+    <div class="card"><canvas id="tune-plot" style="width:100%; height:260px; display:block"></canvas>
+      <div class="note" id="tune-note"></div></div>
+  </section>
+
+  <section class="section" id="reproduce">
+    <div class="sec-h"><h2>Run it yourself</h2><p>Same code, any rig: swap robot or camera with one flag.</p></div>
+    <div class="card"><pre class="code"><span class="c"># one-time setup</span>
+git clone https://github.com/TX-Leo/HumanEgo.git &amp;&amp; cd HumanEgo
+pip install -r requirements.txt -r simulation/requirements.txt
+huggingface-cli download Leo-TX/HumanEgo --include "serve_bread/*" --local-dir ./checkpoints
+python simulation/scripts/build_assets.py
+
+<span class="c"># one closed-loop episode (+ video)</span>
+python simulation/scripts/run_episode.py --video
+python simulation/scripts/run_episode.py --robot franka_panda --camera zed2i --mode single
+
+<span class="c"># success rate over randomized scenes, and the self-tuning loop</span>
+python simulation/scripts/evaluate.py --n 40 --workers 8
+python simulation/scripts/autotune.py --name my_rig</pre></div>
+  </section>
+</main>
+
+<footer>HumanEgo · University of Maryland &nbsp;·&nbsp; Robot models from <a href="https://github.com/google-deepmind/mujoco_menagerie" target="_blank" rel="noopener">MuJoCo Menagerie</a>,
+  bread photoscans from <a href="https://polyhaven.com" target="_blank" rel="noopener">Poly Haven</a> (CC0) &nbsp;·&nbsp; <a href="https://github.com/TX-Leo/HumanEgo" target="_blank" rel="noopener">github.com/TX-Leo/HumanEgo</a></footer>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
