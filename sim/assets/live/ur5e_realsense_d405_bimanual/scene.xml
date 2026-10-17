@@ -992,14 +992,14 @@
     <general name="right/wrist_1" class="right/size1" joint="right/wrist_1_joint"/>
     <general name="right/wrist_2" class="right/size1" joint="right/wrist_2_joint"/>
     <general name="right/wrist_3" class="right/size1" joint="right/wrist_3_joint"/>
-    <general name="right/gripper/fingers_actuator" class="right/gripper/2f85" tendon="right/gripper/split" ctrlrange="0 255" forcelimited="true" forcerange="-21.0577 21.0577" gainprm="0.313725" biasprm="0 -100 -10"/>
+    <general name="right/gripper/fingers_actuator" class="right/gripper/2f85" tendon="right/gripper/split" ctrlrange="0 255" forcelimited="true" forcerange="-40 40" gainprm="0.313725" biasprm="0 -100 -10"/>
     <general name="left/shoulder_pan" class="left/size3" joint="left/shoulder_pan_joint"/>
     <general name="left/shoulder_lift" class="left/size3" joint="left/shoulder_lift_joint"/>
     <general name="left/elbow" class="left/size3_limited" joint="left/elbow_joint"/>
     <general name="left/wrist_1" class="left/size1" joint="left/wrist_1_joint"/>
     <general name="left/wrist_2" class="left/size1" joint="left/wrist_2_joint"/>
     <general name="left/wrist_3" class="left/size1" joint="left/wrist_3_joint"/>
-    <general name="left/gripper/fingers_actuator" class="left/gripper/2f85" tendon="left/gripper/split" ctrlrange="0 255" forcelimited="true" forcerange="-21.0577 21.0577" gainprm="0.313725" biasprm="0 -100 -10"/>
+    <general name="left/gripper/fingers_actuator" class="left/gripper/2f85" tendon="left/gripper/split" ctrlrange="0 255" forcelimited="true" forcerange="-40 40" gainprm="0.313725" biasprm="0 -100 -10"/>
   </actuator>
 
   <keyframe>
