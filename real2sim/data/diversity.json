@@ -456,6 +456,75 @@
    "light_k": 2893
   }
  ],
+ "hq": {
+  "grid": "media/div/hq_grid.jpg",
+  "stills": [
+   {
+    "src": "media/div/diverse_baguette_v024_0000.jpg",
+    "title": "baguette"
+   },
+   {
+    "src": "media/div/diverse_bun_v017_0001.jpg",
+    "title": "bun"
+   },
+   {
+    "src": "media/div/diverse_crescent_v002_0000.jpg",
+    "title": "crescent"
+   },
+   {
+    "src": "media/div/diverse_roll_v031_0000.jpg",
+    "title": "roll"
+   }
+  ],
+  "clips": [
+   {
+    "id": "ep_v023_0001_scene_r0",
+    "zed": "media/div/hq0_zed.mp4",
+    "wrist": "media/div/hq0_wrist.mp4",
+    "instruction": "Pick up the bread roll from the table and place it on the small plate.",
+    "label": "bread roll"
+   },
+   {
+    "id": "ep_v017_0001_scene_r0",
+    "zed": "media/div/hq1_zed.mp4",
+    "wrist": "media/div/hq1_wrist.mp4",
+    "instruction": "Pick up the bun from the table and place it on the small plate.",
+    "label": "bun"
+   },
+   {
+    "id": "ep_v007_0001_scene_r0",
+    "zed": "media/div/hq2_zed.mp4",
+    "wrist": "media/div/hq2_wrist.mp4",
+    "instruction": "Pick up the crescent croissant from the table and place it on the small plate.",
+    "label": "crescent croissant"
+   },
+   {
+    "id": "ep_v018_0001_scene_r0",
+    "zed": "media/div/hq3_zed.mp4",
+    "wrist": "media/div/hq3_wrist.mp4",
+    "instruction": "Pick up the croissant from the table and place it on the plate.",
+    "label": "croissant"
+   },
+   {
+    "id": "ep_v030_0001_scene_r0",
+    "zed": "media/div/hq4_zed.mp4",
+    "wrist": "media/div/hq4_wrist.mp4",
+    "instruction": "Pick up the small baguette from the table and place it on the plate.",
+    "label": "small baguette"
+   }
+  ],
+  "dataset": {
+   "episodes": 71,
+   "ok": 71,
+   "frames": 16102,
+   "distinct_physics_samples": 71,
+   "hours_at_15fps": 0.298,
+   "track_err_arm_deg_p95": 0.8385743093663185,
+   "final_dist_to_plate_cm_mean": 2.04,
+   "max_lift_cm_mean": 15.73,
+   "failed": []
+  }
+ },
  "revisions": [
   {
    "date": "2026-10-17",

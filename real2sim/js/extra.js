@@ -72,6 +72,13 @@ function renderDiversity(D) {
   $('#d-clips').innerHTML = D.clips.map(c => `<div class="clip"><div class="pair"><video data-src="${c.zed}" muted loop playsinline preload="none"></video><video data-src="${c.wrist}" muted loop playsinline preload="none"></video></div>
     <div class="cap col"><b>“${esc(c.instruction)}”</b><span>${esc((c.label || '').replace('croissant=', '').replace('blue_plate=', '').replace(/, grasp /, ' · ').replace(/, /g, ' · '))} · ${c.tempo}× · ${esc(c.table)} · ${c.light_k} K</span></div></div>`).join('');
   $('#d-sheet').src = D.sheet; $('#d-sheet-a').href = D.sheet;
+  if (D.hq) {
+    $('#d-hq-clips').innerHTML = D.hq.clips.map(c => `<div class="clip"><div class="pair"><video data-src="${c.zed}" muted loop playsinline preload="none"></video><video data-src="${c.wrist}" muted loop playsinline preload="none"></video></div>
+      <div class="cap col"><b>“${esc(c.instruction)}”</b><span>photoreal · ZED + wrist</span></div></div>`).join('');
+    $('#d-hq-stills').innerHTML = D.hq.stills.map(s => `<figure><img src="${s.src}" alt="${esc(s.title)}" loading="lazy"><figcaption>${esc(s.title)}</figcaption></figure>`).join('');
+    $('#d-hq-grid').src = D.hq.grid; $('#d-hq-grid-a').href = D.hq.grid;
+    if (D.hq.dataset) $('#d-hq-note').textContent += ` ${D.hq.dataset.ok}/${D.hq.dataset.episodes} episodes pass the dataset checks.`;
+  } else { ['#d-hq-clips', '#d-hq-stills'].forEach(q => $(q).remove()); }
   lazyVideos(box);
 }
 
