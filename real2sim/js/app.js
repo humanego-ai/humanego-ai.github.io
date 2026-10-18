@@ -50,14 +50,14 @@ async function main() {
 
 // ------------------------------------------------------------------ hero
 function renderStats() {
-  const r = MAN.runs, d = SUM.dataset || {};
-  const verified = Object.values(r).reduce((a, x) => a + (x.n_verified_total || 0), 0);
+  const r = MAN.runs, d = SUM.dataset || {}, T = SUM.totals;
+  const verified = T ? T.physics_samples : Object.values(r).reduce((a, x) => a + (x.n_verified_total || 0), 0);
   const chips = [
     ['1', 'human video · 15 s'],
     ['2 × 3', 'DexAgent stages passed'],
     [verified, 'physics-verified robot episodes'],
-    [d.episodes ?? '—', 'rendered robot-camera episodes'],
-    [d.frames ? (d.frames / 1000).toFixed(1) + 'k' : '—', 'frames'],
+    [T ? T.rendered_episodes : (d.episodes ?? '—'), 'rendered robot-camera episodes'],
+    [T ? (T.frames / 1000).toFixed(0) + 'k' : (d.frames ? (d.frames / 1000).toFixed(1) + 'k' : '—'), 'frames'],
     [SUM.new_tools?.length ?? 0, 'tools the agent created'],
     ['7 + 22', 'DOF per arm + hand'],
   ];
