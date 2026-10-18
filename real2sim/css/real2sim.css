@@ -89,3 +89,30 @@
 @media(max-width:560px){
   .clips, .clips.photo, .objtab{grid-template-columns:1fr;}
 }
+
+/* ---------- photoreal + diversity sections ---------- */
+.hero-pair{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:14px; margin-bottom:18px;}
+.hero-pair video{aspect-ratio:16/9;}
+.card.cmp{margin:18px 0; overflow:hidden;}
+.card.cmp img{display:block; width:100%; height:auto; background:#05070a;}
+.stills{display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:14px; margin-top:18px;}
+.stills figure{margin:0; background:var(--card); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden;}
+.stills img{display:block; width:100%; aspect-ratio:16/9; object-fit:cover;}
+.stills figcaption{padding:8px 12px; font-size:11.5px; color:var(--mut);}
+.div-grid{display:grid; grid-template-columns:1fr; gap:14px;}
+table.axes{font-size:12.5px;}
+table.axes td{vertical-align:top;}
+table.axes td.why{color:var(--mut); font-size:11.5px; line-height:1.45; width:48%;}
+table.axes td:first-child{white-space:nowrap;}
+.chip{display:inline-block; margin:1px 0; padding:1px 7px; border-radius:999px; border:1px solid var(--line2); font-size:11px; color:var(--txt); white-space:nowrap;}
+.accs{padding:10px 16px 16px; display:grid; grid-template-columns:repeat(5, minmax(0,1fr)); gap:18px;}
+.acc-g h5{margin:0 0 6px; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--dim);}
+.acc{display:grid; grid-template-columns:96px 1fr 64px; gap:8px; align-items:center; font-size:12px; margin:3px 0;}
+.acc .l{color:var(--txt); text-transform:capitalize;}
+.acc .bar{height:8px; border-radius:4px; background:var(--card2); overflow:hidden;}
+.acc .bar i{display:block; height:100%; background:linear-gradient(90deg, var(--accent), #ffc58a); border-radius:4px;}
+.acc .n{color:var(--mut); font-variant-numeric:tabular-nums; text-align:right;}
+.clip .cap.col{flex-direction:column; gap:3px;}
+.clip .cap.col b{font-weight:600;}
+@media(max-width:1080px){ .hero-pair{grid-template-columns:1fr;} .accs{grid-template-columns:repeat(2, minmax(0,1fr));} .stills{grid-template-columns:repeat(2, minmax(0,1fr));} }
+@media(max-width:560px){ .stills, .accs{grid-template-columns:1fr;} table.axes td.why{display:none;} .acc{grid-template-columns:96px 1fr 64px;} }

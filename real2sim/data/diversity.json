@@ -1,0 +1,512 @@
+{
+ "designer": "Serve bread is a one-hand pick-and-place of a small rigid baked good onto a plate. What a policy meets in the real world: other breads (croissants straight or crescent, rolls, buns, short baguettes) of other sizes, weights and crusts; plates from side plates to dinner plates in other colours; the bread and the plate in other places and at other distances; a table a few centimetres higher or lower than the bench; and operators (the teleoperated or scripted data a policy is trained on) who grab the loaf at other points along its middle, lift and carry it at other heights and move faster or slower. The ranges are bounded by what the verified strategy can physically do: the Sharpa thumb-index pinch closes across the bread's width (verified at 6.8 cm), at the height of its widest cross-section, which must stay above the fingertips' lowest reach at the table (the Stage 3 pads held at 13 mm with the index tip 1.4 mm above the table); the pinch line must pass close to the centre of mass (Stage 3 found that a diagonal or off-centre pinch tilts the loaf in the hand, which then forced a leveling turn that drove idle fingers into the plate); the bread must come to rest inside the plate (checked on every built variant); the arm must reach the bread and the plate from the right station (setup work area x -0.45..0.45, y 0.23..0.85 m); the arm joints must stay under the robot's speed limit at the fastest tempo. Geometry, table height and strategy are varied per VARIANT (the Stage 3 executor re-plans and re-executes the task there, closed loop in contact physics, and the Stage 3 gate suite re-checks it); small layout jitter and tempo are varied per SAMPLE by Stage 4 around each verified variant, every sample replayed in physics.",
+ "axes": [
+  {
+   "axis": "bread",
+   "values": [
+    "croissant (30%)",
+    "crescent croissant (15%)",
+    "bread roll (20%)",
+    "bun (15%)",
+    "small baguette (20%)"
+   ],
+   "why": "The demonstrated object, around its reconstruction (16 x 6.8 x 4.5 cm): bakery croissants run 13-18 cm long and 6-7 cm across. Height >= 4.2 cm with base_flatness <= 0.6 keeps the widest section >= 12 mm above the table, where the verified pinch closes without the fingertips touching the table. Width <= 7.2 cm stays near the verified 6.8 cm pinch span. A slight bow (bend <= 0.04) is what 'fairly straight' (Stage 1) allows. Browning varies from golden to deep brown; the crust friction from glazed (0.7) to dry (1.0)."
+  },
+  {
+   "axis": "plate",
+   "values": [
+    "plate (60%)",
+    "small plate (40%)"
+   ],
+   "why": "Dinner plates are 24-28 cm across and 1.8-2.8 cm tall: the demo's plate (25.3 cm) is in the middle. Ceramic plates weigh 0.35-0.6 kg; a heavier plate only makes the untouched-plate check easier. Colours: the demo's pale blue-grey and the usual white, cream, light blue, sage."
+  },
+  {
+   "axis": "table_height_m",
+   "values": [
+    -0.04,
+    0.0,
+    0.04
+   ],
+   "why": "Desks and kitchen tables differ by a few centimetres from the 0.56 m the bench puts the tabletop above the robot base; +-4 cm keeps the hand's home pose 11-19 cm above the table and the reach down to the table well inside the arm's 0.93 m reach. Realised by moving the robot rig (arm stations, ZED head camera, home pose) by the opposite amount, so the camera's view of the table changes as it would on a real other table."
+  },
+  {
+   "axis": "grasp",
+   "values": [
+    "com_pinch (55%)",
+    "offset_pinch (45%)"
+   ],
+   "why": "Strategy varies where the verified pinch holds; the grasp type stays the one Stage 3 verified."
+  },
+  {
+   "axis": "lift_m",
+   "values": [
+    0.07,
+    0.14
+   ],
+   "why": "How high the bread is lifted before the carry: Stage 1 asks for 'held clear of the table' and the demo lifts it 'high'; 7 cm clears a 2.8 cm plate rim with the bread's height, 14 cm stays inside the arm's comfortable band above the table."
+  },
+  {
+   "axis": "approach_m",
+   "values": [
+    0.06,
+    0.11
+   ],
+   "why": "The pre-grasp height above the grasp from which the hand descends: 6 cm keeps the open fingers clear of a 5.8 cm bun, 11 cm is a slow, high approach."
+  },
+  {
+   "axis": "carry_height_m",
+   "values": [
+    0.08,
+    0.15
+   ],
+   "why": "Height of the carry over to the plate: Stage 1 'carried at height, until it is above the plate'; at least 8 cm above the table so a held loaf clears the plate's rim."
+  },
+  {
+   "axis": "set_down_clearance_m",
+   "values": [
+    0.008
+   ],
+   "why": "Kept at the verified 8 mm: Stage 3 showed a lower release driving the opening index tip into the plate and a level drop from 8 mm landing flat; this is a safety margin, not a style."
+  },
+  {
+   "axis": "place_offset_m",
+   "values": [
+    0.0,
+    0.02
+   ],
+   "why": "Where on the plate the bread lands: up to 2 cm off the centre, inside the margin fits_in leaves."
+  },
+  {
+   "axis": "tempo",
+   "values": [
+    0.8,
+    1.0,
+    1.15,
+    1.3
+   ],
+   "why": "Operators work slower or faster than the demo. The verified episode's peak arm joint speed is 1.14 rad/s; 1.3x keeps it under 1.571 rad/s, the 90 deg/s the Stage 3 executor itself plans arm motions at (half the URDF limit of 3.14 rad/s). Slower than 0.8x adds nothing new (the motion is quasi-static already)."
+  },
+  {
+   "axis": "render \u00b7 camera",
+   "values": [
+    "pos jitter m: 0.015",
+    "rot jitter deg: 2.5",
+    "fovy jitter deg: 1.5"
+   ],
+   "why": "The ZED's hand-eye calibration error and head-mount play (a few mm / ~1 deg) plus re-mounting between sessions; the lens field of view varies between ZED units and calibrations."
+  },
+  {
+   "axis": "render \u00b7 lighting",
+   "values": [
+    "intensity: 0.35, 1.0",
+    "color temperature k: 2800, 6500",
+    "elevation deg: 30, 85",
+    "azimuth deg: -180, 180",
+    "n lights: 1, 2, 3"
+   ],
+   "why": "Kitchens and labs: warm tungsten to daylight, overhead to window light."
+  },
+  {
+   "axis": "render \u00b7 colors",
+   "values": [
+    "table: light_wood, dark_wood, white_laminate, grey_laminate, human_table_plate",
+    "background: {\"hsv_jitter\": [0.5, 0.3, 0.3]}",
+    "croissant: {\"hsv_jitter\": [0.02, 0.08, 0.1]}"
+   ],
+   "why": "Table finishes and room colours a policy meets; the bread and plate colours themselves are drawn per variant (body_rgba), these are renderer-side jitters on top."
+  }
+ ],
+ "acceptance": {
+  "croissant.variant": {
+   "bun": {
+    "variants": 5,
+    "stage3_ok": 3,
+    "s4_attempts": 7,
+    "s4_accepted": 6,
+    "samples": 9
+   },
+   "crescent_croissant": {
+    "variants": 6,
+    "stage3_ok": 4,
+    "s4_attempts": 11,
+    "s4_accepted": 6,
+    "samples": 10
+   },
+   "croissant": {
+    "variants": 11,
+    "stage3_ok": 10,
+    "s4_attempts": 30,
+    "s4_accepted": 18,
+    "samples": 28
+   },
+   "demi_baguette": {
+    "variants": 7,
+    "stage3_ok": 3,
+    "s4_attempts": 10,
+    "s4_accepted": 6,
+    "samples": 9
+   },
+   "roll": {
+    "variants": 7,
+    "stage3_ok": 5,
+    "s4_attempts": 14,
+    "s4_accepted": 10,
+    "samples": 15
+   }
+  },
+  "blue_plate.variant": {
+   "dinner_plate": {
+    "variants": 22,
+    "stage3_ok": 13,
+    "s4_attempts": 40,
+    "s4_accepted": 25,
+    "samples": 38
+   },
+   "side_plate": {
+    "variants": 14,
+    "stage3_ok": 12,
+    "s4_attempts": 32,
+    "s4_accepted": 21,
+    "samples": 33
+   }
+  },
+  "table_height_m": {
+   "+0.000": {
+    "variants": 12,
+    "stage3_ok": 9,
+    "s4_attempts": 28,
+    "s4_accepted": 15,
+    "samples": 24
+   },
+   "+0.040": {
+    "variants": 12,
+    "stage3_ok": 8,
+    "s4_attempts": 26,
+    "s4_accepted": 15,
+    "samples": 23
+   },
+   "-0.040": {
+    "variants": 12,
+    "stage3_ok": 8,
+    "s4_attempts": 18,
+    "s4_accepted": 16,
+    "samples": 24
+   }
+  },
+  "grasp": {
+   "com_pinch": {
+    "variants": 20,
+    "stage3_ok": 14,
+    "s4_attempts": 40,
+    "s4_accepted": 26,
+    "samples": 40
+   },
+   "offset_pinch": {
+    "variants": 16,
+    "stage3_ok": 11,
+    "s4_attempts": 32,
+    "s4_accepted": 20,
+    "samples": 31
+   }
+  },
+  "lift_m": {
+   "[0, 0.09)": {
+    "variants": 12,
+    "stage3_ok": 9,
+    "s4_attempts": 24,
+    "s4_accepted": 18,
+    "samples": 27
+   },
+   "[0.09, 0.11)": {
+    "variants": 11,
+    "stage3_ok": 7,
+    "s4_attempts": 14,
+    "s4_accepted": 14,
+    "samples": 21
+   },
+   "[0.11, 0.13)": {
+    "variants": 11,
+    "stage3_ok": 8,
+    "s4_attempts": 32,
+    "s4_accepted": 12,
+    "samples": 20
+   },
+   "[0.13, 1)": {
+    "variants": 2,
+    "stage3_ok": 1,
+    "s4_attempts": 2,
+    "s4_accepted": 2,
+    "samples": 3
+   }
+  },
+  "carry_height_m": {
+   "[0, 0.09)": {
+    "variants": 7,
+    "stage3_ok": 4,
+    "s4_attempts": 10,
+    "s4_accepted": 8,
+    "samples": 12
+   },
+   "[0.09, 0.11)": {
+    "variants": 8,
+    "stage3_ok": 5,
+    "s4_attempts": 13,
+    "s4_accepted": 10,
+    "samples": 15
+   },
+   "[0.11, 0.13)": {
+    "variants": 11,
+    "stage3_ok": 8,
+    "s4_attempts": 27,
+    "s4_accepted": 14,
+    "samples": 22
+   },
+   "[0.13, 1)": {
+    "variants": 10,
+    "stage3_ok": 8,
+    "s4_attempts": 22,
+    "s4_accepted": 14,
+    "samples": 22
+   }
+  },
+  "approach_m": {
+   "[0, 0.07)": {
+    "variants": 6,
+    "stage3_ok": 4,
+    "s4_attempts": 11,
+    "s4_accepted": 8,
+    "samples": 12
+   },
+   "[0.07, 0.09)": {
+    "variants": 18,
+    "stage3_ok": 13,
+    "s4_attempts": 37,
+    "s4_accepted": 24,
+    "samples": 37
+   },
+   "[0.09, 1)": {
+    "variants": 12,
+    "stage3_ok": 8,
+    "s4_attempts": 24,
+    "s4_accepted": 14,
+    "samples": 22
+   }
+  }
+ },
+ "totals": {
+  "variants": 36,
+  "stage3_ok": 25,
+  "samples": 71,
+  "stage4_draws": {
+   "attempts": 72,
+   "accepted": 46
+  },
+  "variant_failures": {
+   "not judged": 2,
+   "grasp": 1,
+   "execute": 3,
+   "contact_impulse_spike_audit": 5
+  }
+ },
+ "tempo": {
+  "0.8": {
+   "attempts": 24,
+   "accepted": 16,
+   "failures": {
+    "physics": 5,
+    "reach": 1,
+    "penetration": 2
+   }
+  },
+  "1": {
+   "attempts": 15,
+   "accepted": 10,
+   "failures": {
+    "physics": 3,
+    "reach": 2
+   }
+  },
+  "1.15": {
+   "attempts": 18,
+   "accepted": 15,
+   "failures": {
+    "physics": 3
+   }
+  },
+  "1.3": {
+   "attempts": 15,
+   "accepted": 5,
+   "failures": {
+    "joint_speed": 7,
+    "penetration": 3
+   }
+  }
+ },
+ "dataset": {
+  "episodes": 142,
+  "ok": 142,
+  "frames": 32204,
+  "distinct_physics_samples": 71,
+  "hours_at_15fps": 0.596,
+  "track_err_arm_deg_p95": 0.8449138043084745,
+  "final_dist_to_plate_cm_mean": 2.04,
+  "max_lift_cm_mean": 15.73,
+  "failed": []
+ },
+ "sheet": "media/div/sheet.jpg",
+ "clips": [
+  {
+   "id": "ep_v017_original_r0",
+   "zed": "media/div/c0_zed.mp4",
+   "wrist": "media/div/c0_wrist.mp4",
+   "instruction": "Pick up the bun from the table and place it on the small plate.",
+   "label": "croissant=bun, blue_plate=side_plate, table -0.040 m, grasp com_pinch (+0.00), lift 0.0974, carry 0.1448",
+   "tempo": 1.0,
+   "table": "dark_wood",
+   "light_k": 6206
+  },
+  {
+   "id": "ep_v021_0001_r0",
+   "zed": "media/div/c1_zed.mp4",
+   "wrist": "media/div/c1_wrist.mp4",
+   "instruction": "Pick up the bun from the table and place it on the small plate.",
+   "label": "croissant=bun, blue_plate=side_plate, table +0.000 m, grasp offset_pinch (-0.22), lift 0.0742, carry 0.1001",
+   "tempo": 0.8,
+   "table": "dark_wood",
+   "light_k": 5292
+  },
+  {
+   "id": "ep_v007_0000_r0",
+   "zed": "media/div/c2_zed.mp4",
+   "wrist": "media/div/c2_wrist.mp4",
+   "instruction": "Pick up the crescent croissant from the table and place it on the small plate.",
+   "label": "croissant=crescent_croissant, blue_plate=side_plate, table -0.040 m, grasp com_pinch (+0.00), lift 0.0988, carry 0.1251",
+   "tempo": 1.15,
+   "table": "light_wood",
+   "light_k": 5606
+  },
+  {
+   "id": "ep_v016_0000_r0",
+   "zed": "media/div/c3_zed.mp4",
+   "wrist": "media/div/c3_wrist.mp4",
+   "instruction": "Pick up the crescent croissant from the table and place it on the small plate.",
+   "label": "croissant=crescent_croissant, blue_plate=side_plate, table +0.040 m, grasp com_pinch (+0.00), lift 0.109, carry 0.1397",
+   "tempo": 0.8,
+   "table": "human_table_plate",
+   "light_k": 3799
+  },
+  {
+   "id": "ep_v008_0000_r0",
+   "zed": "media/div/c4_zed.mp4",
+   "wrist": "media/div/c4_wrist.mp4",
+   "instruction": "Pick up the croissant from the table and place it on the small plate.",
+   "label": "croissant=croissant, blue_plate=side_plate, table -0.040 m, grasp com_pinch (+0.00), lift 0.1019, carry 0.0888",
+   "tempo": 1.0,
+   "table": "light_wood",
+   "light_k": 4238
+  },
+  {
+   "id": "ep_v020_0001_r0",
+   "zed": "media/div/c5_zed.mp4",
+   "wrist": "media/div/c5_wrist.mp4",
+   "instruction": "Pick up the croissant from the table and place it on the plate.",
+   "label": "croissant=croissant, blue_plate=dinner_plate, table -0.040 m, grasp offset_pinch (+0.24), lift 0.08, carry 0.0849",
+   "tempo": 1.15,
+   "table": "white_laminate",
+   "light_k": 3451
+  },
+  {
+   "id": "ep_v024_0000_r0",
+   "zed": "media/div/c6_zed.mp4",
+   "wrist": "media/div/c6_wrist.mp4",
+   "instruction": "Pick up the small baguette from the table and place it on the plate.",
+   "label": "croissant=demi_baguette, blue_plate=dinner_plate, table +0.000 m, grasp com_pinch (+0.00), lift 0.1248, carry 0.1484",
+   "tempo": 0.8,
+   "table": "grey_laminate",
+   "light_k": 6422
+  },
+  {
+   "id": "ep_v024_original_r0",
+   "zed": "media/div/c7_zed.mp4",
+   "wrist": "media/div/c7_wrist.mp4",
+   "instruction": "Pick up the small baguette from the table and place it on the plate.",
+   "label": "croissant=demi_baguette, blue_plate=dinner_plate, table +0.000 m, grasp com_pinch (+0.00), lift 0.1248, carry 0.1484",
+   "tempo": 1.0,
+   "table": "light_wood",
+   "light_k": 3950
+  },
+  {
+   "id": "ep_v023_0000_r0",
+   "zed": "media/div/c8_zed.mp4",
+   "wrist": "media/div/c8_wrist.mp4",
+   "instruction": "Pick up the bread roll from the table and place it on the small plate.",
+   "label": "croissant=roll, blue_plate=side_plate, table -0.040 m, grasp offset_pinch (-0.13), lift 0.0739, carry 0.1295",
+   "tempo": 1.3,
+   "table": "grey_laminate",
+   "light_k": 3995
+  },
+  {
+   "id": "ep_v023_0001_r0",
+   "zed": "media/div/c9_zed.mp4",
+   "wrist": "media/div/c9_wrist.mp4",
+   "instruction": "Pick up the bread roll from the table and place it on the small plate.",
+   "label": "croissant=roll, blue_plate=side_plate, table -0.040 m, grasp offset_pinch (-0.13), lift 0.0739, carry 0.1295",
+   "tempo": 1.0,
+   "table": "light_wood",
+   "light_k": 2893
+  }
+ ],
+ "revisions": [
+  {
+   "date": "2026-10-17",
+   "stage": "pilot",
+   "change": "set_down_clearance_m stays 0.008 as the drawn value, but the generator may raise it to 0.012 then 0.016 (with a slower 2.0 / 2.5 s opening) when the executed place fails or its let-go spikes, resumed from the place subgoal; the release used is recorded per variant (variant_result.json executions).",
+   "why": "Pilot p1 (bread roll 11 x 6.8 x 5 cm, side plate r 11 cm, table +4 cm, pinch 20 % off the centre of mass): the off-centre pinch tilted the roll 9.5 deg in the hand; the executed episode passed every subgoal but the let-go logged a 62.9 N hand-object spike (contact_impulse_spike_audit limit 33 N). Released 12 mm above the plate floor with a 2 s opening it passed the audit, the packaging, the stress tests and all 47 Stage 3 gate-suite checks. Pilot p0 (croissant 14 x 6.4 x 4.2 cm, nominal rig, centre pinch) passed at 8 mm. Both kept the Stage 3 lesson (no lower release); only higher, slower releases are tried.",
+   "evidence": [
+    "runs/serve_bread_040/diversity/pilot/p1/variant_result.json",
+    "runs/serve_bread_040/diversity/pilot/p0/variant_result.json"
+   ]
+  },
+  {
+   "date": "2026-10-17",
+   "stage": "pilot",
+   "change": "tempo kept at [0.8, 1.0, 1.15, 1.3] with max_arm_speed_rad_s 1.571; Stage 4 judges the Stage 1 goals of a tempo'd draw in its retimed subgoal windows.",
+   "why": "Pilot p0 Stage 4: a 1.3x draw was rejected by the kinematic penetration check (its layout, not its tempo); two 0.8x draws passed the physics replay (peak arm speed 0.96 rad/s). A first version judged the Stage 1 goals of retimed draws in the original frame windows and rejected a valid draw on all three goals; fixed in stage4/diversity.py (the same applies to Stage 4's own speed-limit retime, which the mass run never accepted).",
+   "evidence": [
+    "runs/serve_bread_040/diversity/pilot/p0/stage4"
+   ]
+  },
+  {
+   "date": "2026-10-18",
+   "stage": "run 1 (36 variants)",
+   "change": "bun: tip_frac [0.7, 0.85] -> [0.45, 0.58], length [0.08, 0.095] -> [0.088, 0.1], width [0.068, 0.075] -> [0.066, 0.074]",
+   "why": "All 5 bun variants of the first run were refused by construct_tapered_loaf before any robot work ('tip_frac * width is too large for this length: the noses would meet'): the skill needs length > 2 x width x tip_frac (its rounded noses must leave half the length of spine). The new ranges satisfy it at every corner (0.088 > 2 x 0.074 x 0.58 = 0.086).",
+   "evidence": [
+    "runs/serve_bread_040/diversity/work/v013/variant_result.json",
+    "v015",
+    "v017",
+    "v021",
+    "v027"
+   ]
+  },
+  {
+   "date": "2026-10-18",
+   "stage": "run 2 (the 15 failed variants re-run)",
+   "change": "variant_stage3 repair search extended: per passing grasp pose (best, then next) the drawn plan; a contact spike on the way in -> the same pose with a slower approach (t_reach 3.0, t_descend 1.6, t_close 1.0, t_grip 0.5 s); a place failure or let-go spike -> resumed from the place: level at the yaw the bread has in hand (after an orientation miss), then 12 mm / 2.0 s, then 16 mm / 2.5 s / 4 N releases; at most 8 executions. No check was relaxed.",
+   "why": "Run 1: 6 of 36 variants failed only on contact_impulse_spike_audit, 4 of them on the way in (descend / close / reach, 15-36 N against 15-22 N limits) where the audit itself says 'slow the motion into that contact', which the executor's t_* parameters exist for.",
+   "evidence": [
+    "runs/serve_bread_040/diversity/work_run1/acceptance_run1.json"
+   ],
+   "result": "Re-run of 7 of the 15 (buns first) before the shared machine ran out of memory: v001 (crescent, offset pinch) passed with the next pose + slow approach; buns v015 (after a 12 mm release), v017, v021 passed; v013 (bun, pinch 23 % off centre) still spiked on the descent (15.3 N vs 15.0 N) through all 5 executions; v000 and v027 passed the execution and the spike audit (slow approach / 12 mm release) but were killed by the kernel OOM killer during packaging (not judged). v009, v012, v014, v019, v022, v029, v034, v035 keep their run-1 results."
+  },
+  {
+   "date": "2026-10-18",
+   "stage": "final",
+   "change": "No further shrinking: every axis value has verified samples. tempo 1.3 kept (5 of 15 draws pass; 7 rejected because the tempo'd arm exceeded 1.571 rad/s, 3 on penetration); if the generator needs efficiency, cap tempo at 1.2 for variants whose own peak arm speed is above 1.2 rad/s.",
+   "why": "Acceptance per axis value (acceptance.json): bread croissant 10/11 variants verified, roll 5/7, crescent 4/6, bun 3/5 (after its revision), demi-baguette 3/7 (narrow 5-6 cm loaf: the transferred pinch missed the pads once, two descents spiked, one place missed its orientation on the plate's sloped wall); plates dinner 13/22, side 12/14; table -4 / 0 / +4 cm: 8 / 9 / 8 of 12; com_pinch 14/20, offset_pinch 11/16. Stage 4 draws: 46 of 72 accepted (64 %, vs 29 % for the +-7 cm / +-35 deg mass run).",
+   "evidence": [
+    "runs/serve_bread_040/diversity/acceptance.json"
+   ]
+  }
+ ]
+}

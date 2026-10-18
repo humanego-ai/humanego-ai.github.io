@@ -33,6 +33,8 @@
     <a href="https://github.com/dexagent1/DexAgent" target="_blank" rel="noopener">🧩 DexAgent</a>
     <a href="https://arxiv.org/abs/2609.35318" target="_blank" rel="noopener">📄 DexAgent paper</a>
     <a href="#data">📦 Generated data</a>
+    <a href="#quality">✨ Photoreal</a>
+    <a href="#diversity">🎲 Diversity</a>
   </div>
   <div class="stats" id="stats"></div>
 </section>
@@ -164,6 +166,28 @@ ep_shard_01_0007_r0/
   meta.json        <span class="c"># source sample + layout, randomization draw, camera intrinsics/extrinsics, instruction</span></pre></div>
   </section>
 
+  <section class="section" id="quality">
+    <div class="sec-h"><h2>Photoreal robot-camera data</h2><p>The same physics-verified episodes re-rendered with Blender Cycles from the robot's ZED and wrist cameras: PBR robot (white satin paint, black anodised wrist, graphite torso, rubber fingertip pads), a glazed ceramic plate in the colour measured from the human video, a baked-crust croissant with subsurface scattering and a contact dent where the fingers press, real indoor HDRI rooms or a studio cyclorama. The robot stays exactly where the physics put it.</p></div>
+    <div class="kpis big" id="q-kpis"></div>
+    <div class="hero-pair" id="q-hero"></div>
+    <div class="card cmp"><div class="card-h"><h3>Same frames, three renderers</h3><span class="meta">MuJoCo (left) · Cycles studio · Cycles scene &nbsp;— ZED and wrist</span></div><img id="q-compare" alt="MuJoCo vs Cycles studio vs Cycles scene" loading="lazy"></div>
+    <div class="sec-h small"><h3>Photoreal episodes</h3><p>ZED 2i + wrist, 640×480, with depth and the full state/action streams (same format as the fast dataset); every appearance knob drawn per episode.</p></div>
+    <div class="clips" id="q-clips"></div>
+    <div class="stills" id="q-stills"></div>
+  </section>
+
+  <section class="section" id="diversity">
+    <div class="sec-h"><h2>Agent-designed diversity</h2><p id="d-designer">An agent decides which axes of variation matter for the task and how wide each may be, then every draw is rebuilt and re-verified in contact physics.</p></div>
+    <div class="kpis big" id="d-kpis"></div>
+    <div class="div-grid">
+      <div class="card"><div class="card-h"><h3>The spec the agent wrote</h3><span class="meta">runs/serve_bread_040/diversity/spec.json</span></div><table class="res axes" id="d-axes"></table></div>
+      <div class="card"><div class="card-h"><h3>What survived physics</h3><span class="meta">variants verified / drawn · samples</span></div><div class="accs" id="d-acc"></div></div>
+    </div>
+    <div class="sec-h small"><h3>Diverse episodes</h3><p>Each with its own instruction, bread, plate, table height, grasp, motion and speed — and the look the designer drew for it (table finish, lamp colour temperature and direction, room colour, ZED offset).</p></div>
+    <div class="clips" id="d-clips"></div>
+    <div class="card cmp"><div class="card-h"><h3>All 71 diverse samples</h3><span class="meta">ZED view, lifted and placed frames · click to enlarge</span></div><a id="d-sheet-a" target="_blank" rel="noopener"><img id="d-sheet" alt="Contact sheet of the diverse samples" loading="lazy"></a></div>
+  </section>
+
   <section class="section" id="photoreal">
     <div class="sec-h"><h2>Photoreal composites</h2><p>DexAgent's own Stage 4 render path: Blender Cycles renders of the robot and objects composited onto the human video's clean background plate, plus the wrist and ZED views.</p></div>
     <div class="clips photo" id="photo"></div>
@@ -184,5 +208,6 @@ ep_shard_01_0007_r0/
   run by Claude &nbsp;·&nbsp; Robot: Tianji (TJ Marvin) + SharpaWave + ZED 2i &nbsp;·&nbsp; Physics: MuJoCo</footer>
 
 <script type="module" src="js/app.js"></script>
+<script type="module" src="js/extra.js"></script>
 </body>
 </html>

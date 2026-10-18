@@ -1,0 +1,80 @@
+{
+ "hero": {
+  "scene": "media/hq/hero_scene.mp4",
+  "studio": "media/hq/hero_studio.mp4"
+ },
+ "compare": "media/hq/compare.jpg",
+ "grid": "media/hq/grid.jpg",
+ "stills": [
+  {
+   "src": "media/hq/hero_scene.jpg",
+   "title": "Scene mode: a Poly Haven room, the table finish drawn per episode"
+  },
+  {
+   "src": "media/hq/closeup_scene.jpg",
+   "title": "Close-up of the thumb-index pinch"
+  },
+  {
+   "src": "media/hq/closeup_studio.jpg",
+   "title": "Studio mode: cyclorama with key/fill/rim area lights"
+  },
+  {
+   "src": "media/hq/croissant_studio.jpg",
+   "title": "The croissant: baked-crust shading, subsurface, egg-wash gloss"
+  }
+ ],
+ "clips": [
+  {
+   "id": "ep_shard_00_0000_scene_r0",
+   "mode": "scene",
+   "zed": "media/hq/c0_zed.mp4",
+   "wrist": "media/hq/c0_wrist.mp4"
+  },
+  {
+   "id": "ep_shard_00_0001_scene_r0",
+   "mode": "scene",
+   "zed": "media/hq/c1_zed.mp4",
+   "wrist": "media/hq/c1_wrist.mp4"
+  },
+  {
+   "id": "ep_shard_01_0000_scene_r0",
+   "mode": "scene",
+   "zed": "media/hq/c2_zed.mp4",
+   "wrist": "media/hq/c2_wrist.mp4"
+  },
+  {
+   "id": "ep_shard_00_0000_studio_r0",
+   "mode": "studio",
+   "zed": "media/hq/c3_zed.mp4",
+   "wrist": "media/hq/c3_wrist.mp4"
+  },
+  {
+   "id": "ep_shard_00_0001_studio_r0",
+   "mode": "studio",
+   "zed": "media/hq/c4_zed.mp4",
+   "wrist": "media/hq/c4_wrist.mp4"
+  },
+  {
+   "id": "ep_shard_01_0000_studio_r0",
+   "mode": "studio",
+   "zed": "media/hq/c5_zed.mp4",
+   "wrist": "media/hq/c5_wrist.mp4"
+  }
+ ],
+ "kpis": {
+  "episodes": 24,
+  "ok": 24,
+  "episodes_left": 6,
+  "ok_left": 6,
+  "s_per_frame_view_median": 0.29,
+  "s_per_frame_view_idle_gpu": 0.15,
+  "robot_silhouette_iou": 0.999,
+  "depth_err_mm_median": 0.4,
+  "croissant_iou": [
+   0.92,
+   0.99
+  ],
+  "hdris": 14,
+  "table_textures": 19
+ }
+}
