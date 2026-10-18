@@ -116,3 +116,6 @@ table.axes td:first-child{white-space:nowrap;}
 .clip .cap.col b{font-weight:600;}
 @media(max-width:1080px){ .hero-pair{grid-template-columns:1fr;} .accs{grid-template-columns:repeat(2, minmax(0,1fr));} .stills{grid-template-columns:repeat(2, minmax(0,1fr));} }
 @media(max-width:560px){ .stills, .accs{grid-template-columns:1fr;} table.axes td.why{display:none;} .acc{grid-template-columns:96px 1fr 64px;} }
+
+#e-table td.why{color:var(--mut); font-size:12px; line-height:1.45;}
+#q-compare{max-width:860px; margin:0 auto;}

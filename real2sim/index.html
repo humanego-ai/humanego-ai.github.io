@@ -35,6 +35,7 @@
     <a href="#data">📦 Generated data</a>
     <a href="#quality">✨ Photoreal</a>
     <a href="#diversity">🎲 Diversity</a>
+    <a href="#efficiency">⚡ Efficiency</a>
   </div>
   <div class="stats" id="stats"></div>
 </section>
@@ -170,7 +171,7 @@ ep_shard_01_0007_r0/
     <div class="sec-h"><h2>Photoreal robot-camera data</h2><p>The same physics-verified episodes re-rendered with Blender Cycles from the robot's ZED and wrist cameras: PBR robot (white satin paint, black anodised wrist, graphite torso, rubber fingertip pads), a glazed ceramic plate in the colour measured from the human video, a baked-crust croissant with subsurface scattering and a contact dent where the fingers press, real indoor HDRI rooms or a studio cyclorama. The robot stays exactly where the physics put it.</p></div>
     <div class="kpis big" id="q-kpis"></div>
     <div class="hero-pair" id="q-hero"></div>
-    <div class="card cmp"><div class="card-h"><h3>Same frames, three renderers</h3><span class="meta">MuJoCo (left) · Cycles studio · Cycles scene &nbsp;— ZED and wrist</span></div><img id="q-compare" alt="MuJoCo vs Cycles studio vs Cycles scene" loading="lazy"></div>
+    <div class="card cmp"><div class="card-h"><h3>Same frames, three renderers</h3><span class="meta">MuJoCo (left) · Cycles studio · Cycles scene &nbsp;— ZED and wrist</span></div><img id="q-compare" width="1200" height="1800" alt="MuJoCo vs Cycles studio vs Cycles scene" loading="lazy"></div>
     <div class="sec-h small"><h3>Photoreal episodes</h3><p>ZED 2i + wrist, 640×480, with depth and the full state/action streams (same format as the fast dataset); every appearance knob drawn per episode.</p></div>
     <div class="clips" id="q-clips"></div>
     <div class="stills" id="q-stills"></div>
@@ -185,7 +186,13 @@ ep_shard_01_0007_r0/
     </div>
     <div class="sec-h small"><h3>Diverse episodes</h3><p>Each with its own instruction, bread, plate, table height, grasp, motion and speed — and the look the designer drew for it (table finish, lamp colour temperature and direction, room colour, ZED offset).</p></div>
     <div class="clips" id="d-clips"></div>
-    <div class="card cmp"><div class="card-h"><h3>All 71 diverse samples</h3><span class="meta">ZED view, lifted and placed frames · click to enlarge</span></div><a id="d-sheet-a" target="_blank" rel="noopener"><img id="d-sheet" alt="Contact sheet of the diverse samples" loading="lazy"></a></div>
+    <div class="card cmp"><div class="card-h"><h3>All 71 diverse samples</h3><span class="meta">ZED view, lifted and placed frames · click to enlarge</span></div><a id="d-sheet-a" target="_blank" rel="noopener"><img id="d-sheet" width="1800" height="1621" alt="Contact sheet of the diverse samples" loading="lazy"></a></div>
+  </section>
+
+  <section class="section" id="efficiency">
+    <div class="sec-h"><h2>Faster and cheaper, same data</h2><p>Engineering only: every component, check, audit and the contact-physics replay are kept. The speed work leaves Stage 4's outputs bitwise identical; two bugs in its checks were fixed, so more of the drawn layouts survive.</p></div>
+    <div class="kpis big" id="e-kpis"></div>
+    <div class="card"><table class="res" id="e-table"></table><div class="note" id="e-note"></div></div>
   </section>
 
   <section class="section" id="photoreal">

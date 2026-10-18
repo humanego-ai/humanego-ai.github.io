@@ -75,5 +75,20 @@ function renderDiversity(D) {
   lazyVideos(box);
 }
 
-const [Q, D] = await Promise.all([getJSON('data/quality.json'), getJSON('data/diversity.json')]);
-renderQuality(Q); renderDiversity(D);
+function renderEfficiency(E) {
+  if (!E) { $('#efficiency').style.display = 'none'; return; }
+  const a = E.acceptance, s = E.s_per_sample, u = E.usd_per_1000_samples;
+  $('#e-kpis').innerHTML = [
+    kpi('CPU time per sample', `${s.after}<small>s</small>`, `was ${s.before} s · ${(s.before / s.after).toFixed(1)}× less, end to end per verified sample`),
+    kpi('Layouts kept', `${Math.round(100 * a.after.rate)}<small>%</small>`, `was ${Math.round(100 * a.before.rate)}% (${a.before.accepted}/${a.before.attempts}) · now ${a.after.accepted}/${a.after.attempts}`),
+    kpi('Physics rejections', `${Math.round(100 * a.after.physics_rejected / a.after.attempts)}<small>%</small>`, `of attempts · was ${Math.round(100 * a.before.physics_rejected / a.before.attempts)}%`),
+    kpi('Compute per 1000 samples', `$${u.after}`, `was $${u.before} · at $${u.vcpu_hour_usd}/vCPU-h`),
+    kpi('Memory per process', '2.5<small>GiB</small>', 'was 5.1 GiB · 11–12 shards fit in 30 GB, was 5'),
+  ].join('');
+  $('#e-table').innerHTML = '<tr><th>What</th><th>Before</th><th>After</th><th>How</th></tr>' +
+    E.rows.map(r => `<tr><td><b>${esc(r.what)}</b></td><td>${esc(r.before)}</td><td><b>${esc(r.after)}</b></td><td class="why">${esc(r.how)}</td></tr>`).join('');
+  $('#e-note').textContent = 'Equivalence: ' + E.equivalence + '.';
+}
+
+const [Q, D, E] = await Promise.all([getJSON('data/quality.json'), getJSON('data/diversity.json'), getJSON('data/efficiency.json')]);
+renderQuality(Q); renderDiversity(D); renderEfficiency(E);

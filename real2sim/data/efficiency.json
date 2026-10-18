@@ -1,0 +1,64 @@
+{
+ "acceptance": {
+  "before": {
+   "accepted": 247,
+   "attempts": 809,
+   "physics_rejected": 308,
+   "rate": 0.305
+  },
+  "after": {
+   "accepted": 60,
+   "attempts": 111,
+   "physics_rejected": 8,
+   "rate": 0.541
+  }
+ },
+ "s_per_sample": {
+  "before": 190.9,
+  "after": 46.3
+ },
+ "usd_per_1000_samples": {
+  "before": 2.39,
+  "after": 0.58,
+  "vcpu_hour_usd": 0.045
+ },
+ "rows": [
+  {
+   "what": "one contact-physics replay",
+   "before": "32 s",
+   "after": "11.5 s",
+   "how": "each integrated state computed once (one forward pass per substep instead of three), vectorized contact scan"
+  },
+  {
+   "what": "audits of an accepted layout",
+   "before": "46 s",
+   "after": "23 s",
+   "how": "scene compiled once per process, the two collision audits share one scan, voxelized solids built at start-up"
+  },
+  {
+   "what": "peak memory per Stage 4 process",
+   "before": "5.1 GiB",
+   "after": "2.5 GiB",
+   "how": "one compiled model per scene, MuJoCo mesh cache off, freed memory returned after each attempt"
+  },
+  {
+   "what": "parallel shards in 30 GB",
+   "before": "5",
+   "after": "11\u201312",
+   "how": "follows from the memory"
+  },
+  {
+   "what": "export per sample",
+   "before": "8.5 s",
+   "after": "4.5 s",
+   "how": "ray grids reused; a static camera reuses its plate"
+  },
+  {
+   "what": "layouts kept",
+   "before": "30.5%",
+   "after": "54.1%",
+   "how": "bug fixes: the place target attitude now turns with the plate; retimed draws judged in their own windows"
+  }
+ ],
+ "equivalence": "randomize outputs bitwise identical to the unmodified code (trajectory.npz, physics_replay.npz, sample.json, scene bytes) on 2-, 4- and 12-sample runs; all Stage 4 tests pass"
+}
