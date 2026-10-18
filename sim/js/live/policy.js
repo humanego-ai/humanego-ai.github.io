@@ -66,7 +66,7 @@ export class LivePolicy {
     const out = await this.session.run({
       x_rgb: T(rgbCHW, [1, 3, ...this.meta.img_size]), x_ict: T(ict.x, [1, this.meta.max_ict, this.meta.ict_dim]),
       ict_mask: T(ict.mask, [1, this.meta.max_ict]), anchor_uv: T(Float32Array.from(uv), [1, 2]),
-      noise: T(Float32Array.from(this.meta.noise), [1, this.K, this.D]) });
+      noise: T(Float32Array.from(this.noise ?? this.meta.noise), [1, this.K, this.D]) });
     const x = out.actions.data, done = out.done_logit.data[0];
     const sig = (z) => 1 / (1 + Math.exp(-z));
     const pos = [], o6d = [], g = [];

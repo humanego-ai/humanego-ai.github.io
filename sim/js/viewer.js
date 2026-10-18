@@ -173,6 +173,14 @@ export class SimViewer {
     return m;
   }
 
+  // packed robot meshes with flat shading ship without normals (web_pack.quantize_glb): rebuild them
+  // once per geometry (the GTAO pass needs a normal attribute, so no material-side flatShading)
+  _shaded(geo) {
+    if (geo.attributes.normal) return geo;
+    if (!geo.userData.flat) { const f = geo.index ? geo.toNonIndexed() : geo.clone(); f.computeVertexNormals(); geo.userData.flat = f; }
+    return geo.userData.flat;
+  }
+
   // ------------------------------------------------------------------ model
   async loadModel(model, onProgress) {
     if (this.model && this.model.key === model.key) return;
@@ -201,7 +209,11 @@ export class SimViewer {
           const src = gl.scene.getObjectByName(g.node);
           if (!src) { console.warn('missing node', g.node); continue; }
           const mesh = (src.isMesh ? src : src.children.find(c => c.isMesh)) || src;
-          obj = new THREE.Mesh(mesh.geometry, this._material(model, g.material, g.rgba));
+          obj = new THREE.Mesh(this._shaded(mesh.geometry), this._material(model, g.material, g.rgba));
+          // KHR_mesh_quantization (web_pack.quantize_glb): int16 positions, offset + scale on the node
+          src.updateMatrix();
+          if (mesh !== src) { mesh.updateMatrix(); obj.applyMatrix4(TMP_M.multiplyMatrices(src.matrix, mesh.matrix)); }
+          else obj.applyMatrix4(src.matrix);
         } else {
           obj = gl.scene.clone(true);
           if (g.yup) obj.rotation.x = Math.PI / 2;

@@ -146,22 +146,22 @@
 
   <worldbody>
     <geom name="floor" size="4 4 0.05" pos="0.4 0 -0.76" type="plane"/>
-    <camera name="policy_cam" quat="-0.632814 -0.31551 0.31551 0.632814" pos="0 0 0.436" fovy="57.2209"/>
+    <camera name="policy_cam" quat="-0.632814 -0.31551 0.31551 0.632814" pos="0 0 0.366" fovy="57.2209"/>
     <light name="key" pos="-0.6 0.8 2.5" dir="0.222834 -0.297113 -0.928477" diffuse="0.48 0.48 0.48" specular="0.15 0.15 0.15" type="directional"/>
     <light name="fill" castshadow="false" pos="1.5 -1 2" dir="-0.557086 0.371391 -0.742781" diffuse="0.16 0.16 0.16" type="directional"/>
     <body name="table">
-      <geom name="table_top" size="0.665 0.75 0.0225" pos="0.315 0 -0.0225" type="box" friction="0.8"/>
+      <geom name="table_top" size="0.665 0.75 0.0225" pos="0.315 0 -0.0225" type="box" friction="0.45"/>
     </body>
     <body name="rig_frame">
-      <geom name="rail" size="0.02 0.423765 0.02" pos="0.02 0 0.179784" type="box"/>
-      <geom name="bracket_right" size="0.0800681 0.045 0.006" pos="0.0700681 -0.323765 0.208784" type="box"/>
-      <geom name="bracket_left" size="0.0800681 0.045 0.006" pos="0.0700681 0.323765 0.208784" type="box"/>
-      <geom name="post0" size="0.02 0.02 0.0798922" pos="0.02 0.403765 0.0798922" type="box"/>
-      <geom name="post1" size="0.02 0.02 0.0798922" pos="0.02 -0.403765 0.0798922" type="box"/>
-      <geom name="mast" size="0.015 0.015 0.243" pos="-0.045 0 0.243" type="box"/>
-      <geom name="cam_arm" size="0.03 0.012 0.01" pos="-0.02 0 0.466" type="box"/>
+      <geom name="rail" size="0.02 0.423765 0.02" pos="0.02 0 0.109784" type="box"/>
+      <geom name="bracket_right" size="0.0800681 0.045 0.006" pos="0.0700681 -0.323765 0.138784" type="box"/>
+      <geom name="bracket_left" size="0.0800681 0.045 0.006" pos="0.0700681 0.323765 0.138784" type="box"/>
+      <geom name="post0" size="0.02 0.02 0.0448922" pos="0.02 0.403765 0.0448922" type="box"/>
+      <geom name="post1" size="0.02 0.02 0.0448922" pos="0.02 -0.403765 0.0448922" type="box"/>
+      <geom name="mast" size="0.015 0.015 0.208" pos="-0.045 0 0.208" type="box"/>
+      <geom name="cam_arm" size="0.03 0.012 0.01" pos="-0.02 0 0.396" type="box"/>
     </body>
-    <frame pos="0.120136 -0.323765 0.214784">
+    <frame pos="0.120136 -0.323765 0.144784">
       <light name="right/spotlight" target="right/wrist_2_link" pos="0 -1 2" mode="targetbodycom"/>
       <body name="right/base" childclass="right/ur5e" quat="0 0 0 -1" gravcomp="1">
         <inertial pos="0 0 0" mass="4" diaginertia="0.00443333 0.00443333 0.0072"/>
@@ -220,8 +220,8 @@
                               <geom class="right/gripper/collision" mesh="right/gripper/follower"/>
                               <body name="right/gripper/right_pad" pos="0 -0.0189 0.01352" gravcomp="1">
                                 <inertial pos="0 -0.0025 0.0185" quat="0.707107 0 0 0.707107" mass="0.0035" diaginertia="4.73958e-07 3.64583e-07 1.23958e-07"/>
-                                <geom name="right/gripper/right_pad1" class="right/gripper/pad_box1" pos="0 -0.0026 0.028125" mass="0"/>
-                                <geom name="right/gripper/right_pad2" class="right/gripper/pad_box2" pos="0 -0.0026 0.009375" mass="0"/>
+                                <geom name="right/gripper/right_pad1" class="right/gripper/pad_box1" pos="0 -0.0026 0.028125" priority="0" friction="0.8" mass="0"/>
+                                <geom name="right/gripper/right_pad2" class="right/gripper/pad_box2" pos="0 -0.0026 0.009375" priority="0" friction="0.8" mass="0"/>
                                 <body name="right/gripper/right_silicone_pad" gravcomp="1"/>
                               </body>
                             </body>
@@ -246,8 +246,8 @@
                               <geom class="right/gripper/collision" mesh="right/gripper/follower"/>
                               <body name="right/gripper/left_pad" pos="0 -0.0189 0.01352" gravcomp="1">
                                 <inertial pos="0 -0.0025 0.0185" quat="0.707107 0 0 0.707107" mass="0.0035" diaginertia="4.73958e-07 3.64583e-07 1.23958e-07"/>
-                                <geom name="right/gripper/left_pad1" class="right/gripper/pad_box1" pos="0 -0.0026 0.028125" mass="0"/>
-                                <geom name="right/gripper/left_pad2" class="right/gripper/pad_box2" pos="0 -0.0026 0.009375" mass="0"/>
+                                <geom name="right/gripper/left_pad1" class="right/gripper/pad_box1" pos="0 -0.0026 0.028125" priority="0" friction="0.8" mass="0"/>
+                                <geom name="right/gripper/left_pad2" class="right/gripper/pad_box2" pos="0 -0.0026 0.009375" priority="0" friction="0.8" mass="0"/>
                                 <body name="right/gripper/left_silicone_pad" gravcomp="1"/>
                               </body>
                             </body>
@@ -263,7 +263,7 @@
         </body>
       </body>
     </frame>
-    <frame pos="0.120136 0.323765 0.214784">
+    <frame pos="0.120136 0.323765 0.144784">
       <light name="left/spotlight" target="left/wrist_2_link" pos="0 -1 2" mode="targetbodycom"/>
       <body name="left/base" childclass="left/ur5e" quat="0 0 0 -1" gravcomp="1">
         <inertial pos="0 0 0" mass="4" diaginertia="0.00443333 0.00443333 0.0072"/>
@@ -322,8 +322,8 @@
                               <geom class="left/gripper/collision" mesh="left/gripper/follower"/>
                               <body name="left/gripper/right_pad" pos="0 -0.0189 0.01352" gravcomp="1">
                                 <inertial pos="0 -0.0025 0.0185" quat="0.707107 0 0 0.707107" mass="0.0035" diaginertia="4.73958e-07 3.64583e-07 1.23958e-07"/>
-                                <geom name="left/gripper/right_pad1" class="left/gripper/pad_box1" pos="0 -0.0026 0.028125" mass="0"/>
-                                <geom name="left/gripper/right_pad2" class="left/gripper/pad_box2" pos="0 -0.0026 0.009375" mass="0"/>
+                                <geom name="left/gripper/right_pad1" class="left/gripper/pad_box1" pos="0 -0.0026 0.028125" priority="0" friction="0.8" mass="0"/>
+                                <geom name="left/gripper/right_pad2" class="left/gripper/pad_box2" pos="0 -0.0026 0.009375" priority="0" friction="0.8" mass="0"/>
                                 <body name="left/gripper/right_silicone_pad" gravcomp="1"/>
                               </body>
                             </body>
@@ -348,8 +348,8 @@
                               <geom class="left/gripper/collision" mesh="left/gripper/follower"/>
                               <body name="left/gripper/left_pad" pos="0 -0.0189 0.01352" gravcomp="1">
                                 <inertial pos="0 -0.0025 0.0185" quat="0.707107 0 0 0.707107" mass="0.0035" diaginertia="4.73958e-07 3.64583e-07 1.23958e-07"/>
-                                <geom name="left/gripper/left_pad1" class="left/gripper/pad_box1" pos="0 -0.0026 0.028125" mass="0"/>
-                                <geom name="left/gripper/left_pad2" class="left/gripper/pad_box2" pos="0 -0.0026 0.009375" mass="0"/>
+                                <geom name="left/gripper/left_pad1" class="left/gripper/pad_box1" pos="0 -0.0026 0.028125" priority="0" friction="0.8" mass="0"/>
+                                <geom name="left/gripper/left_pad2" class="left/gripper/pad_box2" pos="0 -0.0026 0.009375" priority="0" friction="0.8" mass="0"/>
                                 <body name="left/gripper/left_silicone_pad" gravcomp="1"/>
                               </body>
                             </body>
@@ -365,272 +365,272 @@
         </body>
       </body>
     </frame>
-    <body name="bread_right_0_0_0" pos="0.392 -0.3 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_0_0_0" pos="0.38786 -0.30186 0.0018">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_0_0_1" pos="0.392 -0.3 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_0_0_1" pos="0.38786 -0.30186 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_0_0_2" pos="0.392 -0.3 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_0_0_2" pos="0.38786 -0.30186 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_0_1_0" pos="0.392 -0.27 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_0_1_0" pos="0.38786 -0.27 0.0018">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_0_1_1" pos="0.392 -0.27 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_0_1_1" pos="0.38786 -0.27 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_0_1_2" pos="0.392 -0.27 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_0_1_2" pos="0.38786 -0.27 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_0_2_0" pos="0.392 -0.24 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_0_2_0" pos="0.38786 -0.23814 0.0018">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_0_2_1" pos="0.392 -0.24 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_0_2_1" pos="0.38786 -0.23814 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_0_2_2" pos="0.392 -0.24 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_0_2_2" pos="0.38786 -0.23814 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_1_0_0" pos="0.426 -0.3 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_1_0_0" pos="0.42393 -0.30186 0.0018">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_1_0_1" pos="0.426 -0.3 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_1_0_1" pos="0.42393 -0.30186 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_1_0_2" pos="0.426 -0.3 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_1_0_2" pos="0.42393 -0.30186 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_1_1_0" pos="0.426 -0.27 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_1_1_0" pos="0.42393 -0.27 0.0018">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_1_1_1" pos="0.426 -0.27 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_1_1_1" pos="0.42393 -0.27 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_1_1_2" pos="0.426 -0.27 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_1_1_2" pos="0.42393 -0.27 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_1_2_0" pos="0.426 -0.24 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_1_2_0" pos="0.42393 -0.23814 0.0018">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_1_2_1" pos="0.426 -0.24 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_1_2_1" pos="0.42393 -0.23814 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_1_2_2" pos="0.426 -0.24 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_1_2_2" pos="0.42393 -0.23814 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_2_0_0" pos="0.46 -0.3 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_2_0_0" pos="0.46 -0.30186 0.0018">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_2_0_1" pos="0.46 -0.3 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_2_0_1" pos="0.46 -0.30186 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_2_0_2" pos="0.46 -0.3 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_2_0_2" pos="0.46 -0.30186 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
     <body name="bread_right_2_1_0" pos="0.46 -0.27 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_2_1_1" pos="0.46 -0.27 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_2_1_1" pos="0.46 -0.27 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_2_1_2" pos="0.46 -0.27 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_2_1_2" pos="0.46 -0.27 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_2_2_0" pos="0.46 -0.24 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_2_2_0" pos="0.46 -0.23814 0.0018">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_2_2_1" pos="0.46 -0.24 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_2_2_1" pos="0.46 -0.23814 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_2_2_2" pos="0.46 -0.24 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_2_2_2" pos="0.46 -0.23814 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_3_0_0" pos="0.494 -0.3 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_3_0_0" pos="0.49607 -0.30186 0.0018">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_3_0_1" pos="0.494 -0.3 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_3_0_1" pos="0.49607 -0.30186 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_3_0_2" pos="0.494 -0.3 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_3_0_2" pos="0.49607 -0.30186 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_3_1_0" pos="0.494 -0.27 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_3_1_0" pos="0.49607 -0.27 0.0018">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_3_1_1" pos="0.494 -0.27 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_3_1_1" pos="0.49607 -0.27 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_3_1_2" pos="0.494 -0.27 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_3_1_2" pos="0.49607 -0.27 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_3_2_0" pos="0.494 -0.24 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_3_2_0" pos="0.49607 -0.23814 0.0018">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_3_2_1" pos="0.494 -0.24 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_3_2_1" pos="0.49607 -0.23814 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_3_2_2" pos="0.494 -0.24 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_3_2_2" pos="0.49607 -0.23814 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_4_0_0" pos="0.528 -0.3 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_4_0_0" pos="0.53214 -0.30186 0.0018">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_4_0_1" pos="0.528 -0.3 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_4_0_1" pos="0.53214 -0.30186 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_4_0_2" pos="0.528 -0.3 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_4_0_2" pos="0.53214 -0.30186 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_4_1_0" pos="0.528 -0.27 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_4_1_0" pos="0.53214 -0.27 0.0018">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_4_1_1" pos="0.528 -0.27 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_4_1_1" pos="0.53214 -0.27 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_4_1_2" pos="0.528 -0.27 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_4_1_2" pos="0.53214 -0.27 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_4_2_0" pos="0.528 -0.24 0.0018">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_4_2_0" pos="0.53214 -0.23814 0.0018">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_4_2_1" pos="0.528 -0.24 0.0258">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_4_2_1" pos="0.53214 -0.23814 0.0273">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
     </body>
-    <body name="bread_right_4_2_2" pos="0.528 -0.24 0.0498">
-      <inertial pos="0 0 0" mass="0.00111111" diaginertia="1.85185e-08 1.85185e-08 1.85185e-08"/>
+    <body name="bread_right_4_2_2" pos="0.53214 -0.23814 0.0528">
+      <inertial pos="0 0 0" mass="0.00132335" diaginertia="2.20559e-08 2.20559e-08 2.20559e-08"/>
       <joint type="slide" axis="1 0 0"/>
       <joint type="slide" axis="0 1 0"/>
       <joint type="slide"/>
@@ -907,45 +907,45 @@
     </body>
     <body name="plate" pos="0.47 0 0.0005">
       <joint name="plate_free" type="free"/>
-      <geom name="plate_well" size="0.084 0.00425" pos="0 0 0.00425" type="cylinder" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim0" size="0.0222963 0.0133602 0.0025" pos="0.10125 0 0.01275" quat="0.988199 0 -0.153178 0" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim1" size="0.0222963 0.0133602 0.0025" pos="0.0987115 0.0225302 0.01275" quat="0.981985 -0.0171505 -0.152215 0.110643" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim2" size="0.0222963 0.0133602 0.0025" pos="0.0912231 0.0439307 0.01275" quat="0.963422 -0.0340853 -0.149338 0.219895" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim3" size="0.0222963 0.0133602 0.0025" pos="0.0791604 0.0631283 0.01275" quat="0.932744 -0.0505915 -0.144582 0.326381" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim4" size="0.0222963 0.0133602 0.0025" pos="0.0631283 0.0791604 0.01275" quat="0.890336 -0.0664615 -0.138009 0.428763" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim5" size="0.0222963 0.0133602 0.0025" pos="0.0439307 0.0912231 0.01275" quat="0.836732 -0.0814957 -0.1297 0.525753" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim6" size="0.0222963 0.0133602 0.0025" pos="0.0225302 0.0987115 0.01275" quat="0.772605 -0.095505 -0.119759 0.616132" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim7" size="0.0222963 0.0133602 0.0025" pos="0 0.10125 0.01275" quat="0.698762 -0.108313 -0.108313 0.698762" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim8" size="0.0222963 0.0133602 0.0025" pos="-0.0225302 0.0987115 0.01275" quat="0.616132 -0.119759 -0.095505 0.772605" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim9" size="0.0222963 0.0133602 0.0025" pos="-0.0439307 0.0912231 0.01275" quat="0.525753 -0.1297 -0.0814957 0.836732" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim10" size="0.0222963 0.0133602 0.0025" pos="-0.0631283 0.0791604 0.01275" quat="0.428763 -0.138009 -0.0664615 0.890336" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim11" size="0.0222963 0.0133602 0.0025" pos="-0.0791604 0.0631283 0.01275" quat="0.326381 -0.144582 -0.0505915 0.932744" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim12" size="0.0222963 0.0133602 0.0025" pos="-0.0912231 0.0439307 0.01275" quat="0.219895 -0.149338 -0.0340853 0.963422" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim13" size="0.0222963 0.0133602 0.0025" pos="-0.0987115 0.0225302 0.01275" quat="0.110643 -0.152215 -0.0171505 0.981985" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim14" size="0.0222963 0.0133602 0.0025" pos="-0.10125 0 0.01275" quat="0 -0.153178 0 0.988199" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim15" size="0.0222963 0.0133602 0.0025" pos="-0.0987115 -0.0225302 0.01275" quat="-0.110643 -0.152215 0.0171505 0.981985" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim16" size="0.0222963 0.0133602 0.0025" pos="-0.0912231 -0.0439307 0.01275" quat="-0.219895 -0.149338 0.0340853 0.963422" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim17" size="0.0222963 0.0133602 0.0025" pos="-0.0791604 -0.0631283 0.01275" quat="-0.326381 -0.144582 0.0505915 0.932744" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim18" size="0.0222963 0.0133602 0.0025" pos="-0.0631283 -0.0791604 0.01275" quat="-0.428763 -0.138009 0.0664615 0.890336" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim19" size="0.0222963 0.0133602 0.0025" pos="-0.0439307 -0.0912231 0.01275" quat="-0.525753 -0.1297 0.0814957 0.836732" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim20" size="0.0222963 0.0133602 0.0025" pos="-0.0225302 -0.0987115 0.01275" quat="-0.616132 -0.119759 0.095505 0.772605" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim21" size="0.0222963 0.0133602 0.0025" pos="0 -0.10125 0.01275" quat="-0.698762 -0.108313 0.108313 0.698762" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim22" size="0.0222963 0.0133602 0.0025" pos="0.0225302 -0.0987115 0.01275" quat="0.772605 0.095505 -0.119759 -0.616132" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim23" size="0.0222963 0.0133602 0.0025" pos="0.0439307 -0.0912231 0.01275" quat="0.836732 0.0814957 -0.1297 -0.525753" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim24" size="0.0222963 0.0133602 0.0025" pos="0.0631283 -0.0791604 0.01275" quat="0.890336 0.0664615 -0.138009 -0.428763" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim25" size="0.0222963 0.0133602 0.0025" pos="0.0791604 -0.0631283 0.01275" quat="0.932744 0.0505915 -0.144582 -0.326381" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim26" size="0.0222963 0.0133602 0.0025" pos="0.0912231 -0.0439307 0.01275" quat="0.963422 0.0340853 -0.149338 -0.219895" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
-      <geom name="plate_rim27" size="0.0222963 0.0133602 0.0025" pos="0.0987115 -0.0225302 0.01275" quat="0.981985 0.0171505 -0.152215 -0.110643" type="box" group="3" rgba="0 0 1 0" density="1266.77"/>
+      <geom name="plate_well" size="0.084 0.00425" pos="0 0 0.00425" type="cylinder" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim0" size="0.0238144 0.0133602 0.0025" pos="0.10125 0 0.01675" quat="0.972707 0 -0.232037 0" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim1" size="0.0238144 0.0133602 0.0025" pos="0.0987115 0.0225302 0.01675" quat="0.966591 -0.0259799 -0.230578 0.108909" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim2" size="0.0238144 0.0133602 0.0025" pos="0.0912231 0.0439307 0.01675" quat="0.948319 -0.0516331 -0.226219 0.216448" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim3" size="0.0238144 0.0133602 0.0025" pos="0.0791604 0.0631283 0.01675" quat="0.918122 -0.0766369 -0.219016 0.321265" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim4" size="0.0238144 0.0133602 0.0025" pos="0.0631283 0.0791604 0.01675" quat="0.876379 -0.100677 -0.209058 0.422042" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim5" size="0.0238144 0.0133602 0.0025" pos="0.0439307 0.0912231 0.01675" quat="0.823615 -0.123451 -0.196471 0.517511" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim6" size="0.0238144 0.0133602 0.0025" pos="0.0225302 0.0987115 0.01675" quat="0.760493 -0.144673 -0.181414 0.606473" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim7" size="0.0238144 0.0133602 0.0025" pos="0 0.10125 0.01675" quat="0.687808 -0.164075 -0.164075 0.687808" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim8" size="0.0238144 0.0133602 0.0025" pos="-0.0225302 0.0987115 0.01675" quat="0.606473 -0.181414 -0.144673 0.760493" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim9" size="0.0238144 0.0133602 0.0025" pos="-0.0439307 0.0912231 0.01675" quat="0.517511 -0.196471 -0.123451 0.823615" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim10" size="0.0238144 0.0133602 0.0025" pos="-0.0631283 0.0791604 0.01675" quat="0.422042 -0.209058 -0.100677 0.876379" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim11" size="0.0238144 0.0133602 0.0025" pos="-0.0791604 0.0631283 0.01675" quat="0.321265 -0.219016 -0.0766369 0.918122" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim12" size="0.0238144 0.0133602 0.0025" pos="-0.0912231 0.0439307 0.01675" quat="0.216448 -0.226219 -0.0516331 0.948319" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim13" size="0.0238144 0.0133602 0.0025" pos="-0.0987115 0.0225302 0.01675" quat="0.108909 -0.230578 -0.0259799 0.966591" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim14" size="0.0238144 0.0133602 0.0025" pos="-0.10125 0 0.01675" quat="0 -0.232037 0 0.972707" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim15" size="0.0238144 0.0133602 0.0025" pos="-0.0987115 -0.0225302 0.01675" quat="-0.108909 -0.230578 0.0259799 0.966591" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim16" size="0.0238144 0.0133602 0.0025" pos="-0.0912231 -0.0439307 0.01675" quat="-0.216448 -0.226219 0.0516331 0.948319" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim17" size="0.0238144 0.0133602 0.0025" pos="-0.0791604 -0.0631283 0.01675" quat="-0.321265 -0.219016 0.0766369 0.918122" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim18" size="0.0238144 0.0133602 0.0025" pos="-0.0631283 -0.0791604 0.01675" quat="-0.422042 -0.209058 0.100677 0.876379" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim19" size="0.0238144 0.0133602 0.0025" pos="-0.0439307 -0.0912231 0.01675" quat="-0.517511 -0.196471 0.123451 0.823615" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim20" size="0.0238144 0.0133602 0.0025" pos="-0.0225302 -0.0987115 0.01675" quat="-0.606473 -0.181414 0.144673 0.760493" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim21" size="0.0238144 0.0133602 0.0025" pos="0 -0.10125 0.01675" quat="-0.687808 -0.164075 0.164075 0.687808" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim22" size="0.0238144 0.0133602 0.0025" pos="0.0225302 -0.0987115 0.01675" quat="0.760493 0.144673 -0.181414 -0.606473" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim23" size="0.0238144 0.0133602 0.0025" pos="0.0439307 -0.0912231 0.01675" quat="0.823615 0.123451 -0.196471 -0.517511" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim24" size="0.0238144 0.0133602 0.0025" pos="0.0631283 -0.0791604 0.01675" quat="0.876379 0.100677 -0.209058 -0.422042" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim25" size="0.0238144 0.0133602 0.0025" pos="0.0791604 -0.0631283 0.01675" quat="0.918122 0.0766369 -0.219016 -0.321265" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim26" size="0.0238144 0.0133602 0.0025" pos="0.0912231 -0.0439307 0.01675" quat="0.948319 0.0516331 -0.226219 -0.216448" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
+      <geom name="plate_rim27" size="0.0238144 0.0133602 0.0025" pos="0.0987115 -0.0225302 0.01675" quat="0.966591 0.0259799 -0.230578 -0.108909" type="box" group="3" friction="0.4" rgba="0 0 1 0" density="1227.52"/>
     </body>
   </worldbody>
 
   <deformable>
-    <flex name="bread_right" group="3" dim="3" radius="0.001" rgba="0.9 0.6 0.2 0" cellcount="4 2 2" dof="trilinear" body="world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world" vertex="0.46 -0.27 0.0258 0.393228 -0.272986 0.0018 0.393228 -0.27186 0.00183856 0.393228 -0.27136 0.00195624 0.393228 -0.271119 0.00217221 0.393228 -0.271137 0.00263045 0.393228 -0.271503 0.00302568 0.393228 -0.272163 0.00329918 0.393228 -0.272986 0.0033968 0.393228 -0.273809 0.00329918 0.393228 -0.27447 0.00302568 0.393228 -0.274836 0.00263045 0.393228 -0.274854 0.00217221 0.393228 -0.274613 0.00195624 0.393228 -0.274112 0.00183856 0.395273 -0.272806 0.0018 0.395273 -0.269933 0.00192345 0.395273 -0.268655 0.00230018 0.395273 -0.268041 0.00299156 0.395273 -0.268086 0.00445854 0.395273 -0.269021 0.00572377 0.395273 -0.270706 0.00659935 0.395273 -0.272806 0.00691184 0.395273 -0.274907 0.00659935 0.395273 -0.276591 0.00572377 0.395273 -0.277526 0.00445854 0.395273 -0.277571 0.00299156 0.395273 -0.276957 0.00230018 0.395273 -0.275679 0.00192345 0.398637 -0.272522 0.0018 0.398637 -0.267589 0.00203991 0.398637 -0.265395 0.00277209 0.398637 -0.26434 0.00411578 0.398637 -0.264418 0.00696684 0.398637 -0.266023 0.00942581 0.398637 -0.268915 0.0111275 0.398637 -0.272522 0.0117348 0.398637 -0.276129 0.0111275 0.398637 -0.279021 0.00942581 0.398637 -0.280626 0.00696684 0.398637 -0.280704 0.00411578 0.398637 -0.279649 0.00277209 0.398637 -0.277455 0.00203991 0.40325 -0.272157 0.0018 0.40325 -0.264986 0.00217777 0.40325 -0.261796 0.00333064 0.40325 -0.260263 0.0054464 0.40325 -0.260376 0.00993562 0.40325 -0.262709 0.0138075 0.40325 -0.266914 0.0164869 0.40325 -0.272157 0.0174432 0.40325 -0.2774 0.0164869 0.40325 -0.281605 0.0138075 0.40325 -0.283939 0.00993562 0.40325 -0.284051 0.0054464 0.40325 -0.282519 0.00333064 0.40325 -0.279328 0.00217777 0.409018 -0.271741 0.0018 0.409018 -0.262268 0.00232739 0.409018 -0.258053 0.00393685 0.409018 -0.256028 0.00689055 0.409018 -0.256177 0.0131577 0.409018 -0.25926 0.0185631 0.409018 -0.264814 0.0223037 0.409018 -0.271741 0.0236387 0.409018 -0.278667 0.0223037 0.409018 -0.284222 0.0185631 0.409018 -0.287305 0.0131577 0.409018 -0.287453 0.00689055 0.409018 -0.285429 0.00393685 0.409018 -0.281214 0.00232739 0.415824 -0.271307 0.0018 0.415824 -0.259585 0.00247928 0.415824 -0.254369 0.00455228 0.415824 -0.251864 0.00835667 0.415824 -0.252048 0.0164289 0.415824 -0.255863 0.0233909 0.415824 -0.262736 0.0282089 0.415824 -0.271307 0.0299284 0.415824 -0.279878 0.0282089 0.415824 -0.286752 0.0233909 0.415824 -0.290566 0.0164289 0.415824 -0.29075 0.00835667 0.415824 -0.288245 0.00455228 0.415824 -0.28303 0.00247928 0.423529 -0.270891 0.0018 0.423529 -0.257095 0.00262414 0.423529 -0.250957 0.00513927 0.423529 -0.248008 0.00975502 0.423529 -0.248225 0.0195488 0.423529 -0.252714 0.0279957 0.423529 -0.260803 0.0338411 0.423529 -0.270891 0.0359273 0.423529 -0.280978 0.0338411 0.423529 -0.289068 0.0279957 0.423529 -0.293557 0.0195488 0.423529 -0.293774 0.00975502 0.423529 -0.290825 0.00513926 0.423529 -0.284687 0.00262414 0.431976 -0.270526 0.0018 0.431976 -0.254954 0.00275306 0.431976 -0.248026 0.00566162 0.431976 -0.244698 0.0109994 0.431976 -0.244943 0.0223252 0.431976 -0.25001 0.0320934 0.431976 -0.25914 0.0388532 0.431976 -0.270526 0.0412658 0.431976 -0.281912 0.0388532 0.431976 -0.291042 0.0320934 0.431976 -0.296109 0.0223252 0.431976 -0.296354 0.0109994 0.431976 -0.293026 0.00566162 0.431976 -0.286098 0.00275306 0.440995 -0.270242 0.0018 0.440995 -0.253307 0.00285759 0.440995 -0.245772 0.00608516 0.440995 -0.242153 0.0120084 0.440995 -0.242419 0.0245764 0.440995 -0.247929 0.035416 0.440995 -0.257859 0.0429173 0.440995 -0.270242 0.0455945 0.440995 -0.282624 0.0429173 0.440995 -0.292554 0.035416 0.440995 -0.298065 0.0245764 0.440995 -0.298331 0.0120084 0.440995 -0.294712 0.00608516 0.440995 -0.287177 0.00285759 0.4504 -0.270062 0.0018 0.4504 -0.252268 0.00292961 0.4504 -0.244351 0.00637698 0.4504 -0.240548 0.0127036 0.4504 -0.240828 0.0261274 0.4504 -0.246618 0.0377052 0.4504 -0.257051 0.0457173 0.4504 -0.270062 0.0485768 0.4504 -0.283072 0.0457173 0.4504 -0.293505 0.0377052 0.4504 -0.299296 0.0261274 0.4504 -0.299575 0.0127036 0.4504 -0.295772 0.00637698 0.4504 -0.287856 0.00292961 0.46 -0.27 0.0018 0.46 -0.251913 0.00295915 0.46 -0.243866 0.00649666 0.46 -0.24 0.0129887 0.46 -0.240284 0.0267636 0.46 -0.24617 0.0386441 0.46 -0.256775 0.0468657 0.46 -0.27 0.0498 0.46 -0.283225 0.0468657 0.46 -0.29383 0.0386441 0.46 -0.299716 0.0267636 0.46 -0.3 0.0129887 0.46 -0.296134 0.00649667 0.46 -0.288087 0.00295915 0.4696 -0.270062 0.0018 0.4696 -0.252268 0.00292961 0.4696 -0.244351 0.00637698 0.4696 -0.240548 0.0127036 0.4696 -0.240828 0.0261274 0.4696 -0.246618 0.0377052 0.4696 -0.257051 0.0457173 0.4696 -0.270062 0.0485768 0.4696 -0.283072 0.0457173 0.4696 -0.293505 0.0377052 0.4696 -0.299296 0.0261274 0.4696 -0.299575 0.0127036 0.4696 -0.295772 0.00637698 0.4696 -0.287856 0.00292961 0.479005 -0.270242 0.0018 0.479005 -0.253307 0.00285759 0.479005 -0.245772 0.00608516 0.479005 -0.242153 0.0120084 0.479005 -0.242419 0.0245764 0.479005 -0.247929 0.035416 0.479005 -0.257859 0.0429173 0.479005 -0.270242 0.0455945 0.479005 -0.282624 0.0429173 0.479005 -0.292554 0.035416 0.479005 -0.298065 0.0245764 0.479005 -0.298331 0.0120084 0.479005 -0.294712 0.00608516 0.479005 -0.287177 0.00285759 0.488024 -0.270526 0.0018 0.488024 -0.254954 0.00275306 0.488024 -0.248026 0.00566162 0.488024 -0.244698 0.0109994 0.488024 -0.244943 0.0223252 0.488024 -0.25001 0.0320934 0.488024 -0.25914 0.0388532 0.488024 -0.270526 0.0412658 0.488024 -0.281912 0.0388532 0.488024 -0.291042 0.0320934 0.488024 -0.296109 0.0223252 0.488024 -0.296354 0.0109994 0.488024 -0.293026 0.00566162 0.488024 -0.286098 0.00275306 0.496471 -0.270891 0.0018 0.496471 -0.257095 0.00262414 0.496471 -0.250957 0.00513927 0.496471 -0.248008 0.00975502 0.496471 -0.248225 0.0195488 0.496471 -0.252714 0.0279957 0.496471 -0.260803 0.0338411 0.496471 -0.270891 0.0359273 0.496471 -0.280978 0.0338411 0.496471 -0.289068 0.0279957 0.496471 -0.293557 0.0195488 0.496471 -0.293774 0.00975502 0.496471 -0.290825 0.00513926 0.496471 -0.284687 0.00262414 0.504176 -0.271307 0.0018 0.504176 -0.259585 0.00247928 0.504176 -0.254369 0.00455228 0.504176 -0.251864 0.00835667 0.504176 -0.252048 0.0164289 0.504176 -0.255863 0.0233909 0.504176 -0.262736 0.0282089 0.504176 -0.271307 0.0299284 0.504176 -0.279878 0.0282089 0.504176 -0.286752 0.0233909 0.504176 -0.290566 0.0164289 0.504176 -0.29075 0.00835667 0.504176 -0.288245 0.00455228 0.504176 -0.28303 0.00247928 0.510982 -0.271741 0.0018 0.510982 -0.262268 0.00232739 0.510982 -0.258053 0.00393685 0.510982 -0.256028 0.00689055 0.510982 -0.256177 0.0131577 0.510982 -0.25926 0.0185631 0.510982 -0.264814 0.0223037 0.510982 -0.271741 0.0236387 0.510982 -0.278667 0.0223037 0.510982 -0.284222 0.0185631 0.510982 -0.287305 0.0131577 0.510982 -0.287453 0.00689055 0.510982 -0.285429 0.00393685 0.510982 -0.281214 0.00232739 0.51675 -0.272157 0.0018 0.51675 -0.264986 0.00217777 0.51675 -0.261796 0.00333064 0.51675 -0.260263 0.0054464 0.51675 -0.260376 0.00993562 0.51675 -0.262709 0.0138075 0.51675 -0.266914 0.0164869 0.51675 -0.272157 0.0174432 0.51675 -0.2774 0.0164869 0.51675 -0.281605 0.0138075 0.51675 -0.283939 0.00993562 0.51675 -0.284051 0.0054464 0.51675 -0.282519 0.00333064 0.51675 -0.279328 0.00217777 0.521363 -0.272522 0.0018 0.521363 -0.267589 0.00203991 0.521363 -0.265395 0.00277209 0.521363 -0.26434 0.00411578 0.521363 -0.264418 0.00696684 0.521363 -0.266023 0.00942581 0.521363 -0.268915 0.0111275 0.521363 -0.272522 0.0117348 0.521363 -0.276129 0.0111275 0.521363 -0.279021 0.00942581 0.521363 -0.280626 0.00696684 0.521363 -0.280704 0.00411578 0.521363 -0.279649 0.00277209 0.521363 -0.277455 0.00203991 0.524727 -0.272806 0.0018 0.524727 -0.269933 0.00192345 0.524727 -0.268655 0.00230018 0.524727 -0.268041 0.00299156 0.524727 -0.268086 0.00445854 0.524727 -0.269021 0.00572377 0.524727 -0.270706 0.00659935 0.524727 -0.272806 0.00691184 0.524727 -0.274907 0.00659935 0.524727 -0.276591 0.00572377 0.524727 -0.277526 0.00445854 0.524727 -0.277571 0.00299156 0.524727 -0.276957 0.00230018 0.524727 -0.275679 0.00192345 0.526772 -0.272986 0.0018 0.526772 -0.27186 0.00183856 0.526772 -0.27136 0.00195624 0.526772 -0.271119 0.00217221 0.526772 -0.271137 0.00263045 0.526772 -0.271503 0.00302568 0.526772 -0.272163 0.00329918 0.526772 -0.272986 0.0033968 0.526772 -0.273809 0.00329918 0.526772 -0.27447 0.00302568 0.526772 -0.274836 0.00263045 0.526772 -0.274854 0.00217221 0.526772 -0.274613 0.00195624 0.526772 -0.274112 0.00183856 0.392 -0.272986 0.00250296 0.528 -0.272986 0.00250296" element="0 2 1 15 0 16 2 15 0 3 2 16 0 17 3 16 0 4 3 17 0 18 4 17 0 5 4 18 0 19 5 18 0 6 5 19 0 20 6 19 0 7 6 20 0 21 7 20 0 8 7 21 0 22 8 21 0 9 8 22 0 23 9 22 0 10 9 23 0 24 10 23 0 11 10 24 0 25 11 24 0 12 11 25 0 26 12 25 0 13 12 26 0 27 13 26 0 14 13 27 0 28 14 27 0 1 14 28 0 15 1 28 0 16 15 29 0 30 16 29 0 17 16 30 0 31 17 30 0 18 17 31 0 32 18 31 0 19 18 32 0 33 19 32 0 20 19 33 0 34 20 33 0 21 20 34 0 35 21 34 0 22 21 35 0 36 22 35 0 23 22 36 0 37 23 36 0 24 23 37 0 38 24 37 0 25 24 38 0 39 25 38 0 26 25 39 0 40 26 39 0 27 26 40 0 41 27 40 0 28 27 41 0 42 28 41 0 15 28 42 0 29 15 42 0 30 29 43 0 44 30 43 0 31 30 44 0 45 31 44 0 32 31 45 0 46 32 45 0 33 32 46 0 47 33 46 0 34 33 47 0 48 34 47 0 35 34 48 0 49 35 48 0 36 35 49 0 50 36 49 0 37 36 50 0 51 37 50 0 38 37 51 0 52 38 51 0 39 38 52 0 53 39 52 0 40 39 53 0 54 40 53 0 41 40 54 0 55 41 54 0 42 41 55 0 56 42 55 0 29 42 56 0 43 29 56 0 44 43 57 0 58 44 57 0 45 44 58 0 59 45 58 0 46 45 59 0 60 46 59 0 47 46 60 0 61 47 60 0 48 47 61 0 62 48 61 0 49 48 62 0 63 49 62 0 50 49 63 0 64 50 63 0 51 50 64 0 65 51 64 0 52 51 65 0 66 52 65 0 53 52 66 0 67 53 66 0 54 53 67 0 68 54 67 0 55 54 68 0 69 55 68 0 56 55 69 0 70 56 69 0 43 56 70 0 57 43 70 0 58 57 71 0 72 58 71 0 59 58 72 0 73 59 72 0 60 59 73 0 74 60 73 0 61 60 74 0 75 61 74 0 62 61 75 0 76 62 75 0 63 62 76 0 77 63 76 0 64 63 77 0 78 64 77 0 65 64 78 0 79 65 78 0 66 65 79 0 80 66 79 0 67 66 80 0 81 67 80 0 68 67 81 0 82 68 81 0 69 68 82 0 83 69 82 0 70 69 83 0 84 70 83 0 57 70 84 0 71 57 84 0 72 71 85 0 86 72 85 0 73 72 86 0 87 73 86 0 74 73 87 0 88 74 87 0 75 74 88 0 89 75 88 0 76 75 89 0 90 76 89 0 77 76 90 0 91 77 90 0 78 77 91 0 92 78 91 0 79 78 92 0 93 79 92 0 80 79 93 0 94 80 93 0 81 80 94 0 95 81 94 0 82 81 95 0 96 82 95 0 83 82 96 0 97 83 96 0 84 83 97 0 98 84 97 0 71 84 98 0 85 71 98 0 86 85 99 0 100 86 99 0 87 86 100 0 101 87 100 0 88 87 101 0 102 88 101 0 89 88 102 0 103 89 102 0 90 89 103 0 104 90 103 0 91 90 104 0 105 91 104 0 92 91 105 0 106 92 105 0 93 92 106 0 107 93 106 0 94 93 107 0 108 94 107 0 95 94 108 0 109 95 108 0 96 95 109 0 110 96 109 0 97 96 110 0 111 97 110 0 98 97 111 0 112 98 111 0 85 98 112 0 99 85 112 0 100 99 113 0 114 100 113 0 101 100 114 0 115 101 114 0 102 101 115 0 116 102 115 0 103 102 116 0 117 103 116 0 104 103 117 0 118 104 117 0 105 104 118 0 119 105 118 0 106 105 119 0 120 106 119 0 107 106 120 0 121 107 120 0 108 107 121 0 122 108 121 0 109 108 122 0 123 109 122 0 110 109 123 0 124 110 123 0 111 110 124 0 125 111 124 0 112 111 125 0 126 112 125 0 99 112 126 0 113 99 126 0 114 113 127 0 128 114 127 0 115 114 128 0 129 115 128 0 116 115 129 0 130 116 129 0 117 116 130 0 131 117 130 0 118 117 131 0 132 118 131 0 119 118 132 0 133 119 132 0 120 119 133 0 134 120 133 0 121 120 134 0 135 121 134 0 122 121 135 0 136 122 135 0 123 122 136 0 137 123 136 0 124 123 137 0 138 124 137 0 125 124 138 0 139 125 138 0 126 125 139 0 140 126 139 0 113 126 140 0 127 113 140 0 128 127 141 0 142 128 141 0 129 128 142 0 143 129 142 0 130 129 143 0 144 130 143 0 131 130 144 0 145 131 144 0 132 131 145 0 146 132 145 0 133 132 146 0 147 133 146 0 134 133 147 0 148 134 147 0 135 134 148 0 149 135 148 0 136 135 149 0 150 136 149 0 137 136 150 0 151 137 150 0 138 137 151 0 152 138 151 0 139 138 152 0 153 139 152 0 140 139 153 0 154 140 153 0 127 140 154 0 141 127 154 0 142 141 155 0 156 142 155 0 143 142 156 0 157 143 156 0 144 143 157 0 158 144 157 0 145 144 158 0 159 145 158 0 146 145 159 0 160 146 159 0 147 146 160 0 161 147 160 0 148 147 161 0 162 148 161 0 149 148 162 0 163 149 162 0 150 149 163 0 164 150 163 0 151 150 164 0 165 151 164 0 152 151 165 0 166 152 165 0 153 152 166 0 167 153 166 0 154 153 167 0 168 154 167 0 141 154 168 0 155 141 168 0 156 155 169 0 170 156 169 0 157 156 170 0 171 157 170 0 158 157 171 0 172 158 171 0 159 158 172 0 173 159 172 0 160 159 173 0 174 160 173 0 161 160 174 0 175 161 174 0 162 161 175 0 176 162 175 0 163 162 176 0 177 163 176 0 164 163 177 0 178 164 177 0 165 164 178 0 179 165 178 0 166 165 179 0 180 166 179 0 167 166 180 0 181 167 180 0 168 167 181 0 182 168 181 0 155 168 182 0 169 155 182 0 170 169 183 0 184 170 183 0 171 170 184 0 185 171 184 0 172 171 185 0 186 172 185 0 173 172 186 0 187 173 186 0 174 173 187 0 188 174 187 0 175 174 188 0 189 175 188 0 176 175 189 0 190 176 189 0 177 176 190 0 191 177 190 0 178 177 191 0 192 178 191 0 179 178 192 0 193 179 192 0 180 179 193 0 194 180 193 0 181 180 194 0 195 181 194 0 182 181 195 0 196 182 195 0 169 182 196 0 183 169 196 0 184 183 197 0 198 184 197 0 185 184 198 0 199 185 198 0 186 185 199 0 200 186 199 0 187 186 200 0 201 187 200 0 188 187 201 0 202 188 201 0 189 188 202 0 203 189 202 0 190 189 203 0 204 190 203 0 191 190 204 0 205 191 204 0 192 191 205 0 206 192 205 0 193 192 206 0 207 193 206 0 194 193 207 0 208 194 207 0 195 194 208 0 209 195 208 0 196 195 209 0 210 196 209 0 183 196 210 0 197 183 210 0 198 197 211 0 212 198 211 0 199 198 212 0 213 199 212 0 200 199 213 0 214 200 213 0 201 200 214 0 215 201 214 0 202 201 215 0 216 202 215 0 203 202 216 0 217 203 216 0 204 203 217 0 218 204 217 0 205 204 218 0 219 205 218 0 206 205 219 0 220 206 219 0 207 206 220 0 221 207 220 0 208 207 221 0 222 208 221 0 209 208 222 0 223 209 222 0 210 209 223 0 224 210 223 0 197 210 224 0 211 197 224 0 212 211 225 0 226 212 225 0 213 212 226 0 227 213 226 0 214 213 227 0 228 214 227 0 215 214 228 0 229 215 228 0 216 215 229 0 230 216 229 0 217 216 230 0 231 217 230 0 218 217 231 0 232 218 231 0 219 218 232 0 233 219 232 0 220 219 233 0 234 220 233 0 221 220 234 0 235 221 234 0 222 221 235 0 236 222 235 0 223 222 236 0 237 223 236 0 224 223 237 0 238 224 237 0 211 224 238 0 225 211 238 0 226 225 239 0 240 226 239 0 227 226 240 0 241 227 240 0 228 227 241 0 242 228 241 0 229 228 242 0 243 229 242 0 230 229 243 0 244 230 243 0 231 230 244 0 245 231 244 0 232 231 245 0 246 232 245 0 233 232 246 0 247 233 246 0 234 233 247 0 248 234 247 0 235 234 248 0 249 235 248 0 236 235 249 0 250 236 249 0 237 236 250 0 251 237 250 0 238 237 251 0 252 238 251 0 225 238 252 0 239 225 252 0 240 239 253 0 254 240 253 0 241 240 254 0 255 241 254 0 242 241 255 0 256 242 255 0 243 242 256 0 257 243 256 0 244 243 257 0 258 244 257 0 245 244 258 0 259 245 258 0 246 245 259 0 260 246 259 0 247 246 260 0 261 247 260 0 248 247 261 0 262 248 261 0 249 248 262 0 263 249 262 0 250 249 263 0 264 250 263 0 251 250 264 0 265 251 264 0 252 251 265 0 266 252 265 0 239 252 266 0 253 239 266 0 254 253 267 0 268 254 267 0 255 254 268 0 269 255 268 0 256 255 269 0 270 256 269 0 257 256 270 0 271 257 270 0 258 257 271 0 272 258 271 0 259 258 272 0 273 259 272 0 260 259 273 0 274 260 273 0 261 260 274 0 275 261 274 0 262 261 275 0 276 262 275 0 263 262 276 0 277 263 276 0 264 263 277 0 278 264 277 0 265 264 278 0 279 265 278 0 266 265 279 0 280 266 279 0 253 266 280 0 267 253 280 0 268 267 281 0 282 268 281 0 269 268 282 0 283 269 282 0 270 269 283 0 284 270 283 0 271 270 284 0 285 271 284 0 272 271 285 0 286 272 285 0 273 272 286 0 287 273 286 0 274 273 287 0 288 274 287 0 275 274 288 0 289 275 288 0 276 275 289 0 290 276 289 0 277 276 290 0 291 277 290 0 278 277 291 0 292 278 291 0 279 278 292 0 293 279 292 0 280 279 293 0 294 280 293 0 267 280 294 0 281 267 294 0 2 295 1 0 281 296 282 0 3 295 2 0 282 296 283 0 4 295 3 0 283 296 284 0 5 295 4 0 284 296 285 0 6 295 5 0 285 296 286 0 7 295 6 0 286 296 287 0 8 295 7 0 287 296 288 0 9 295 8 0 288 296 289 0 10 295 9 0 289 296 290 0 11 295 10 0 290 296 291 0 12 295 11 0 291 296 292 0 13 295 12 0 292 296 293 0 14 295 13 0 293 296 294 0 1 295 14 0 294 296 281" node="bread_right_0_0_0 bread_right_0_0_1 bread_right_0_0_2 bread_right_0_1_0 bread_right_0_1_1 bread_right_0_1_2 bread_right_0_2_0 bread_right_0_2_1 bread_right_0_2_2 bread_right_1_0_0 bread_right_1_0_1 bread_right_1_0_2 bread_right_1_1_0 bread_right_1_1_1 bread_right_1_1_2 bread_right_1_2_0 bread_right_1_2_1 bread_right_1_2_2 bread_right_2_0_0 bread_right_2_0_1 bread_right_2_0_2 bread_right_2_1_0 bread_right_2_1_1 bread_right_2_1_2 bread_right_2_2_0 bread_right_2_2_1 bread_right_2_2_2 bread_right_3_0_0 bread_right_3_0_1 bread_right_3_0_2 bread_right_3_1_0 bread_right_3_1_1 bread_right_3_1_2 bread_right_3_2_0 bread_right_3_2_1 bread_right_3_2_2 bread_right_4_0_0 bread_right_4_0_1 bread_right_4_0_2 bread_right_4_1_0 bread_right_4_1_1 bread_right_4_1_2 bread_right_4_2_0 bread_right_4_2_1 bread_right_4_2_2">
-      <contact condim="4" priority="1" friction="1 0.01 0.001" solref="0.004 3" selfcollide="none"/>
+    <flex name="bread_right" group="3" dim="3" radius="0.001" rgba="0.9 0.6 0.2 0" cellcount="4 2 2" dof="trilinear" body="world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world" vertex="0.46 -0.27 0.0273 0.389162 -0.273171 0.0018 0.389162 -0.271976 0.00184097 0.389162 -0.271444 0.001966 0.389162 -0.271188 0.00219547 0.389162 -0.271207 0.00268235 0.389162 -0.271596 0.00310229 0.389162 -0.272297 0.00339288 0.389162 -0.273171 0.0034966 0.389162 -0.274046 0.00339288 0.389162 -0.274747 0.00310229 0.389162 -0.275136 0.00268235 0.389162 -0.275155 0.00219547 0.389162 -0.274899 0.001966 0.389162 -0.274367 0.00184097 0.391333 -0.27298 0.0018 0.391333 -0.269929 0.00193116 0.391333 -0.268572 0.00233144 0.391333 -0.26792 0.00306603 0.391333 -0.267968 0.0046247 0.391333 -0.26896 0.005969 0.391333 -0.270749 0.00689931 0.391333 -0.27298 0.00723133 0.391333 -0.275211 0.00689931 0.391333 -0.277 0.005969 0.391333 -0.277992 0.0046247 0.391333 -0.27804 0.00306603 0.391333 -0.277388 0.00233144 0.391333 -0.276031 0.00193116 0.394901 -0.272678 0.0018 0.394901 -0.26744 0.00205491 0.394901 -0.265109 0.00283284 0.394901 -0.263989 0.00426051 0.394901 -0.264072 0.00728976 0.394901 -0.265776 0.00990242 0.394901 -0.268848 0.0117104 0.394901 -0.272678 0.0123557 0.394901 -0.276509 0.0117104 0.394901 -0.27958 0.00990242 0.394901 -0.281285 0.00728976 0.394901 -0.281367 0.00426052 0.394901 -0.280248 0.00283284 0.394901 -0.277917 0.00205491 0.399795 -0.272291 0.0018 0.399795 -0.264675 0.00220138 0.399795 -0.261287 0.00342631 0.399795 -0.259659 0.0056743 0.399795 -0.259779 0.0104441 0.399795 -0.262257 0.014558 0.399795 -0.266723 0.0174048 0.399795 -0.272291 0.0184209 0.399795 -0.277859 0.0174048 0.399795 -0.282325 0.014558 0.399795 -0.284803 0.0104441 0.399795 -0.284922 0.0056743 0.399795 -0.283295 0.00342631 0.399795 -0.279907 0.00220138 0.405914 -0.271849 0.0018 0.405914 -0.261788 0.00236035 0.405914 -0.257312 0.00407041 0.405914 -0.255162 0.00720871 0.405914 -0.25532 0.0138676 0.405914 -0.258594 0.0196108 0.405914 -0.264493 0.0235851 0.405914 -0.271849 0.0250036 0.405914 -0.279205 0.0235851 0.405914 -0.285104 0.0196108 0.405914 -0.288377 0.0138676 0.405914 -0.288536 0.00720871 0.405914 -0.286385 0.00407041 0.405914 -0.281909 0.00236035 0.413134 -0.271388 0.0018 0.413134 -0.258939 0.00252173 0.413134 -0.2534 0.0047243 0.413134 -0.250739 0.00876647 0.413134 -0.250935 0.0173432 0.413134 -0.254986 0.0247404 0.413134 -0.262286 0.0298594 0.413134 -0.271388 0.0316864 0.413134 -0.280491 0.0298594 0.413134 -0.28779 0.0247404 0.413134 -0.291841 0.0173432 0.413134 -0.292037 0.00876647 0.413134 -0.289376 0.0047243 0.413134 -0.283837 0.00252173 0.421308 -0.270946 0.0018 0.421308 -0.256294 0.00267565 0.421308 -0.249776 0.00534797 0.421308 -0.246644 0.0102522 0.421308 -0.246875 0.0206581 0.421308 -0.251642 0.0296329 0.421308 -0.260233 0.0358437 0.421308 -0.270946 0.0380603 0.421308 -0.281659 0.0358437 0.421308 -0.29025 0.0296329 0.421308 -0.295018 0.0206581 0.421308 -0.295248 0.0102522 0.421308 -0.292116 0.00534797 0.421308 -0.285598 0.00267565 0.43027 -0.270559 0.0018 0.43027 -0.254021 0.00281263 0.43027 -0.246664 0.00590297 0.43027 -0.243129 0.0115744 0.43027 -0.243389 0.023608 0.43027 -0.24877 0.0339867 0.43027 -0.258467 0.0411691 0.43027 -0.270559 0.0437324 0.43027 -0.28265 0.0411691 0.43027 -0.292347 0.0339867 0.43027 -0.297728 0.023608 0.43027 -0.297988 0.0115744 0.43027 -0.294453 0.00590297 0.43027 -0.287096 0.00281263 0.439837 -0.270257 0.0018 0.439837 -0.252272 0.00292369 0.439837 -0.24427 0.00635299 0.439837 -0.240426 0.0126464 0.439837 -0.240709 0.0259999 0.439837 -0.246561 0.037517 0.439837 -0.257107 0.0454871 0.439837 -0.270257 0.0483316 0.439837 -0.283407 0.0454871 0.439837 -0.293953 0.037517 0.439837 -0.299805 0.0259999 0.439837 -0.300088 0.0126464 0.439837 -0.296244 0.00635299 0.439837 -0.288242 0.00292369 0.449815 -0.270066 0.0018 0.449815 -0.251168 0.00300021 0.449815 -0.242761 0.00666305 0.449815 -0.238722 0.0133851 0.449815 -0.239019 0.0276479 0.449815 -0.245168 0.0399493 0.449815 -0.256249 0.0484622 0.449815 -0.270066 0.0515004 0.449815 -0.283883 0.0484622 0.449815 -0.294963 0.0399493 0.449815 -0.301112 0.0276479 0.449815 -0.301409 0.0133851 0.449815 -0.29737 0.00666304 0.449815 -0.288963 0.00300021 0.46 -0.27 0.0018 0.46 -0.250791 0.0030316 0.46 -0.242245 0.00679021 0.46 -0.23814 0.013688 0.46 -0.238442 0.0283238 0.46 -0.244692 0.0409469 0.46 -0.255955 0.0496823 0.46 -0.27 0.0528 0.46 -0.284045 0.0496823 0.46 -0.295308 0.0409469 0.46 -0.301558 0.0283238 0.46 -0.30186 0.013688 0.46 -0.297755 0.00679021 0.46 -0.289209 0.0030316 0.470185 -0.270066 0.0018 0.470185 -0.251168 0.00300021 0.470185 -0.242761 0.00666304 0.470185 -0.238722 0.0133851 0.470185 -0.239019 0.0276479 0.470185 -0.245168 0.0399493 0.470185 -0.256249 0.0484622 0.470185 -0.270066 0.0515004 0.470185 -0.283883 0.0484622 0.470185 -0.294963 0.0399493 0.470185 -0.301112 0.0276479 0.470185 -0.301409 0.0133851 0.470185 -0.29737 0.00666304 0.470185 -0.288963 0.00300022 0.480163 -0.270257 0.0018 0.480163 -0.252272 0.00292369 0.480163 -0.24427 0.00635299 0.480163 -0.240426 0.0126464 0.480163 -0.240709 0.0259999 0.480163 -0.246561 0.037517 0.480163 -0.257107 0.0454871 0.480163 -0.270257 0.0483316 0.480163 -0.283407 0.0454871 0.480163 -0.293953 0.037517 0.480163 -0.299805 0.0259999 0.480163 -0.300088 0.0126464 0.480163 -0.296244 0.00635299 0.480163 -0.288242 0.00292369 0.48973 -0.270559 0.0018 0.48973 -0.254021 0.00281263 0.48973 -0.246664 0.00590297 0.48973 -0.243129 0.0115744 0.48973 -0.243389 0.023608 0.48973 -0.24877 0.0339867 0.48973 -0.258467 0.0411691 0.48973 -0.270559 0.0437324 0.48973 -0.28265 0.0411691 0.48973 -0.292347 0.0339867 0.48973 -0.297728 0.023608 0.48973 -0.297988 0.0115744 0.48973 -0.294453 0.00590297 0.48973 -0.287096 0.00281263 0.498692 -0.270946 0.0018 0.498692 -0.256294 0.00267565 0.498692 -0.249776 0.00534797 0.498692 -0.246644 0.0102522 0.498692 -0.246875 0.0206581 0.498692 -0.251642 0.0296329 0.498692 -0.260233 0.0358437 0.498692 -0.270946 0.0380603 0.498692 -0.281659 0.0358437 0.498692 -0.29025 0.0296329 0.498692 -0.295018 0.0206581 0.498692 -0.295248 0.0102522 0.498692 -0.292116 0.00534797 0.498692 -0.285598 0.00267565 0.506866 -0.271388 0.0018 0.506866 -0.258939 0.00252173 0.506866 -0.2534 0.0047243 0.506866 -0.250739 0.00876647 0.506866 -0.250935 0.0173432 0.506866 -0.254986 0.0247404 0.506866 -0.262286 0.0298594 0.506866 -0.271388 0.0316864 0.506866 -0.280491 0.0298594 0.506866 -0.28779 0.0247404 0.506866 -0.291841 0.0173432 0.506866 -0.292037 0.00876647 0.506866 -0.289376 0.0047243 0.506866 -0.283837 0.00252173 0.514086 -0.271849 0.0018 0.514086 -0.261788 0.00236035 0.514086 -0.257312 0.00407041 0.514086 -0.255162 0.00720871 0.514086 -0.25532 0.0138676 0.514086 -0.258594 0.0196108 0.514086 -0.264493 0.0235851 0.514086 -0.271849 0.0250036 0.514086 -0.279205 0.0235851 0.514086 -0.285104 0.0196108 0.514086 -0.288377 0.0138676 0.514086 -0.288536 0.00720871 0.514086 -0.286385 0.00407041 0.514086 -0.281909 0.00236035 0.520205 -0.272291 0.0018 0.520205 -0.264675 0.00220138 0.520205 -0.261287 0.00342631 0.520205 -0.259659 0.0056743 0.520205 -0.259779 0.0104441 0.520205 -0.262257 0.014558 0.520205 -0.266723 0.0174048 0.520205 -0.272291 0.0184209 0.520205 -0.277859 0.0174048 0.520205 -0.282325 0.014558 0.520205 -0.284803 0.0104441 0.520205 -0.284922 0.0056743 0.520205 -0.283295 0.00342631 0.520205 -0.279907 0.00220138 0.525099 -0.272678 0.0018 0.525099 -0.26744 0.00205491 0.525099 -0.265109 0.00283284 0.525099 -0.263989 0.00426052 0.525099 -0.264072 0.00728976 0.525099 -0.265776 0.00990242 0.525099 -0.268848 0.0117104 0.525099 -0.272678 0.0123557 0.525099 -0.276509 0.0117104 0.525099 -0.27958 0.00990242 0.525099 -0.281285 0.00728976 0.525099 -0.281367 0.00426052 0.525099 -0.280248 0.00283284 0.525099 -0.277917 0.00205491 0.528667 -0.27298 0.0018 0.528667 -0.269929 0.00193116 0.528667 -0.268572 0.00233144 0.528667 -0.26792 0.00306603 0.528667 -0.267968 0.0046247 0.528667 -0.26896 0.005969 0.528667 -0.270749 0.00689931 0.528667 -0.27298 0.00723133 0.528667 -0.275211 0.00689931 0.528667 -0.277 0.005969 0.528667 -0.277992 0.0046247 0.528667 -0.27804 0.00306603 0.528667 -0.277388 0.00233144 0.528667 -0.276031 0.00193116 0.530838 -0.273171 0.0018 0.530838 -0.271976 0.00184097 0.530838 -0.271444 0.001966 0.530838 -0.271188 0.00219547 0.530838 -0.271207 0.00268235 0.530838 -0.271596 0.00310228 0.530838 -0.272297 0.00339288 0.530838 -0.273171 0.0034966 0.530838 -0.274046 0.00339288 0.530838 -0.274747 0.00310229 0.530838 -0.275136 0.00268235 0.530838 -0.275155 0.00219547 0.530838 -0.274899 0.001966 0.530838 -0.274367 0.00184097 0.38786 -0.273171 0.0025469 0.53214 -0.273171 0.0025469" element="0 2 1 15 0 16 2 15 0 3 2 16 0 17 3 16 0 4 3 17 0 18 4 17 0 5 4 18 0 19 5 18 0 6 5 19 0 20 6 19 0 7 6 20 0 21 7 20 0 8 7 21 0 22 8 21 0 9 8 22 0 23 9 22 0 10 9 23 0 24 10 23 0 11 10 24 0 25 11 24 0 12 11 25 0 26 12 25 0 13 12 26 0 27 13 26 0 14 13 27 0 28 14 27 0 1 14 28 0 15 1 28 0 16 15 29 0 30 16 29 0 17 16 30 0 31 17 30 0 18 17 31 0 32 18 31 0 19 18 32 0 33 19 32 0 20 19 33 0 34 20 33 0 21 20 34 0 35 21 34 0 22 21 35 0 36 22 35 0 23 22 36 0 37 23 36 0 24 23 37 0 38 24 37 0 25 24 38 0 39 25 38 0 26 25 39 0 40 26 39 0 27 26 40 0 41 27 40 0 28 27 41 0 42 28 41 0 15 28 42 0 29 15 42 0 30 29 43 0 44 30 43 0 31 30 44 0 45 31 44 0 32 31 45 0 46 32 45 0 33 32 46 0 47 33 46 0 34 33 47 0 48 34 47 0 35 34 48 0 49 35 48 0 36 35 49 0 50 36 49 0 37 36 50 0 51 37 50 0 38 37 51 0 52 38 51 0 39 38 52 0 53 39 52 0 40 39 53 0 54 40 53 0 41 40 54 0 55 41 54 0 42 41 55 0 56 42 55 0 29 42 56 0 43 29 56 0 44 43 57 0 58 44 57 0 45 44 58 0 59 45 58 0 46 45 59 0 60 46 59 0 47 46 60 0 61 47 60 0 48 47 61 0 62 48 61 0 49 48 62 0 63 49 62 0 50 49 63 0 64 50 63 0 51 50 64 0 65 51 64 0 52 51 65 0 66 52 65 0 53 52 66 0 67 53 66 0 54 53 67 0 68 54 67 0 55 54 68 0 69 55 68 0 56 55 69 0 70 56 69 0 43 56 70 0 57 43 70 0 58 57 71 0 72 58 71 0 59 58 72 0 73 59 72 0 60 59 73 0 74 60 73 0 61 60 74 0 75 61 74 0 62 61 75 0 76 62 75 0 63 62 76 0 77 63 76 0 64 63 77 0 78 64 77 0 65 64 78 0 79 65 78 0 66 65 79 0 80 66 79 0 67 66 80 0 81 67 80 0 68 67 81 0 82 68 81 0 69 68 82 0 83 69 82 0 70 69 83 0 84 70 83 0 57 70 84 0 71 57 84 0 72 71 85 0 86 72 85 0 73 72 86 0 87 73 86 0 74 73 87 0 88 74 87 0 75 74 88 0 89 75 88 0 76 75 89 0 90 76 89 0 77 76 90 0 91 77 90 0 78 77 91 0 92 78 91 0 79 78 92 0 93 79 92 0 80 79 93 0 94 80 93 0 81 80 94 0 95 81 94 0 82 81 95 0 96 82 95 0 83 82 96 0 97 83 96 0 84 83 97 0 98 84 97 0 71 84 98 0 85 71 98 0 86 85 99 0 100 86 99 0 87 86 100 0 101 87 100 0 88 87 101 0 102 88 101 0 89 88 102 0 103 89 102 0 90 89 103 0 104 90 103 0 91 90 104 0 105 91 104 0 92 91 105 0 106 92 105 0 93 92 106 0 107 93 106 0 94 93 107 0 108 94 107 0 95 94 108 0 109 95 108 0 96 95 109 0 110 96 109 0 97 96 110 0 111 97 110 0 98 97 111 0 112 98 111 0 85 98 112 0 99 85 112 0 100 99 113 0 114 100 113 0 101 100 114 0 115 101 114 0 102 101 115 0 116 102 115 0 103 102 116 0 117 103 116 0 104 103 117 0 118 104 117 0 105 104 118 0 119 105 118 0 106 105 119 0 120 106 119 0 107 106 120 0 121 107 120 0 108 107 121 0 122 108 121 0 109 108 122 0 123 109 122 0 110 109 123 0 124 110 123 0 111 110 124 0 125 111 124 0 112 111 125 0 126 112 125 0 99 112 126 0 113 99 126 0 114 113 127 0 128 114 127 0 115 114 128 0 129 115 128 0 116 115 129 0 130 116 129 0 117 116 130 0 131 117 130 0 118 117 131 0 132 118 131 0 119 118 132 0 133 119 132 0 120 119 133 0 134 120 133 0 121 120 134 0 135 121 134 0 122 121 135 0 136 122 135 0 123 122 136 0 137 123 136 0 124 123 137 0 138 124 137 0 125 124 138 0 139 125 138 0 126 125 139 0 140 126 139 0 113 126 140 0 127 113 140 0 128 127 141 0 142 128 141 0 129 128 142 0 143 129 142 0 130 129 143 0 144 130 143 0 131 130 144 0 145 131 144 0 132 131 145 0 146 132 145 0 133 132 146 0 147 133 146 0 134 133 147 0 148 134 147 0 135 134 148 0 149 135 148 0 136 135 149 0 150 136 149 0 137 136 150 0 151 137 150 0 138 137 151 0 152 138 151 0 139 138 152 0 153 139 152 0 140 139 153 0 154 140 153 0 127 140 154 0 141 127 154 0 142 141 155 0 156 142 155 0 143 142 156 0 157 143 156 0 144 143 157 0 158 144 157 0 145 144 158 0 159 145 158 0 146 145 159 0 160 146 159 0 147 146 160 0 161 147 160 0 148 147 161 0 162 148 161 0 149 148 162 0 163 149 162 0 150 149 163 0 164 150 163 0 151 150 164 0 165 151 164 0 152 151 165 0 166 152 165 0 153 152 166 0 167 153 166 0 154 153 167 0 168 154 167 0 141 154 168 0 155 141 168 0 156 155 169 0 170 156 169 0 157 156 170 0 171 157 170 0 158 157 171 0 172 158 171 0 159 158 172 0 173 159 172 0 160 159 173 0 174 160 173 0 161 160 174 0 175 161 174 0 162 161 175 0 176 162 175 0 163 162 176 0 177 163 176 0 164 163 177 0 178 164 177 0 165 164 178 0 179 165 178 0 166 165 179 0 180 166 179 0 167 166 180 0 181 167 180 0 168 167 181 0 182 168 181 0 155 168 182 0 169 155 182 0 170 169 183 0 184 170 183 0 171 170 184 0 185 171 184 0 172 171 185 0 186 172 185 0 173 172 186 0 187 173 186 0 174 173 187 0 188 174 187 0 175 174 188 0 189 175 188 0 176 175 189 0 190 176 189 0 177 176 190 0 191 177 190 0 178 177 191 0 192 178 191 0 179 178 192 0 193 179 192 0 180 179 193 0 194 180 193 0 181 180 194 0 195 181 194 0 182 181 195 0 196 182 195 0 169 182 196 0 183 169 196 0 184 183 197 0 198 184 197 0 185 184 198 0 199 185 198 0 186 185 199 0 200 186 199 0 187 186 200 0 201 187 200 0 188 187 201 0 202 188 201 0 189 188 202 0 203 189 202 0 190 189 203 0 204 190 203 0 191 190 204 0 205 191 204 0 192 191 205 0 206 192 205 0 193 192 206 0 207 193 206 0 194 193 207 0 208 194 207 0 195 194 208 0 209 195 208 0 196 195 209 0 210 196 209 0 183 196 210 0 197 183 210 0 198 197 211 0 212 198 211 0 199 198 212 0 213 199 212 0 200 199 213 0 214 200 213 0 201 200 214 0 215 201 214 0 202 201 215 0 216 202 215 0 203 202 216 0 217 203 216 0 204 203 217 0 218 204 217 0 205 204 218 0 219 205 218 0 206 205 219 0 220 206 219 0 207 206 220 0 221 207 220 0 208 207 221 0 222 208 221 0 209 208 222 0 223 209 222 0 210 209 223 0 224 210 223 0 197 210 224 0 211 197 224 0 212 211 225 0 226 212 225 0 213 212 226 0 227 213 226 0 214 213 227 0 228 214 227 0 215 214 228 0 229 215 228 0 216 215 229 0 230 216 229 0 217 216 230 0 231 217 230 0 218 217 231 0 232 218 231 0 219 218 232 0 233 219 232 0 220 219 233 0 234 220 233 0 221 220 234 0 235 221 234 0 222 221 235 0 236 222 235 0 223 222 236 0 237 223 236 0 224 223 237 0 238 224 237 0 211 224 238 0 225 211 238 0 226 225 239 0 240 226 239 0 227 226 240 0 241 227 240 0 228 227 241 0 242 228 241 0 229 228 242 0 243 229 242 0 230 229 243 0 244 230 243 0 231 230 244 0 245 231 244 0 232 231 245 0 246 232 245 0 233 232 246 0 247 233 246 0 234 233 247 0 248 234 247 0 235 234 248 0 249 235 248 0 236 235 249 0 250 236 249 0 237 236 250 0 251 237 250 0 238 237 251 0 252 238 251 0 225 238 252 0 239 225 252 0 240 239 253 0 254 240 253 0 241 240 254 0 255 241 254 0 242 241 255 0 256 242 255 0 243 242 256 0 257 243 256 0 244 243 257 0 258 244 257 0 245 244 258 0 259 245 258 0 246 245 259 0 260 246 259 0 247 246 260 0 261 247 260 0 248 247 261 0 262 248 261 0 249 248 262 0 263 249 262 0 250 249 263 0 264 250 263 0 251 250 264 0 265 251 264 0 252 251 265 0 266 252 265 0 239 252 266 0 253 239 266 0 254 253 267 0 268 254 267 0 255 254 268 0 269 255 268 0 256 255 269 0 270 256 269 0 257 256 270 0 271 257 270 0 258 257 271 0 272 258 271 0 259 258 272 0 273 259 272 0 260 259 273 0 274 260 273 0 261 260 274 0 275 261 274 0 262 261 275 0 276 262 275 0 263 262 276 0 277 263 276 0 264 263 277 0 278 264 277 0 265 264 278 0 279 265 278 0 266 265 279 0 280 266 279 0 253 266 280 0 267 253 280 0 268 267 281 0 282 268 281 0 269 268 282 0 283 269 282 0 270 269 283 0 284 270 283 0 271 270 284 0 285 271 284 0 272 271 285 0 286 272 285 0 273 272 286 0 287 273 286 0 274 273 287 0 288 274 287 0 275 274 288 0 289 275 288 0 276 275 289 0 290 276 289 0 277 276 290 0 291 277 290 0 278 277 291 0 292 278 291 0 279 278 292 0 293 279 292 0 280 279 293 0 294 280 293 0 267 280 294 0 281 267 294 0 2 295 1 0 281 296 282 0 3 295 2 0 282 296 283 0 4 295 3 0 283 296 284 0 5 295 4 0 284 296 285 0 6 295 5 0 285 296 286 0 7 295 6 0 286 296 287 0 8 295 7 0 287 296 288 0 9 295 8 0 288 296 289 0 10 295 9 0 289 296 290 0 11 295 10 0 290 296 291 0 12 295 11 0 291 296 292 0 13 295 12 0 292 296 293 0 14 295 13 0 293 296 294 0 1 295 14 0 294 296 281" node="bread_right_0_0_0 bread_right_0_0_1 bread_right_0_0_2 bread_right_0_1_0 bread_right_0_1_1 bread_right_0_1_2 bread_right_0_2_0 bread_right_0_2_1 bread_right_0_2_2 bread_right_1_0_0 bread_right_1_0_1 bread_right_1_0_2 bread_right_1_1_0 bread_right_1_1_1 bread_right_1_1_2 bread_right_1_2_0 bread_right_1_2_1 bread_right_1_2_2 bread_right_2_0_0 bread_right_2_0_1 bread_right_2_0_2 bread_right_2_1_0 bread_right_2_1_1 bread_right_2_1_2 bread_right_2_2_0 bread_right_2_2_1 bread_right_2_2_2 bread_right_3_0_0 bread_right_3_0_1 bread_right_3_0_2 bread_right_3_1_0 bread_right_3_1_1 bread_right_3_1_2 bread_right_3_2_0 bread_right_3_2_1 bread_right_3_2_2 bread_right_4_0_0 bread_right_4_0_1 bread_right_4_0_2 bread_right_4_1_0 bread_right_4_1_1 bread_right_4_1_2 bread_right_4_2_0 bread_right_4_2_1 bread_right_4_2_2">
+      <contact condim="4" friction="0.4 0.01 0.001" solmix="1000" solref="0.004 3" solimp="0.95 0.995" selfcollide="none"/>
       <elasticity young="20000" poisson="0.25" damping="0.03"/>
     </flex>
     <flex name="bread_left" group="3" dim="3" radius="0.001" rgba="0.9 0.6 0.2 0" cellcount="4 2 2" dof="trilinear" body="world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world world" vertex="0.46 0.27 0.0308 0.392246 0.27 0.0018 0.392246 0.277688 0.00191601 0.392246 0.279356 0.00229476 0.392246 0.28007 0.00313799 0.392246 0.279967 0.00891436 0.392246 0.278463 0.0131726 0.392246 0.275471 0.0156734 0.392246 0.27 0.0165148 0.392246 0.264529 0.0156734 0.392246 0.261537 0.0131726 0.392246 0.260033 0.00891436 0.392246 0.25993 0.00313799 0.392246 0.260644 0.00229476 0.392246 0.262312 0.00191601 0.394322 0.27 0.0018 0.394322 0.282468 0.00199541 0.394322 0.285172 0.00263337 0.394322 0.28633 0.0040537 0.394322 0.286162 0.0137834 0.394322 0.283724 0.0209559 0.394322 0.278873 0.0251682 0.394322 0.27 0.0265855 0.394322 0.261127 0.0251682 0.394322 0.256276 0.0209559 0.394322 0.253838 0.0137834 0.394322 0.25367 0.0040537 0.394322 0.254828 0.00263337 0.394322 0.257532 0.00199541 0.397735 0.27 0.0018 0.397735 0.286335 0.00206168 0.397735 0.289878 0.00291596 0.397735 0.291396 0.00481791 0.397735 0.291175 0.0178468 0.397735 0.287981 0.0274515 0.397735 0.281625 0.0330921 0.397735 0.27 0.03499 0.397735 0.258375 0.0330921 0.397735 0.252019 0.0274515 0.397735 0.248825 0.0178468 0.397735 0.248604 0.00481791 0.397735 0.250122 0.00291596 0.397735 0.253665 0.00206168 0.402415 0.27 0.0018 0.402415 0.289522 0.00211736 0.402415 0.293756 0.00315346 0.402415 0.29557 0.00546018 0.402415 0.295307 0.0212618 0.402415 0.29149 0.0329106 0.402415 0.283893 0.0397516 0.402415 0.27 0.0420535 0.402415 0.256107 0.0397516 0.402415 0.24851 0.0329106 0.402415 0.244693 0.0212618 0.402415 0.24443 0.00546018 0.402415 0.246244 0.00315346 0.402415 0.250478 0.00211736 0.408268 0.27 0.0018 0.408268 0.292107 0.00216307 0.408268 0.296901 0.00334838 0.408268 0.298955 0.00598731 0.408268 0.298657 0.0240647 0.408268 0.294335 0.0373912 0.408268 0.285732 0.0452174 0.408268 0.27 0.0478508 0.408268 0.254268 0.0452174 0.408268 0.245665 0.0373912 0.408268 0.241343 0.0240647 0.408268 0.241045 0.00598731 0.408268 0.243099 0.00334838 0.408268 0.247893 0.00216307 0.415174 0.27 0.0018 0.415174 0.294128 0.00219894 0.415174 0.299361 0.00350139 0.415174 0.301603 0.00640109 0.415174 0.301277 0.0262649 0.415174 0.29656 0.0409082 0.415174 0.287171 0.0495078 0.415174 0.27 0.0524014 0.415174 0.252829 0.0495078 0.415174 0.24344 0.0409082 0.415174 0.238723 0.0262649 0.415174 0.238397 0.00640109 0.415174 0.240639 0.00350139 0.415174 0.245872 0.00219894 0.422993 0.27 0.0018 0.422993 0.295619 0.00222525 0.422993 0.301175 0.00361356 0.422993 0.303556 0.00670445 0.422993 0.30321 0.0278779 0.422993 0.298201 0.0434867 0.422993 0.288232 0.0526533 0.422993 0.27 0.0557377 0.422993 0.251768 0.0526533 0.422993 0.241799 0.0434867 0.422993 0.23679 0.0278779 0.422993 0.236444 0.00670445 0.422993 0.238825 0.00361356 0.422993 0.244381 0.00222525 0.431564 0.27 0.0018 0.431564 0.296622 0.00224265 0.431564 0.302396 0.00368775 0.431564 0.30487 0.00690508 0.431564 0.304511 0.0289447 0.431564 0.299305 0.045192 0.431564 0.288946 0.0547336 0.431564 0.27 0.0579442 0.431564 0.251054 0.0547336 0.431564 0.240695 0.045192 0.431564 0.235489 0.0289447 0.431564 0.23513 0.00690508 0.431564 0.237604 0.00368775 0.431564 0.243378 0.00224265 0.440715 0.27 0.0018 0.440715 0.2972 0.0022524 0.440715 0.303099 0.00372938 0.440715 0.305626 0.00701764 0.440715 0.305259 0.0295432 0.440715 0.299941 0.0461488 0.440715 0.289357 0.0559007 0.440715 0.27 0.0591821 0.440715 0.250643 0.0559007 0.440715 0.240059 0.0461488 0.440715 0.234741 0.0295432 0.440715 0.234374 0.00701764 0.440715 0.236901 0.00372938 0.440715 0.2428 0.0022524 0.450258 0.27 0.0018 0.450258 0.297444 0.00225647 0.450258 0.303395 0.00374671 0.450258 0.305945 0.00706453 0.450258 0.305575 0.0297925 0.450258 0.300209 0.0465473 0.450258 0.28953 0.0563869 0.450258 0.27 0.0596977 0.450258 0.25047 0.0563869 0.450258 0.239791 0.0465473 0.450258 0.234425 0.0297925 0.450258 0.234055 0.00706453 0.450258 0.236605 0.00374671 0.450258 0.242556 0.00225647 0.46 0.27 0.0018 0.46 0.297485 0.00225727 0.46 0.303446 0.00375015 0.46 0.306 0.00707383 0.46 0.30563 0.029842 0.46 0.300255 0.0466263 0.46 0.28956 0.0564833 0.46 0.27 0.0598 0.46 0.25044 0.0564833 0.46 0.239745 0.0466263 0.46 0.23437 0.029842 0.46 0.234 0.00707383 0.46 0.236554 0.00375015 0.46 0.242515 0.00225727 0.469742 0.27 0.0018 0.469742 0.297444 0.00225647 0.469742 0.303395 0.00374671 0.469742 0.305945 0.00706453 0.469742 0.305575 0.0297925 0.469742 0.300209 0.0465473 0.469742 0.28953 0.0563869 0.469742 0.27 0.0596977 0.469742 0.25047 0.0563869 0.469742 0.239791 0.0465473 0.469742 0.234425 0.0297925 0.469742 0.234055 0.00706453 0.469742 0.236605 0.00374671 0.469742 0.242556 0.00225647 0.479285 0.27 0.0018 0.479285 0.2972 0.0022524 0.479285 0.303099 0.00372938 0.479285 0.305626 0.00701764 0.479285 0.305259 0.0295432 0.479285 0.299941 0.0461488 0.479285 0.289357 0.0559007 0.479285 0.27 0.0591821 0.479285 0.250643 0.0559007 0.479285 0.240059 0.0461488 0.479285 0.234741 0.0295432 0.479285 0.234374 0.00701764 0.479285 0.236901 0.00372938 0.479285 0.2428 0.0022524 0.488436 0.27 0.0018 0.488436 0.296622 0.00224265 0.488436 0.302396 0.00368775 0.488436 0.30487 0.00690508 0.488436 0.304511 0.0289447 0.488436 0.299305 0.045192 0.488436 0.288946 0.0547336 0.488436 0.27 0.0579442 0.488436 0.251054 0.0547336 0.488436 0.240695 0.045192 0.488436 0.235489 0.0289447 0.488436 0.23513 0.00690508 0.488436 0.237604 0.00368775 0.488436 0.243378 0.00224265 0.497007 0.27 0.0018 0.497007 0.295619 0.00222525 0.497007 0.301175 0.00361356 0.497007 0.303556 0.00670445 0.497007 0.30321 0.0278779 0.497007 0.298201 0.0434867 0.497007 0.288232 0.0526533 0.497007 0.27 0.0557377 0.497007 0.251768 0.0526533 0.497007 0.241799 0.0434867 0.497007 0.23679 0.0278779 0.497007 0.236444 0.00670445 0.497007 0.238825 0.00361356 0.497007 0.244381 0.00222525 0.504826 0.27 0.0018 0.504826 0.294128 0.00219894 0.504826 0.299361 0.00350139 0.504826 0.301603 0.00640109 0.504826 0.301277 0.0262649 0.504826 0.29656 0.0409082 0.504826 0.287171 0.0495078 0.504826 0.27 0.0524014 0.504826 0.252829 0.0495078 0.504826 0.24344 0.0409082 0.504826 0.238723 0.0262649 0.504826 0.238397 0.00640109 0.504826 0.240639 0.00350139 0.504826 0.245872 0.00219894 0.511732 0.27 0.0018 0.511732 0.292107 0.00216307 0.511732 0.296901 0.00334838 0.511732 0.298955 0.00598731 0.511732 0.298657 0.0240647 0.511732 0.294335 0.0373912 0.511732 0.285732 0.0452174 0.511732 0.27 0.0478508 0.511732 0.254268 0.0452174 0.511732 0.245665 0.0373912 0.511732 0.241343 0.0240647 0.511732 0.241045 0.00598731 0.511732 0.243099 0.00334838 0.511732 0.247893 0.00216307 0.517585 0.27 0.0018 0.517585 0.289522 0.00211736 0.517585 0.293756 0.00315346 0.517585 0.29557 0.00546018 0.517585 0.295307 0.0212618 0.517585 0.29149 0.0329106 0.517585 0.283893 0.0397516 0.517585 0.27 0.0420535 0.517585 0.256107 0.0397516 0.517585 0.24851 0.0329106 0.517585 0.244693 0.0212618 0.517585 0.24443 0.00546018 0.517585 0.246244 0.00315346 0.517585 0.250478 0.00211736 0.522265 0.27 0.0018 0.522265 0.286335 0.00206168 0.522265 0.289878 0.00291596 0.522265 0.291396 0.00481791 0.522265 0.291175 0.0178468 0.522265 0.287981 0.0274515 0.522265 0.281625 0.0330921 0.522265 0.27 0.03499 0.522265 0.258375 0.0330921 0.522265 0.252019 0.0274515 0.522265 0.248825 0.0178468 0.522265 0.248604 0.00481791 0.522265 0.250122 0.00291596 0.522265 0.253665 0.00206168 0.525678 0.27 0.0018 0.525678 0.282468 0.00199541 0.525678 0.285172 0.00263337 0.525678 0.28633 0.0040537 0.525678 0.286162 0.0137834 0.525678 0.283724 0.0209559 0.525678 0.278873 0.0251682 0.525678 0.27 0.0265855 0.525678 0.261127 0.0251682 0.525678 0.256276 0.0209559 0.525678 0.253838 0.0137834 0.525678 0.25367 0.0040537 0.525678 0.254828 0.00263337 0.525678 0.257532 0.00199541 0.527754 0.27 0.0018 0.527754 0.277688 0.00191601 0.527754 0.279356 0.00229476 0.527754 0.28007 0.00313799 0.527754 0.279967 0.00891436 0.527754 0.278463 0.0131726 0.527754 0.275471 0.0156734 0.527754 0.27 0.0165148 0.527754 0.264529 0.0156734 0.527754 0.261537 0.0131726 0.527754 0.260033 0.00891436 0.527754 0.25993 0.00313799 0.527754 0.260644 0.00229476 0.527754 0.262312 0.00191601 0.391 0.27 0.00775236 0.529 0.27 0.00775236" element="0 2 1 15 0 16 2 15 0 3 2 16 0 17 3 16 0 4 3 17 0 18 4 17 0 5 4 18 0 19 5 18 0 6 5 19 0 20 6 19 0 7 6 20 0 21 7 20 0 8 7 21 0 22 8 21 0 9 8 22 0 23 9 22 0 10 9 23 0 24 10 23 0 11 10 24 0 25 11 24 0 12 11 25 0 26 12 25 0 13 12 26 0 27 13 26 0 14 13 27 0 28 14 27 0 1 14 28 0 15 1 28 0 16 15 29 0 30 16 29 0 17 16 30 0 31 17 30 0 18 17 31 0 32 18 31 0 19 18 32 0 33 19 32 0 20 19 33 0 34 20 33 0 21 20 34 0 35 21 34 0 22 21 35 0 36 22 35 0 23 22 36 0 37 23 36 0 24 23 37 0 38 24 37 0 25 24 38 0 39 25 38 0 26 25 39 0 40 26 39 0 27 26 40 0 41 27 40 0 28 27 41 0 42 28 41 0 15 28 42 0 29 15 42 0 30 29 43 0 44 30 43 0 31 30 44 0 45 31 44 0 32 31 45 0 46 32 45 0 33 32 46 0 47 33 46 0 34 33 47 0 48 34 47 0 35 34 48 0 49 35 48 0 36 35 49 0 50 36 49 0 37 36 50 0 51 37 50 0 38 37 51 0 52 38 51 0 39 38 52 0 53 39 52 0 40 39 53 0 54 40 53 0 41 40 54 0 55 41 54 0 42 41 55 0 56 42 55 0 29 42 56 0 43 29 56 0 44 43 57 0 58 44 57 0 45 44 58 0 59 45 58 0 46 45 59 0 60 46 59 0 47 46 60 0 61 47 60 0 48 47 61 0 62 48 61 0 49 48 62 0 63 49 62 0 50 49 63 0 64 50 63 0 51 50 64 0 65 51 64 0 52 51 65 0 66 52 65 0 53 52 66 0 67 53 66 0 54 53 67 0 68 54 67 0 55 54 68 0 69 55 68 0 56 55 69 0 70 56 69 0 43 56 70 0 57 43 70 0 58 57 71 0 72 58 71 0 59 58 72 0 73 59 72 0 60 59 73 0 74 60 73 0 61 60 74 0 75 61 74 0 62 61 75 0 76 62 75 0 63 62 76 0 77 63 76 0 64 63 77 0 78 64 77 0 65 64 78 0 79 65 78 0 66 65 79 0 80 66 79 0 67 66 80 0 81 67 80 0 68 67 81 0 82 68 81 0 69 68 82 0 83 69 82 0 70 69 83 0 84 70 83 0 57 70 84 0 71 57 84 0 72 71 85 0 86 72 85 0 73 72 86 0 87 73 86 0 74 73 87 0 88 74 87 0 75 74 88 0 89 75 88 0 76 75 89 0 90 76 89 0 77 76 90 0 91 77 90 0 78 77 91 0 92 78 91 0 79 78 92 0 93 79 92 0 80 79 93 0 94 80 93 0 81 80 94 0 95 81 94 0 82 81 95 0 96 82 95 0 83 82 96 0 97 83 96 0 84 83 97 0 98 84 97 0 71 84 98 0 85 71 98 0 86 85 99 0 100 86 99 0 87 86 100 0 101 87 100 0 88 87 101 0 102 88 101 0 89 88 102 0 103 89 102 0 90 89 103 0 104 90 103 0 91 90 104 0 105 91 104 0 92 91 105 0 106 92 105 0 93 92 106 0 107 93 106 0 94 93 107 0 108 94 107 0 95 94 108 0 109 95 108 0 96 95 109 0 110 96 109 0 97 96 110 0 111 97 110 0 98 97 111 0 112 98 111 0 85 98 112 0 99 85 112 0 100 99 113 0 114 100 113 0 101 100 114 0 115 101 114 0 102 101 115 0 116 102 115 0 103 102 116 0 117 103 116 0 104 103 117 0 118 104 117 0 105 104 118 0 119 105 118 0 106 105 119 0 120 106 119 0 107 106 120 0 121 107 120 0 108 107 121 0 122 108 121 0 109 108 122 0 123 109 122 0 110 109 123 0 124 110 123 0 111 110 124 0 125 111 124 0 112 111 125 0 126 112 125 0 99 112 126 0 113 99 126 0 114 113 127 0 128 114 127 0 115 114 128 0 129 115 128 0 116 115 129 0 130 116 129 0 117 116 130 0 131 117 130 0 118 117 131 0 132 118 131 0 119 118 132 0 133 119 132 0 120 119 133 0 134 120 133 0 121 120 134 0 135 121 134 0 122 121 135 0 136 122 135 0 123 122 136 0 137 123 136 0 124 123 137 0 138 124 137 0 125 124 138 0 139 125 138 0 126 125 139 0 140 126 139 0 113 126 140 0 127 113 140 0 128 127 141 0 142 128 141 0 129 128 142 0 143 129 142 0 130 129 143 0 144 130 143 0 131 130 144 0 145 131 144 0 132 131 145 0 146 132 145 0 133 132 146 0 147 133 146 0 134 133 147 0 148 134 147 0 135 134 148 0 149 135 148 0 136 135 149 0 150 136 149 0 137 136 150 0 151 137 150 0 138 137 151 0 152 138 151 0 139 138 152 0 153 139 152 0 140 139 153 0 154 140 153 0 127 140 154 0 141 127 154 0 142 141 155 0 156 142 155 0 143 142 156 0 157 143 156 0 144 143 157 0 158 144 157 0 145 144 158 0 159 145 158 0 146 145 159 0 160 146 159 0 147 146 160 0 161 147 160 0 148 147 161 0 162 148 161 0 149 148 162 0 163 149 162 0 150 149 163 0 164 150 163 0 151 150 164 0 165 151 164 0 152 151 165 0 166 152 165 0 153 152 166 0 167 153 166 0 154 153 167 0 168 154 167 0 141 154 168 0 155 141 168 0 156 155 169 0 170 156 169 0 157 156 170 0 171 157 170 0 158 157 171 0 172 158 171 0 159 158 172 0 173 159 172 0 160 159 173 0 174 160 173 0 161 160 174 0 175 161 174 0 162 161 175 0 176 162 175 0 163 162 176 0 177 163 176 0 164 163 177 0 178 164 177 0 165 164 178 0 179 165 178 0 166 165 179 0 180 166 179 0 167 166 180 0 181 167 180 0 168 167 181 0 182 168 181 0 155 168 182 0 169 155 182 0 170 169 183 0 184 170 183 0 171 170 184 0 185 171 184 0 172 171 185 0 186 172 185 0 173 172 186 0 187 173 186 0 174 173 187 0 188 174 187 0 175 174 188 0 189 175 188 0 176 175 189 0 190 176 189 0 177 176 190 0 191 177 190 0 178 177 191 0 192 178 191 0 179 178 192 0 193 179 192 0 180 179 193 0 194 180 193 0 181 180 194 0 195 181 194 0 182 181 195 0 196 182 195 0 169 182 196 0 183 169 196 0 184 183 197 0 198 184 197 0 185 184 198 0 199 185 198 0 186 185 199 0 200 186 199 0 187 186 200 0 201 187 200 0 188 187 201 0 202 188 201 0 189 188 202 0 203 189 202 0 190 189 203 0 204 190 203 0 191 190 204 0 205 191 204 0 192 191 205 0 206 192 205 0 193 192 206 0 207 193 206 0 194 193 207 0 208 194 207 0 195 194 208 0 209 195 208 0 196 195 209 0 210 196 209 0 183 196 210 0 197 183 210 0 198 197 211 0 212 198 211 0 199 198 212 0 213 199 212 0 200 199 213 0 214 200 213 0 201 200 214 0 215 201 214 0 202 201 215 0 216 202 215 0 203 202 216 0 217 203 216 0 204 203 217 0 218 204 217 0 205 204 218 0 219 205 218 0 206 205 219 0 220 206 219 0 207 206 220 0 221 207 220 0 208 207 221 0 222 208 221 0 209 208 222 0 223 209 222 0 210 209 223 0 224 210 223 0 197 210 224 0 211 197 224 0 212 211 225 0 226 212 225 0 213 212 226 0 227 213 226 0 214 213 227 0 228 214 227 0 215 214 228 0 229 215 228 0 216 215 229 0 230 216 229 0 217 216 230 0 231 217 230 0 218 217 231 0 232 218 231 0 219 218 232 0 233 219 232 0 220 219 233 0 234 220 233 0 221 220 234 0 235 221 234 0 222 221 235 0 236 222 235 0 223 222 236 0 237 223 236 0 224 223 237 0 238 224 237 0 211 224 238 0 225 211 238 0 226 225 239 0 240 226 239 0 227 226 240 0 241 227 240 0 228 227 241 0 242 228 241 0 229 228 242 0 243 229 242 0 230 229 243 0 244 230 243 0 231 230 244 0 245 231 244 0 232 231 245 0 246 232 245 0 233 232 246 0 247 233 246 0 234 233 247 0 248 234 247 0 235 234 248 0 249 235 248 0 236 235 249 0 250 236 249 0 237 236 250 0 251 237 250 0 238 237 251 0 252 238 251 0 225 238 252 0 239 225 252 0 240 239 253 0 254 240 253 0 241 240 254 0 255 241 254 0 242 241 255 0 256 242 255 0 243 242 256 0 257 243 256 0 244 243 257 0 258 244 257 0 245 244 258 0 259 245 258 0 246 245 259 0 260 246 259 0 247 246 260 0 261 247 260 0 248 247 261 0 262 248 261 0 249 248 262 0 263 249 262 0 250 249 263 0 264 250 263 0 251 250 264 0 265 251 264 0 252 251 265 0 266 252 265 0 239 252 266 0 253 239 266 0 254 253 267 0 268 254 267 0 255 254 268 0 269 255 268 0 256 255 269 0 270 256 269 0 257 256 270 0 271 257 270 0 258 257 271 0 272 258 271 0 259 258 272 0 273 259 272 0 260 259 273 0 274 260 273 0 261 260 274 0 275 261 274 0 262 261 275 0 276 262 275 0 263 262 276 0 277 263 276 0 264 263 277 0 278 264 277 0 265 264 278 0 279 265 278 0 266 265 279 0 280 266 279 0 253 266 280 0 267 253 280 0 268 267 281 0 282 268 281 0 269 268 282 0 283 269 282 0 270 269 283 0 284 270 283 0 271 270 284 0 285 271 284 0 272 271 285 0 286 272 285 0 273 272 286 0 287 273 286 0 274 273 287 0 288 274 287 0 275 274 288 0 289 275 288 0 276 275 289 0 290 276 289 0 277 276 290 0 291 277 290 0 278 277 291 0 292 278 291 0 279 278 292 0 293 279 292 0 280 279 293 0 294 280 293 0 267 280 294 0 281 267 294 0 2 295 1 0 281 296 282 0 3 295 2 0 282 296 283 0 4 295 3 0 283 296 284 0 5 295 4 0 284 296 285 0 6 295 5 0 285 296 286 0 7 295 6 0 286 296 287 0 8 295 7 0 287 296 288 0 9 295 8 0 288 296 289 0 10 295 9 0 289 296 290 0 11 295 10 0 290 296 291 0 12 295 11 0 291 296 292 0 13 295 12 0 292 296 293 0 14 295 13 0 293 296 294 0 1 295 14 0 294 296 281" node="bread_left_0_0_0 bread_left_0_0_1 bread_left_0_0_2 bread_left_0_1_0 bread_left_0_1_1 bread_left_0_1_2 bread_left_0_2_0 bread_left_0_2_1 bread_left_0_2_2 bread_left_1_0_0 bread_left_1_0_1 bread_left_1_0_2 bread_left_1_1_0 bread_left_1_1_1 bread_left_1_1_2 bread_left_1_2_0 bread_left_1_2_1 bread_left_1_2_2 bread_left_2_0_0 bread_left_2_0_1 bread_left_2_0_2 bread_left_2_1_0 bread_left_2_1_1 bread_left_2_1_2 bread_left_2_2_0 bread_left_2_2_1 bread_left_2_2_2 bread_left_3_0_0 bread_left_3_0_1 bread_left_3_0_2 bread_left_3_1_0 bread_left_3_1_1 bread_left_3_1_2 bread_left_3_2_0 bread_left_3_2_1 bread_left_3_2_2 bread_left_4_0_0 bread_left_4_0_1 bread_left_4_0_2 bread_left_4_1_0 bread_left_4_1_1 bread_left_4_1_2 bread_left_4_2_0 bread_left_4_2_1 bread_left_4_2_2">
-      <contact condim="4" priority="1" friction="1 0.01 0.001" solref="0.004 3" selfcollide="none"/>
+      <contact condim="4" friction="0.4 0.01 0.001" solmix="1000" solref="0.004 3" solimp="0.95 0.995" selfcollide="none"/>
       <elasticity young="20000" poisson="0.25" damping="0.03"/>
     </flex>
   </deformable>
@@ -992,14 +992,14 @@
     <general name="right/wrist_1" class="right/size1" joint="right/wrist_1_joint"/>
     <general name="right/wrist_2" class="right/size1" joint="right/wrist_2_joint"/>
     <general name="right/wrist_3" class="right/size1" joint="right/wrist_3_joint"/>
-    <general name="right/gripper/fingers_actuator" class="right/gripper/2f85" tendon="right/gripper/split" ctrlrange="0 255" forcelimited="true" forcerange="-40 40" gainprm="0.313725" biasprm="0 -100 -10"/>
+    <general name="right/gripper/fingers_actuator" class="right/gripper/2f85" tendon="right/gripper/split" ctrlrange="0 255" forcelimited="true" forcerange="-2.2 2.2" gainprm="0.313725" biasprm="0 -100 -10"/>
     <general name="left/shoulder_pan" class="left/size3" joint="left/shoulder_pan_joint"/>
     <general name="left/shoulder_lift" class="left/size3" joint="left/shoulder_lift_joint"/>
     <general name="left/elbow" class="left/size3_limited" joint="left/elbow_joint"/>
     <general name="left/wrist_1" class="left/size1" joint="left/wrist_1_joint"/>
     <general name="left/wrist_2" class="left/size1" joint="left/wrist_2_joint"/>
     <general name="left/wrist_3" class="left/size1" joint="left/wrist_3_joint"/>
-    <general name="left/gripper/fingers_actuator" class="left/gripper/2f85" tendon="left/gripper/split" ctrlrange="0 255" forcelimited="true" forcerange="-40 40" gainprm="0.313725" biasprm="0 -100 -10"/>
+    <general name="left/gripper/fingers_actuator" class="left/gripper/2f85" tendon="left/gripper/split" ctrlrange="0 255" forcelimited="true" forcerange="-2.2 2.2" gainprm="0.313725" biasprm="0 -100 -10"/>
   </actuator>
 
   <keyframe>

@@ -38,6 +38,15 @@ export class SoftBread {
     gltfScene.updateMatrixWorld(true);
     gltfScene.traverse((o) => { if (o.isMesh && !src) src = o; });
     const geo = src.geometry.clone();
+    // deformed on the CPU: work on plain float32 attributes even if the GLB stores them quantized
+    for (const k of ['position', 'normal']) {
+      const a = geo.attributes[k];
+      if (a && (a.isInterleavedBufferAttribute || a.normalized || !(a.array instanceof Float32Array))) {
+        const f = new Float32Array(a.count * a.itemSize);
+        for (let i = 0; i < a.count; i++) for (let c = 0; c < a.itemSize; c++) f[i * a.itemSize + c] = a.getComponent(i, c);
+        geo.setAttribute(k, new THREE.BufferAttribute(f, a.itemSize));
+      }
+    }
     geo.applyMatrix4(src.matrixWorld);
     geo.rotateX(Math.PI / 2);                      // glTF Y-up -> MuJoCo Z-up (bread frame)
     if (!geo.attributes.normal) geo.computeVertexNormals();

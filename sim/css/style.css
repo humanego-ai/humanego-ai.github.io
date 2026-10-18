@@ -172,19 +172,31 @@ footer a{color:var(--accent); text-decoration:none;}
 
 @media(max-width:1080px){ .stage{grid-template-columns:1fr;} .pipe{grid-template-columns:repeat(2,1fr);} }
 @media(max-width:560px){
-  .logo{font-size:40px;} .hero{padding:36px 16px 18px;} .tag{font-size:16px;} main{padding:14px 12px 50px;}
+  .logo{font-size:40px;} .hero{padding:26px 16px 12px;} .kicker{font-size:11px; padding:5px 13px; margin-bottom:14px;}
+  .tag{font-size:14.5px; margin-top:12px;} main{padding:14px 12px 50px;}
+  .links{gap:7px; margin:16px 0 4px;} .links a{padding:7px 12px; font-size:12.5px;}
+  .stats{gap:6px; margin-top:12px;} .chip{font-size:11.5px; padding:4px 10px;}
   .bar{position:static;}
-  .bar-in{padding:9px 12px; gap:12px; flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;}
+  /* one scrolling row; the fade at the right edge says there is more */
+  .bar-in{padding:9px 12px; gap:12px; flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none;
+    -webkit-mask-image:linear-gradient(90deg,#000 88%,transparent); mask-image:linear-gradient(90deg,#000 88%,transparent);}
   .bar-in::-webkit-scrollbar{display:none;}
+  .bar-in::after{content:""; flex:none; width:24px;}
   .grp{flex-wrap:nowrap;} .count{display:none;}
   .pipe{grid-template-columns:1fr;}
   .viewport{aspect-ratio:4/3;}
-  .hud-tl{left:8px; top:8px;} .hud-chip{font-size:10.5px; padding:4px 8px;} .arm-badge{font-size:10px; padding:3px 7px;}
+  /* the title and arm states share the top row with the policy-input picture (42%) */
+  .hud-tl{left:8px; top:8px; max-width:calc(58% - 20px);}
+  .hud-chip{font-size:10.5px; padding:4px 8px; max-width:100%;}
+  .hud-chip span:last-child{overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0;}
+  .arm-state{flex-wrap:wrap;} .arm-badge{font-size:10px; padding:3px 7px; white-space:nowrap;}
   .hud-tr{width:42%; min-width:0; right:8px; top:8px;} .pip-cap{font-size:9px; padding:3px 6px;} .pip-cap span{display:none;}
-  .hud-br{right:8px; bottom:60px; gap:4px;} .icon-btn{width:28px; height:28px; font-size:9px; border-radius:8px;}
+  .hud-br{right:8px; bottom:60px; gap:4px;} .icon-btn{width:30px; height:28px; font-size:8.5px; letter-spacing:-.02em; border-radius:8px;}
   .timeline{padding:10px 8px 8px; gap:8px;} .play-btn{width:34px; height:34px;}
   .tlabel{min-width:0; font-size:11px;} .speed{display:none;}
   .legend{font-size:10.5px; gap:6px 10px; padding:9px 4px;}
+  table.res th, table.res td{padding:8px 6px; font-size:11.5px;} table.res td .bar-s{display:none;}
+  .card:has(table.res){overflow-x:auto;}
 }
 
 /* kiosk mode (?kiosk=1): only the 3D viewport, full window — used for recording teaser videos */

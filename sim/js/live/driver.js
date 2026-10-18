@@ -25,11 +25,11 @@ class CartInterp {
   reset(T0) {
     this.p = M.getP(T0); this.v = [0, 0, 0]; this.a = [0, 0, 0];
     this.R = M.getR(T0); this.w = [0, 0, 0]; this.al = [0, 0, 0];
-    this.active = false; this.Rg = this.R.slice();
+    this.active = false; this.Rg = this.R.slice(); this.pGoal = this.p.slice();
   }
   setGoal(Tg, dur, t) {
     dur = Math.max(dur, 1e-3);
-    this.Rg = M.getR(Tg);
+    this.Rg = M.getR(Tg); this.pGoal = M.getP(Tg);
     const RgT = M.T3(this.Rg);
     const r0 = M.matToRotvec(M.mul3(RgT, this.R));
     this.Cp = quinticCoeffs(this.p, this.v, this.a, M.getP(Tg), dur);
@@ -171,6 +171,30 @@ export class SimArm {
     return Math.hypot(x[3 * a] - x[3 * b], x[3 * a + 1] - x[3 * b + 1], x[3 * a + 2] - x[3 * b + 2]) - (this.R.finger_gap_closed || 0);
   }
   holdingNothing(qEmpty, gapEmpty = 0.015) { return this.R.grip_sense === 'gap' ? this.fingerOpening() < gapEmpty : this.gripperQ() < qEmpty; }
+  /** Gripper motor effort (N) (driver.py grip_effort: trossen_arm effort, 2F-85 current). */
+  gripEffort() { return Math.abs(this.data.actuator_force[this.gid]); }
+  /** Normal contact force (N) of each finger's collision geoms on the breads (driver.py pad_forces; a tactile pad,
+   *  not on the real grippers). */
+  padForces() {
+    const m = this.model, d = this.data;
+    if (!this._pad) {
+      const fb = this.R.finger_bodies.slice(0, 2).map((b) => m.body(this.pre + b).id);
+      this._pad = fb.map((b) => { const s = new Set(); for (let g = 0; g < m.ngeom; g++) if (m.geom_bodyid[g] === b && (m.geom_contype[g] || m.geom_conaffinity[g])) s.add(g); return s; });
+      this._f6 = new this.mj.DoubleBuffer(6);
+    }
+    const out = [0, 0];
+    for (let i = 0; i < d.ncon; i++) {
+      const c = d.contact.get(i), g0 = c.geom[0], g1 = c.geom[1], f0 = c.flex[0], f1 = c.flex[1];
+      c.delete?.();
+      for (let k = 0; k < 2; k++) {
+        if ((this._pad[k].has(g0) && f1 >= 0) || (this._pad[k].has(g1) && f0 >= 0)) {
+          this.mj.mj_contactForce(m, d, i, this._f6);
+          out[k] += Math.abs(this._f6.GetView()[0]);
+        }
+      }
+    }
+    return out;
+  }
   cmdClosed() { return Math.abs(this.gTo - this.R.gripper_closed) < Math.abs(this.gTo - this.R.gripper_open); }
   settledClosed() {
     if (!this.cmdClosed() || this.t - this.gT0 < this.gT) return false;

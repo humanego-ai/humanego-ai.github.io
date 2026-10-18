@@ -6,6 +6,7 @@
 <title>HumanEgo Sim</title>
 <meta name="description" content="The released HumanEgo serve_bread policy, trained only on human egocentric video, running closed-loop on a physics replica of the real robot. Interactive 3D rollouts.">
 <link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
@@ -16,6 +17,35 @@
   "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/"
 } }
 </script>
+<!-- the viewer's module graph, fetched in parallel instead of import by import -->
+<link rel="modulepreload" href="js/app.js">
+<link rel="modulepreload" href="js/viewer.js">
+<link rel="modulepreload" href="js/rollout.js">
+<link rel="modulepreload" href="js/softbread.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.core.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/loaders/GLTFLoader.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/utils/BufferGeometryUtils.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/utils/SkeletonUtils.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/controls/OrbitControls.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/environments/RoomEnvironment.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/lines/Line2.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/lines/LineSegments2.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/lines/LineMaterial.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/lines/LineGeometry.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/lines/LineSegmentsGeometry.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/postprocessing/EffectComposer.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/postprocessing/Pass.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/postprocessing/RenderPass.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/postprocessing/ShaderPass.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/postprocessing/MaskPass.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/postprocessing/GTAOPass.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/postprocessing/OutputPass.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/shaders/CopyShader.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/shaders/GTAOShader.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/shaders/PoissonDenoiseShader.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/shaders/OutputShader.js">
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.186.1/examples/jsm/math/SimplexNoise.js">
 </head>
 <body>
 
@@ -119,8 +149,8 @@
         <p>Masks → <code>KptsSelector</code> → multi-frame depth lift → PCA object frames → <code>VisualKpts</code>. The arm is removed and a virtual gripper is drawn, as on the robot.</p></div>
       <div class="step"><div class="n">03 · ACT</div><h4>Released policy</h4>
         <p><code>ICTPolicy</code> loads the public checkpoint and solves the flow ODE (20 Euler steps) for a 50-step hand trajectory. The left arm sees a mirrored world.</p></div>
-      <div class="step"><div class="n">04 · MOVE</div><h4>Production controller</h4>
-        <p>Temporal ensembling, safety cage, EMA/Slerp, look-ahead → a Trossen-driver emulator (quintic re-targeting + IK) → MuJoCo, where the bread is a <b>soft body</b> that squashes in the gripper and is held by friction alone.</p></div>
+      <div class="step"><div class="n">04 · MOVE</div><h4>Real-rig controller</h4>
+        <p>Temporal ensembling, safety cage, EMA/Slerp, look-ahead → a Trossen-driver emulator (quintic re-targeting + IK) → MuJoCo, where the bread is a <b>soft body</b> that squashes in the gripper and is held by friction alone. Each robot runs its <b>self-tuned settings + grasp skill</b> (table below).</p></div>
     </div>
   </section>
 
@@ -144,13 +174,16 @@ pip install -r requirements.txt -r simulation/requirements.txt
 huggingface-cli download Leo-TX/HumanEgo --include "serve_bread/*" --local-dir ./checkpoints
 python simulation/scripts/build_assets.py
 
-<span class="c"># one closed-loop episode (+ video)</span>
+<span class="c"># one closed-loop episode (+ video): real-rig controller, or the shipped tuned one + grasp skill</span>
 python simulation/scripts/run_episode.py --video
-python simulation/scripts/run_episode.py --robot franka_panda --camera zed2i --mode single
+python simulation/scripts/run_episode.py --profile tuned --robot franka_panda --camera zed2i --mode single
 
 <span class="c"># success rate over randomized scenes, and the self-tuning loop</span>
-python simulation/scripts/evaluate.py --n 40 --workers 8
-python simulation/scripts/autotune.py --name my_rig</pre></div>
+python simulation/scripts/evaluate.py --profile tuned --n 40 --workers 8
+python simulation/scripts/autotune.py --name my_rig
+
+<span class="c"># this page: build every config, pack, record the videos (never deploys)</span>
+python simulation/scripts/rebuild_site.py</pre></div>
   </section>
 </main>
 

@@ -20,13 +20,28 @@ export class SimController {
     this.ga = { on: !!ga.enabled, refine: ga.refine ?? true, lat: ga.lateral_gain ?? 0.7, alongMax: ga.along_max ?? 0.045,
       upMax: ga.height_max ?? 0.004, upMin: ga.height_min ?? -0.008, tol: ga.arrive_tol ?? 0.01, timeout: ga.approach_timeout ?? 1.5,
       hold: ga.close_hold ?? 0.6, maxTries: ga.regrasp_max ?? 2, qEmpty: ga.q_empty ?? 0.1, gapEmpty: ga.gap_empty ?? 0.015, cool: ga.regrasp_cooldown ?? 1.2,
-      down: ga.retry_lower ?? 0.005, inward: ga.retry_inward ?? 0.01 };
+      down: ga.retry_lower ?? 0.005, inward: ga.retry_inward ?? 0.01,
+      near: ga.timeout_near ?? 0, approachMax: ga.approach_max ?? 4,
+      // re-perceive before a re-grasp (controller.py): 'off' | 'skill' | 'policy'
+      reperceive: ga.reperceive === true ? 'policy' : (!ga.reperceive ? 'off' : String(ga.reperceive)), rpTimeout: ga.reperceive_timeout ?? 1.5,
+      // grip check while holding (controller.py): 'q' | 'touch' | 'effort'
+      check: ga.grip_check ?? 'q', fMin: ga.touch_min ?? 0.3, onePad: ga.one_pad_empty ?? false, effEmpty: ga.effort_empty ?? 3,
+      slipDrop: ga.slip_drop ?? 0, slipTime: ga.slip_time ?? 0.1, emptyTime: ga.empty_time ?? 0.3,
+      // wrist yaw at the pinch point ('off' | 'align' | 'fit') and slow final approach (controller.py)
+      yaw: ga.yaw ?? 'off', yawMax: (ga.yaw_max_deg ?? 60) * Math.PI / 180, yawMargin: ga.yaw_margin ?? 0.01,
+      open: ga.max_opening ?? Object.values(arms)[0]?.R?.max_opening ?? 0.08, rotTol: (ga.arrive_rot_deg ?? 6) * Math.PI / 180,
+      slowDist: ga.slow_dist ?? 0, slowSpeed: ga.slow_speed ?? 0.05 };
+    this.reperceive = o(null);
     this.t = 0; this.geom = {}; this.Tcw = null;
     this.gpShared = o(null); this.gpActive = o(null);
     this.gs = o(() => ({ state: 'free', target: null, t0: 0, tries: 0, emptyT: null, coolUntil: 0 }));
     this.events = o(() => []);
   }
   setGeometry(side, g, Tcw) { this.geom[side] = g; this.Tcw = Tcw; }
+  reperceived(side, g) {
+    const old = this.geom[side]; this.geom[side] = g; this.reperceive[side] = null;
+    this.events[side].push([this.t, 'reperceive', old ? Math.hypot(g.c[0] - old.c[0], g.c[1] - old.c[1]) : 0]);
+  }
   _refine(side, p) {
     const g = this.geom[side]; if (!this.ga.refine || !g || !this.Tcw) return p;
     const cl = (x, lo, hi) => Math.min(Math.max(x, lo), hi);
@@ -35,7 +50,28 @@ export class SimController {
     const sa = cl(M.dot(d, a), -alongMax, alongMax), sw = M.dot(d, w) * Math.pow(1 - this.ga.lat, 1 + n);
     const su = cl(d[2], Math.min(this.ga.upMin, upMax), upMax);
     const pw2 = [g.c[0] + sa * a[0] + sw * w[0], g.c[1] + sa * a[1] + sw * w[1], g.c[2] + su];
-    return [...M.xform(M.inv4(this.Tcw), pw2), ...p.slice(3)];
+    return [...M.xform(M.inv4(this.Tcw), pw2), ...(this.ga.yaw !== 'off' ? this._yawFix(g, p.slice(3)) : p.slice(3))];
+  }
+  /** controller.py _yaw_fix: turn the hand about the world vertical so its fingers close across the bread. */
+  _yawFix(g, rv) {
+    const G = this.ga, Rc = M.getR(this.Tcw), Rw = M.mul3(Rc, M.rotvecToMat(rv)), sp = [Rw[0], Rw[3]];
+    if (Math.hypot(sp[0], sp[1]) < 1e-6) return rv;
+    const phi = Math.atan2(sp[1], sp[0]) - Math.atan2(g.a[1], g.a[0]);
+    const wrap = (x) => ((((x + Math.PI) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)) - Math.PI;
+    const c0 = wrap(Math.PI / 2 - phi), c1 = wrap(-Math.PI / 2 - phi);
+    let d = Math.abs(c0) <= Math.abs(c1) ? c0 : c1;
+    if (G.yaw === 'fit') {
+      const L = g.half_len ?? 0.07, W = g.half_wid ?? 0.035, room = 0.5 * (G.open - G.yawMargin);
+      const width = (an) => Math.hypot(L * Math.cos(an), W * Math.sin(an));
+      if (width(phi) <= room) return rv;
+      if (W < room) {
+        const angFit = Math.acos(Math.sqrt(Math.max(0, (room * room - W * W) / Math.max(L * L - W * W, 1e-9))));
+        d = Math.sign(d) * Math.max(0, Math.abs(d) - (Math.PI / 2 - angFit));
+      }
+    }
+    d = Math.min(Math.max(d, -G.yawMax), G.yawMax);
+    const cz = Math.cos(d), sz = Math.sin(d), Rz = [cz, -sz, 0, sz, cz, 0, 0, 0, 1];
+    return M.matToRotvec(M.mul3(M.T3(Rc), M.mul3(Rz, Rw)));
   }
   _graspPoint(side, tr, i) {
     const gp = this.gpActive[side]; let k = i;
@@ -48,28 +84,68 @@ export class SimController {
     g.tries++; g.state = 'free'; g.target = null; g.emptyT = null; g.coolUntil = this.t + this.ga.cool;
     this.locked[side] = false; this.everOpen[side] = false; this.grip[side] = 0;
     arm.openGripper(this.openT); this.events[side].push([this.t, 'regrasp:' + why]);
+    if (this.ga.reperceive !== 'off') this.reperceive[side] = this.t + this.ga.rpTimeout;
   }
   _skill(side, arm, want, tr, i, act) {
     const g = this.gs[side], G = this.ga;
+    let rp = this.reperceive[side];
+    if (rp !== null && this.t >= rp) { this.reperceive[side] = rp = null; this.events[side].push([this.t, 'reperceive:timeout']); }
     if (g.state === 'free') {
-      if (want && this.t >= g.coolUntil && g.tries <= G.maxTries) { g.state = 'approach'; g.target = this._graspPoint(side, tr, i); g.t0 = this.t; this.events[side].push([this.t, 'approach']); }
-      else return [null, false];
+      if (want && this.t >= g.coolUntil && g.tries <= G.maxTries && rp === null) {
+        g.state = 'approach'; g.target = this._graspPoint(side, tr, i); g.t0 = this.t; g.nearT = null; this.events[side].push([this.t, 'approach']);
+      } else return [null, false];
     }
     if (g.state === 'approach') {
       if (!want) { g.state = 'free'; g.target = null; return [null, false]; }
-      if (M.norm(M.sub(act.slice(0, 3), g.target.slice(0, 3))) < G.tol || this.t - g.t0 > G.timeout) { g.state = 'closing'; g.t0 = this.t; this.events[side].push([this.t, 'close']); }
-      else return [g.target, false];
+      const err = M.norm(M.sub(act.slice(0, 3), g.target.slice(0, 3)));
+      let timedOut;
+      if (G.near > 0) {      // the timeout only counts once the arm is near the pinch point (approach_max: hard limit)
+        if (g.nearT === null && err < G.near) g.nearT = this.t;
+        timedOut = (g.nearT !== null && this.t - g.nearT > G.timeout) || this.t - g.t0 > G.approachMax;
+      } else timedOut = this.t - g.t0 > G.timeout;
+      let arrived = err < G.tol;
+      if (arrived && G.yaw !== 'off') arrived = M.rotAngle(M.rotvecToMat(act.slice(3)), M.rotvecToMat(g.target.slice(3))) < G.rotTol;
+      if (arrived || timedOut) { g.state = 'closing'; g.t0 = this.t; this.events[side].push([this.t, 'close']); }
+      else {
+        let tgt = g.target;
+        if (G.slowDist > 0 && err < G.slowDist) {          // slow final approach
+          const step = G.slowSpeed / this.hz;
+          if (err > step) { tgt = tgt.slice(); for (let k = 0; k < 3; k++) tgt[k] = act[k] + (g.target[k] - act[k]) * (step / err); }
+        }
+        return [tgt, false];
+      }
     }
-    if (g.state === 'closing') { if (this.t - g.t0 >= G.hold) { g.state = 'holding'; g.t0 = this.t; g.emptyT = null; } return [g.target, true]; }
+    if (g.state === 'closing') { if (this.t - g.t0 >= G.hold) { g.state = 'holding'; g.t0 = this.t; g.emptyT = null; g.fPeak = null; } return [g.target, true]; }
     if (g.state === 'holding') {
       if (!want) { g.state = 'free'; g.target = null; return [null, false]; }
-      if (arm.holdingNothing(G.qEmpty, G.gapEmpty)) {
+      const why = this._gripStatus(arm, g);
+      if (why) {
         if (g.emptyT === null) g.emptyT = this.t;
-        if (this.t - g.emptyT > 0.3 && g.tries < G.maxTries) { this._regrasp(side, arm, 'empty'); return [null, false]; }
+        if (this.t - g.emptyT > (why === 'slip' ? G.slipTime : G.emptyTime) && g.tries < G.maxTries) { this._regrasp(side, arm, why); return [null, false]; }
       } else g.emptyT = null;
       return [null, true];
     }
     return [null, want];
+  }
+  /** '' while the grip holds, else 'empty' | 'one_pad' | 'slip' (controller.py _grip_status). */
+  _gripStatus(arm, g) {
+    const G = this.ga;
+    if (G.check === 'touch') {
+      const f = arm.padForces().sort((a, b) => a - b);
+      if (f[1] < G.fMin) return 'empty';
+      if (G.onePad && f[0] < G.fMin) return 'one_pad';
+      g.fPeak = Math.max(g.fPeak || 0, f[0]);
+      if (G.slipDrop > 0 && g.fPeak >= 2 * G.fMin && f[0] < G.slipDrop * g.fPeak) return 'slip';
+      return '';
+    }
+    if (G.check === 'effort') {
+      const e = arm.gripEffort();
+      if (e < G.effEmpty) return 'empty';
+      g.fPeak = Math.max(g.fPeak || 0, e);
+      if (G.slipDrop > 0 && e < G.slipDrop * g.fPeak) return 'slip';
+      return '';
+    }
+    return arm.holdingNothing(G.qEmpty, G.gapEmpty) ? 'empty' : '';
   }
   shouldGrasp(g) {
     const th = this.gth;

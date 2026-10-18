@@ -2,7 +2,7 @@
 import * as M from './math.js';
 import { SimArm } from './driver.js';
 import { SimController } from './controller.js';
-import { mirrorPose } from './perception.js';
+import { mirrorPose, pca1, sideBreadMask } from './perception.js';
 import { T_ALIGN } from './policy.js';
 
 const yawQuat = (deg) => { const h = deg * Math.PI / 360; return [Math.cos(h), 0, 0, Math.sin(h)]; };   // wxyz about +z
@@ -19,7 +19,9 @@ export class LiveEpisode {
   }
 
   // ---------------------------------------------------------------- reset
-  reset(scene, seed = 0) {
+  /** `init` (parity test): {state: {qpos, qvel, act, qacc_warmstart} at t = 0, objs: perception per side} replaces the
+   *  drop-in + settle and the rendered perception with the Python run's. */
+  reset(scene, seed = 0, init = null) {
     const { mj, model, data, spec } = this;
     mj.mj_resetData(model, data);
     this.rng = M.makeRng(seed + 1);
@@ -51,6 +53,18 @@ export class LiveEpisode {
     this.phase = 'settle';
     this.done = false;
     this.entries = {};
+    if (init?.state) {
+      this.loadState(init.state);
+      this._startPolicy(init.objs || null);
+    }
+  }
+
+  /** Overwrite the physics state (parity test: start from, or re-sync to, the Python run). With `st.ctrl` the state
+   *  is the one before the last physics step and that step is replayed, so the kinematics match too. */
+  loadState(st) {
+    const d = this.data;
+    for (const k of ['qpos', 'qvel', 'act', 'qacc_warmstart']) if (st[k] && d[k]) d[k].set(st[k]);
+    if (st.ctrl) { d.ctrl.set(st.ctrl); this.mj.mj_step(this.model, d); } else this.mj.mj_forward(this.model, d);
   }
 
   _step() {
@@ -64,9 +78,11 @@ export class LiveEpisode {
   }
 
   // ---------------------------------------------------------------- perception (t = 0)
-  _startPolicy() {
+  _startPolicy(objs = null) {
     const c = this.cc, sp = this.spec;
-    this.objs = this.cam.estimateObjects(this.sides, this.objNames, this.rng, sp.camera.depth_noise, sp.perception?.n_init_frames ?? 10);
+    if (!objs) this.cam.syncScene?.(this.data.qpos);
+    this.objs = objs || this.cam.estimateObjects(this.sides, this.objNames, this.rng, (sp.perception?.depth_noise ?? true) ? sp.camera.depth_noise : null,
+                                                 sp.perception?.n_init_frames ?? 10);
     this.ctx = {};
     for (const s of this.sides) this.ctx[s] = { side: s, flip: s === 'left', o: this.objs[s], active: s === 'right',
       hand: { grasping: false, latched: null, lock: null, released: false, ever: false }, done: false, wrap: null, wrapT: 0,
@@ -77,6 +93,9 @@ export class LiveEpisode {
       this.geoms[s] = this._perceivedGeometry(s, this.objs[s]);
       if (this.geoms[s].bread) this.ctl.setGeometry(s, this.geoms[s].bread, sp.T_cam_in_world);
     }
+    this.area0 = {}; this.rpMask = {};
+    if (this.ctl.ga.reperceive !== 'off' && this.cam.lastMasks)
+      for (const s of this.sides) this.area0[s] = this._count(sideBreadMask(this.cam.lastMasks, this.objNames, s, this.sides.length));
     this.P = c.policy_period ?? 0.3; this.Tc = 1 / (c.control_freq ?? 10);
     this.nextPol = 0; this.nextCtl = 0; this.pending = null;
     this.t = 0; for (const a of Object.values(this.arms)) { a.t = 0; a.gT0 = 0; }
@@ -101,12 +120,65 @@ export class LiveEpisode {
       let sxx = 0, syy = 0, sxy = 0;
       for (const q of b) { const x = q[0] - c[0], y = q[1] - c[1]; sxx += x * x; syy += y * y; sxy += x * y; }
       const th = 0.5 * Math.atan2(2 * sxy, sxx - syy), a = [Math.cos(th), Math.sin(th), 0];
-      out.bread = { c, a };
+      let hl = 0, hw = 0;          // half length / width along the axes (runner.py)
+      for (const q of b) { const x = q[0] - c[0], y = q[1] - c[1]; hl = Math.max(hl, Math.abs(x * a[0] + y * a[1])); hw = Math.max(hw, Math.abs(-x * a[1] + y * a[0])); }
+      out.bread = { c, a, half_len: hl, half_wid: hw };
       const pl = pts.obj2;
       const floor = pl ? pl.reduce((acc, q) => acc + q[2], 0) / pl.length - 0.0135 : 0.0085;
       out.placeZ = c[2] + Math.max(floor, 0);
+      if (pl && pl.length >= 3) {          // the plate's centre and rim radius (horizontal)
+        const pc = [0, 1].map((i) => pl.reduce((acc, q) => acc + q[i], 0) / pl.length);
+        out.plate = { c: pc, r: pl.reduce((acc, q) => acc + Math.hypot(q[0] - pc[0], q[1] - pc[1]), 0) / pl.length };
+      }
     }
     return out;
+  }
+
+  _count(m) { let n = 0; for (let i = 0; i < m.length; i++) n += m[i] ? 1 : 0; return n; }
+
+  /** runner.py _reperceive: before a re-grasp, re-run the perception once the bread is visible and still. */
+  _reperceive(side) {
+    const o = this.reperceiveSource ? this.reperceiveSource(side, this.ctl.t) : this._reperceiveObserve(side);
+    return !!o && this._reperceiveApply(side, o);
+  }
+  _reperceiveObserve(side) {
+    const ga = this.cc.grasp_assist || {}, a0 = this.area0[side] || 0;
+    this.cam.syncScene?.(this.data.qpos);
+    const m = sideBreadMask(this.cam.masks(this.objNames), this.objNames, side, this.sides.length), prev = this.rpMask[side];
+    this.rpMask[side] = m;
+    if (a0 <= 0 || this._count(m) < (ga.reperceive_visible ?? 0.6) * a0) return null;      // hidden under the hand
+    if (!prev) return null;
+    let inter = 0, uni = 0;
+    for (let i = 0; i < m.length; i++) { inter += m[i] && prev[i] ? 1 : 0; uni += m[i] || prev[i] ? 1 : 0; }
+    if (inter < (ga.reperceive_iou ?? 0.9) * uni) return null;                                // still moving
+    this.rpMask[side] = null;
+    const sp = this.spec;
+    return this.cam.estimateObjects(this.sides, this.objNames, this.rng, (sp.perception?.depth_noise ?? true) ? sp.camera.depth_noise : null,
+                                    sp.perception?.n_init_frames ?? 10)[side];
+  }
+  _reperceiveApply(side, o) {
+    const g = this._perceivedGeometry(side, o), b = g.bread, ctx = this.ctx[side], ctl = this.ctl;
+    if (!b || b.c[2] > 0.06) return false;                       // nothing usable, or not lying on the table
+    const pl = this.geoms[side].plate;
+    if (pl && Math.hypot(b.c[0] - pl.c[0], b.c[1] - pl.c[1]) < pl.r) {      // on the plate: served, release
+      ctl.reperceive[side] = null; ctl.events[side].push([ctl.t, 'reperceive:on_plate']);
+      ctx.done = true; ctx.doneReason = 'dropped_on_plate';
+      return true;
+    }
+    this.geoms[side].bread = b;
+    ctl.reperceived(side, b);
+    if (ctl.ga.reperceive === 'policy' && o.meta.obj1) {       // the policy's object state too
+      const m1 = o.meta.obj1, c1 = M.getP(m1.T_static);
+      ctx.o.meta.obj1 = m1; ctx.o.T_anchor_static = m1.T_static.slice(); ctx.o.dynamic.obj1 = m1.T_static.slice();
+      for (const [k, m] of Object.entries(ctx.o.meta)) {      // the plate keeps its keypoints, frame re-oriented to the bread
+        if (k === 'obj1' || m.kpts_local.length < 3) continue;
+        const k3d = m.kpts_local.map((p) => M.xform(m.T_static, p)), T = pca1(k3d, false, c1), Ti = M.inv4(T);
+        ctx.o.meta[k] = { T_static: T, kpts_local: k3d.map((p) => M.xform(Ti, p)) };
+        ctx.o.dynamic[k] = T.slice();
+      }
+      ctx.hand.latched = null; ctx.hand.lock = null;
+    }
+    return true;
   }
 
   /** Lower (dz < 0) or raise the end effector by dz in world, keeping its orientation. */
@@ -150,8 +222,9 @@ export class LiveEpisode {
     const K = this.cam.K, aK = ctx.flip ? [K[0], 0, 640 - K[2], 0, K[4], K[5], 0, 0, 1] : K;
     const uv = pol.anchorUV(ctx.o.dynamic.obj1, aK, 640, 480);
     tt = performance.now();
-    const out = await pol.infer(img.chw, ict, uv);
+    const out = await pol.infer(img.chw, ict, uv, ctx.side, this.t);
     this.stats.infer += performance.now() - tt; this.stats.plans++;
+    this.hooks?.policy?.(ctx, { t: this.t, gv, Tv, ict, uv, out });
     if (out.done > (c.done_threshold ?? 0.8) && (!c.done_requires_grasp || st.ever)) { ctx.done = true; ctx.doneReason = 'policy_done'; }
     // decode -> camera-frame EE targets (+ forced lift), mirrored back for the left arm
     const he = Math.min(c.exec_horizon ?? pol.K, pol.K), raw = [], world = [];
@@ -173,6 +246,7 @@ export class LiveEpisode {
     if (this.pending) { this.ctl.updateTarget(...this.pending); this.pending = null; }
     if (this.sides.length > 1 && !this.ctx.left.active && this.t >= (this.cc.bimanual_start_delay ?? 6)) this.ctx.left.active = true;
     let tt = performance.now();
+    this.cam.syncScene?.(this.data.qpos);
     const clean = this.cam.cleanImage();
     this.stats.render += performance.now() - tt;
     const tr = {}, gr = {};
@@ -192,7 +266,8 @@ export class LiveEpisode {
           const zg = g.placeZ + (rel.margin ?? 0.012), Tw = M.mul4(a.Tbw, a.getTeeInBase());
           if (Tw[11] > zg + 0.005) { this._moveWorldZ(a, zg, rel.place_time ?? 0.9); ctx.wrap = 'place'; }
         }
-        if (!ctx.wrap) { ctx.wrap = 'open'; a.openGripper(0.5); }
+        if (!ctx.wrap && (rel.settle ?? 0) > 0) ctx.wrap = 'settle';          // hold still a moment before opening
+        if (!ctx.wrap) { ctx.wrap = 'open'; a.openGripper(rel.open_time ?? 0.5); }
         delete this.entries[s];
       }
     }
@@ -207,11 +282,15 @@ export class LiveEpisode {
         if (this.t >= 0.6) this._startPolicy();
         continue;
       }
+      const ctlDue = this.t >= this.nextCtl - 1e-9;
+      if (ctlDue && this._preT !== this.nextCtl) { this._preT = this.nextCtl; this.hooks?.preTick?.(this); }
       if (this.t >= this.nextPol - 1e-9) { await this._policyTick(); continue; }
       for (const [s, ctx] of Object.entries(this.ctx)) {
         const rel = this.cc.release || {}, a = this.arms[s];
-        if (ctx.wrap === 'place' && this.t - ctx.wrapT >= (rel.place_time ?? 0.9) + 0.15) { ctx.wrap = 'open'; ctx.wrapT = this.t; a.openGripper(0.5); }
-        else if (ctx.wrap === 'open' && this.t - ctx.wrapT >= 0.8) {
+        const openT = rel.open_time ?? 0.5, settle = rel.settle ?? 0;
+        if ((ctx.wrap === 'place' && this.t - ctx.wrapT >= (rel.place_time ?? 0.9) + 0.15 + settle) || (ctx.wrap === 'settle' && this.t - ctx.wrapT >= settle)) {
+          ctx.wrap = 'open'; ctx.wrapT = this.t; a.openGripper(openT);
+        } else if (ctx.wrap === 'open' && this.t - ctx.wrapT >= Math.max(0.8, openT + 0.3)) {
           ctx.wrapT = this.t;
           if ((rel.lift ?? 0) > 0) {                      // lift the open hand straight up before going home
             const Tw = M.mul4(a.Tbw, a.getTeeInBase()); this._moveWorldZ(a, Tw[11] + rel.lift, 0.8); ctx.wrap = 'retreat';
@@ -219,7 +298,11 @@ export class LiveEpisode {
         } else if (ctx.wrap === 'retreat' && this.t - ctx.wrapT >= 0.9) { ctx.wrap = 'home'; ctx.wrapT = this.t; a.goHome(3); }
         else if (ctx.wrap === 'home' && this.t - ctx.wrapT >= 3.1) ctx.wrap = 'finished';
       }
-      if (this.t >= this.nextCtl - 1e-9) { this.ctl.tick(); this.nextCtl += this.Tc; }
+      if (ctlDue) {
+        const tc = this.t; this.ctl.tick(); this.nextCtl += this.Tc;
+        for (const s of this.sides) if (this.ctl.reperceive[s] !== null) this._reperceive(s);
+        this.hooks?.postTick?.(this, tc);
+      }
       this._step();
       if (Object.values(this.ctx).every((c) => c.wrap === 'finished') || this.t > (this.cc.max_episode_time ?? 40)) {
         this.done = true; this.onDone?.(this.evaluate());

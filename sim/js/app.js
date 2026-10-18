@@ -1,5 +1,6 @@
 // HumanEgo Sim — UI: configs, initial-condition explorer, timeline, policy-input sync.
 import { SimViewer } from './viewer.js';
+import { fetchRollout } from './rollout.js';
 
 const $ = (s) => document.querySelector(s);
 const el = (tag, attrs = {}, html = '') => { const e = document.createElement(tag); Object.assign(e, attrs); if (html) e.innerHTML = html; return e; };
@@ -88,21 +89,23 @@ async function selectConfig(rolloutId) {
   const n = cfg.rollouts.flatMap(r => Object.values(r.per_side)).length;
   $('#count').textContent = `${cfg.rollouts.length} rollouts · ${pct(ok / Math.max(1, n))} served`;
   showLoading('Loading the robot…');
+  const pick = cfg.rollouts.find(r => r.id === rolloutId) || cfg.rollouts.find(r => r.featured) || cfg.rollouts[0];
+  const roP = fetchRollout(pick.id, pick.fmt);         // in parallel with the model and its meshes
+  roP.catch(() => {});
   const model = await (await fetch(`data/models/${cfg.model}.json`)).json();
   await viewer.loadModel(model, (p) => showLoading(`Loading meshes… ${Math.round(p * 100)}%`));
-  const pick = cfg.rollouts.find(r => r.id === rolloutId) || cfg.rollouts.find(r => r.featured) || cfg.rollouts[0];
-  await selectRollout(pick.id, !state.live);
+  await selectRollout(pick.id, !state.live, roP);
   if (state.live) { state.liveScene = structuredClone(state.ro.scene); await state.liveSession.load(cfg.model); renderMinimap(); }
 }
 
 function showLoading(msg) { $('#loading-msg').textContent = msg; $('#loading').classList.remove('hide'); }
 function hideLoading() { $('#loading').classList.add('hide'); }
 
-async function selectRollout(id, autoplay = true) {
+async function selectRollout(id, autoplay = true, roP = null) {
   const meta = state.cfg.rollouts.find(r => r.id === id);
   state.rollout = meta;
   showLoading('Loading the rollout…');
-  const ro = await (await fetch(`data/rollouts/${id}.json`)).json();
+  const ro = await (roP || fetchRollout(id, meta.fmt));
   state.ro = ro;
   viewer.setRollout(ro);
   // policy-input video
@@ -420,14 +423,25 @@ window.addEventListener('resize', drawTrack);
 // ------------------------------------------------------------------ results + tuning sections
 function renderResultsTable() {
   const m = state.manifest, tb = $('#res-table');
-  let h = '<tr><th>Robot</th><th>Camera</th><th>Arms</th><th>Rollouts</th><th>Right arm</th><th>Left arm</th><th>Both served</th></tr>';
+  // every number comes from the manifest (humanego_sim/web_manifest.py): rollouts on this page, and the
+  // held-out validation of the controller profile (configs/tuned/<robot>.json)
+  const anyHeld = (m.summary || []).some(c => c.held_out);
+  let h = '<tr><th>Robot</th><th>Camera</th><th>Arms</th><th>Controller</th><th>Rollouts</th><th>Right arm</th><th>Left arm</th><th>Both served</th>'
+        + (anyHeld ? '<th title="per-arm success of this controller on held-out scenes (seeds 7777 / 8888)">Held-out per arm</th>' : '') + '</tr>';
   for (const c of (m.summary || [])) {
     const bar = (v) => v == null ? '<span class="meta">—</span>' : `<span class="bar-s" style="width:${Math.round(60 * v)}px"></span>${pct(v)}`;
-    h += `<tr><td>${m.robots[c.robot]}</td><td>${m.cameras[c.camera]}</td><td>${c.mode === 'bimanual' ? 'two' : 'one'}</td><td>${c.n}</td>
-          <td>${bar(c.right)}</td><td>${bar(c.left)}</td><td>${bar(c.both)}</td></tr>`;
+    const ctl = c.profile === 'tuned' ? `tuned <span class="meta">${c.autotune_run || ''}</span>` : (c.profile || 'production');
+    const held = (c.held_out || []).map(x => `<span title="${x.n_scenes} scenes, seed ${x.seed}">${pct(x.per_arm)}</span>`).join(' / ') || '<span class="meta">—</span>';
+    h += `<tr><td>${m.robots[c.robot]}</td><td>${m.cameras[c.camera]}</td><td>${c.mode === 'bimanual' ? 'two' : 'one'}</td><td>${ctl}</td><td>${c.n}</td>
+          <td>${bar(c.right)}</td><td>${bar(c.left)}</td><td>${bar(c.both)}</td>${anyHeld ? `<td>${held}</td>` : ''}</tr>`;
   }
   tb.innerHTML = h;
-  $('#res-note').innerHTML = m.summary_note || '';
+  let note = m.summary_note || '';
+  const media = m.media || {};
+  const vids = Object.keys(m.robots).filter(r => media[r]).map(r => `<a href="${media[r]}" target="_blank" rel="noopener">${m.robots[r]}</a>`);
+  if (vids.length) note += ` Videos: ${vids.join(' · ')}.`;
+  if (m.built?.date) note += ` <span class="meta">Built ${m.built.date}${m.built.commit ? ` from ${m.built.commit}` : ''}.</span>`;
+  $('#res-note').innerHTML = note;
 }
 
 function renderTuning() {
