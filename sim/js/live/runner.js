@@ -267,7 +267,7 @@ export class LiveEpisode {
           if (Tw[11] > zg + 0.005) { this._moveWorldZ(a, zg, rel.place_time ?? 0.9); ctx.wrap = 'place'; }
         }
         if (!ctx.wrap && (rel.settle ?? 0) > 0) ctx.wrap = 'settle';          // hold still a moment before opening
-        if (!ctx.wrap) { ctx.wrap = 'open'; a.openGripper(rel.open_time ?? 0.5); }
+        if (!ctx.wrap) { ctx.wrap = 'open'; a.openGripper(rel.open_time ?? 1.0); }
         delete this.entries[s];
       }
     }
@@ -287,10 +287,12 @@ export class LiveEpisode {
       if (this.t >= this.nextPol - 1e-9) { await this._policyTick(); continue; }
       for (const [s, ctx] of Object.entries(this.ctx)) {
         const rel = this.cc.release || {}, a = this.arms[s];
-        const openT = rel.open_time ?? 0.5, settle = rel.settle ?? 0;
+        // real wrap-up: open over 1 s; two arms go home once it is open, one arm after 0.5 s (runner.py)
+        const openT = rel.open_time ?? 1.0, settle = rel.settle ?? 0;
+        const homeAfter = rel.home_after ?? (this.sides.length > 1 ? openT : 0.5);
         if ((ctx.wrap === 'place' && this.t - ctx.wrapT >= (rel.place_time ?? 0.9) + 0.15 + settle) || (ctx.wrap === 'settle' && this.t - ctx.wrapT >= settle)) {
           ctx.wrap = 'open'; ctx.wrapT = this.t; a.openGripper(openT);
-        } else if (ctx.wrap === 'open' && this.t - ctx.wrapT >= Math.max(0.8, openT + 0.3)) {
+        } else if (ctx.wrap === 'open' && this.t - ctx.wrapT >= homeAfter) {
           ctx.wrapT = this.t;
           if ((rel.lift ?? 0) > 0) {                      // lift the open hand straight up before going home
             const Tw = M.mul4(a.Tbw, a.getTeeInBase()); this._moveWorldZ(a, Tw[11] + rel.lift, 0.8); ctx.wrap = 'retreat';
