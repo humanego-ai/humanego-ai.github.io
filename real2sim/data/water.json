@@ -208,5 +208,29 @@
    "wrist_right": "media/water/c3_wrist_right.mp4",
    "tp0": "media/water/c3_tp0.mp4"
   }
- ]
+ ],
+ "hq": {
+  "hero": "media/water/hq_hero.mp4",
+  "composite": "media/water/hq_composite.mp4",
+  "stills": [
+   {
+    "src": "media/water/water_tulips_lever_on_f0710.jpg",
+    "title": "Head held over the tulips, lever on"
+   },
+   {
+    "src": "media/water/water_pull_from_dock_f0262.jpg",
+    "title": "Pulling the head from its dock: hose and lever"
+   }
+  ],
+  "grid": "media/water/hq_grid.jpg",
+  "dataset": {
+   "episodes": 49,
+   "ok": 49,
+   "frames": 18081,
+   "distinct_physics_samples": 49,
+   "hours_at_15fps": 0.335,
+   "track_err_arm_deg_p95": 2.1871650301626846,
+   "failed": []
+  }
+ }
 }

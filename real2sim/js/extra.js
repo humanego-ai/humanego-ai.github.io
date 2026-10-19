@@ -132,6 +132,12 @@ function renderWater(W) {
     kpi('Rendered episodes', `${d.ok ?? '—'}/${d.episodes ?? '—'}`, 'pass the dataset checks'),
     kpi('Frames', d.frames ? `${(d.frames / 1000).toFixed(1)}k` : '—', 'ZED + 2 wrists + third-person, with depth'),
   ].join('');
+  if (W.hq) {
+    const v = [[W.hq.hero, 'Third-person, Blender Cycles', 'the agent\'s episode · 1280×720'], [W.hq.composite, 'Composited into the human\'s kitchen', 'robot over the clean plate, from the head camera']].filter(x => x[0]);
+    $('#w-hq-videos').innerHTML = v.map(([src, t, sub]) => `<div class="clip"><video data-src="${src}" muted loop playsinline preload="none"></video><div class="cap"><b>${t}</b><span>${sub}</span></div></div>`).join('');
+    $('#w-hq-stills').innerHTML = W.hq.stills.map(s => `<figure><img src="${s.src}" alt="${esc(s.title)}" loading="lazy"><figcaption>${esc(s.title)}</figcaption></figure>`).join('')
+      + `<figure><a href="${W.hq.grid}" target="_blank" rel="noopener"><img src="${W.hq.grid}" alt="All photoreal water episodes" loading="lazy"></a><figcaption>All ${W.hq.dataset?.episodes ?? ''} photoreal episodes (${W.hq.dataset?.ok ?? ''} pass the dataset checks) · ZED at the lift</figcaption></figure>`;
+  } else { ['#w-hq-h', '#w-hq-videos', '#w-hq-stills'].forEach(q => $(q)?.remove()); }
   $('#w-clips').innerHTML = (W.clips || []).map(c => `<div class="clip"><div class="quad">${['ego', 'tp0', 'wrist_left', 'wrist_right'].filter(v => c[v]).map(v => `<video data-src="${c[v]}" muted loop playsinline preload="none"></video>`).join('')}</div>
     <div class="cap"><b>${esc(c.id.replace('ep_', '').replace(/_r\d$/, ''))}</b><span>ZED · third-person · left wrist · right wrist</span></div></div>`).join('');
   lazyVideos(box);

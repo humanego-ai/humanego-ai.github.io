@@ -5339,8 +5339,8 @@
   ]
  },
  "totals": {
-  "rendered_episodes": 1354,
-  "frames": 347907,
+  "rendered_episodes": 1403,
+  "frames": 365988,
   "physics_samples": 609,
   "datasets": {
    "serve_bread_040_diverse_tianji": {
@@ -5387,6 +5387,11 @@
     "episodes": 98,
     "ok": 98,
     "frames": 36162
+   },
+   "water_flowers_000_tianji_hq": {
+    "episodes": 49,
+    "ok": 49,
+    "frames": 18081
    }
   }
  },

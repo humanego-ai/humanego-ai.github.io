@@ -127,3 +127,6 @@ table.axes td:first-child{white-space:nowrap;}
 #w-sessions td.why{color:var(--mut); font-size:12px; line-height:1.45;}
 @media(max-width:760px){ .wclips{grid-template-columns:1fr;} }
 #w-s3{max-height:460px; width:100%; object-fit:contain; background:#05070a;}
+
+.stills.two{grid-template-columns:repeat(3, minmax(0,1fr)); margin-bottom:8px;}
+@media(max-width:760px){ .stills.two{grid-template-columns:1fr;} }
