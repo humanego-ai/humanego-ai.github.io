@@ -5339,8 +5339,8 @@
   ]
  },
  "totals": {
-  "rendered_episodes": 1151,
-  "frames": 288780,
+  "rendered_episodes": 1256,
+  "frames": 311745,
   "physics_samples": 525,
   "datasets": {
    "serve_bread_040_diverse_tianji": {
@@ -5362,6 +5362,16 @@
     "episodes": 6,
     "ok": 6,
     "frames": 2022
+   },
+   "serve_bread_040_soft_tianji": {
+    "episodes": 70,
+    "ok": 70,
+    "frames": 15310
+   },
+   "serve_bread_040_soft_tianji_hq": {
+    "episodes": 35,
+    "ok": 35,
+    "frames": 7655
    },
    "serve_bread_040_tianji": {
     "episodes": 618,

@@ -97,5 +97,22 @@ function renderEfficiency(E) {
   $('#e-note').textContent = 'Equivalence: ' + E.equivalence + '.';
 }
 
-const [Q, D, E] = await Promise.all([getJSON('data/quality.json'), getJSON('data/diversity.json'), getJSON('data/efficiency.json')]);
-renderQuality(Q); renderDiversity(D); renderEfficiency(E);
+function renderSoft(S) {
+  if (!S) { ['#soft', '#s-kpis', '#s-videos', '#s-table', '#s-stills'].forEach(q => $(q)?.closest('.card')?.remove() ?? $(q)?.remove()); return; }
+  const T = S.totals, row = b => S.calibration.find(r => r.bread === b) || {};
+  $('#s-kpis').innerHTML = [
+    kpi('Soft samples', `${T.samples}`, `${T.stage3_ok}/${T.variants} soft variants verified · ${T.stage4_draws.accepted}/${T.stage4_draws.attempts} layout draws kept`),
+    kpi('Brioche bun', `${row('brioche').grip_sink_mm}<small>mm</small>`, 'fingertip sink under the grip'),
+    kpi('Croissant', `${row('croissant').grip_sink_mm}<small>mm</small>`, 'fingertip sink under the grip'),
+    kpi('Demi-baguette', `${row('baguette').grip_sink_mm}<small>mm</small>`, 'crust: gives the least'),
+    kpi('Rigid (before)', `${row('rigid (before)').grip_sink_mm}<small>mm</small>`, 'the bread did not give at all'),
+  ].join('');
+  $('#s-videos').innerHTML = S.videos.map(v => `<div class="clip"><video data-src="${v.src}" muted loop playsinline preload="none"></video><div class="cap"><b>${esc(v.title)}</b><span>1280×720 · dent = recorded penetration</span></div></div>`).join('');
+  $('#s-table').innerHTML = '<tr><th>Bread</th><th>Softness</th><th>Grip force</th><th>Fingertip sink</th><th>Deepest</th><th>Floor press at 2 N</th></tr>' +
+    S.calibration.map(r => `<tr><td><b>${esc(r.bread)}</b></td><td>${r.softness ?? '—'}</td><td>${r.grip_force_n} N</td><td><b>${r.grip_sink_mm} mm</b></td><td>${r.max_sink_mm} mm</td><td>${r.squeeze_2n_mm} mm</td></tr>`).join('');
+  $('#s-stills').innerHTML = S.stills.map(s => `<figure><img src="${s.src}" alt="${esc(s.title)}" loading="lazy"><figcaption>${esc(s.title)}</figcaption></figure>`).join('');
+  lazyVideos($('#s-videos'));
+}
+
+const [Q, D, E, S] = await Promise.all([getJSON('data/quality.json'), getJSON('data/diversity.json'), getJSON('data/efficiency.json'), getJSON('data/soft.json')]);
+renderQuality(Q); renderDiversity(D); renderEfficiency(E); renderSoft(S);

@@ -576,6 +576,15 @@
    "evidence": [
     "runs/serve_bread_040/diversity/acceptance.json"
    ]
+  },
+  {
+   "date": "2026-10-18",
+   "stage": "softness",
+   "change": "added axes.objects.croissant.variants[*].params.softness (a level range per bread type) and its model / calibration / why; soft variants are generated from runs/serve_bread_040/diversity_soft/spec.json (the same axes plus softness) into stage4_diverse_soft/.",
+   "why": "the user asked for soft bread as a physical, verified property; the rigid run's 71 samples stay as they were (their variants were drawn before this axis existed).",
+   "evidence": [
+    "DexAgent tianji 24ef50f (construct_tapered_loaf softness, hand.SOFT_HAND_TAG, soft_pinch_test, record_soft_contact)"
+   ]
   }
  ]
 }

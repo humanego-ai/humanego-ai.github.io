@@ -1,0 +1,110 @@
+{
+ "calibration": [
+  {
+   "bread": "rigid (before)",
+   "softness": null,
+   "squeeze_2n_mm": 0.046,
+   "grip_sink_mm": 0.056,
+   "grip_force_n": 17.65,
+   "max_sink_mm": 0.161
+  },
+  {
+   "bread": "baguette",
+   "softness": 0.1,
+   "squeeze_2n_mm": 0.136,
+   "grip_sink_mm": 0.813,
+   "grip_force_n": 15.95,
+   "max_sink_mm": 1.096
+  },
+  {
+   "bread": "roll",
+   "softness": 0.4,
+   "squeeze_2n_mm": 0.205,
+   "grip_sink_mm": 1.284,
+   "grip_force_n": 20.31,
+   "max_sink_mm": 1.415
+  },
+  {
+   "bread": "croissant",
+   "softness": 0.7,
+   "squeeze_2n_mm": 0.257,
+   "grip_sink_mm": 1.658,
+   "grip_force_n": 15.55,
+   "max_sink_mm": 2.004
+  },
+  {
+   "bread": "brioche",
+   "softness": 0.9,
+   "squeeze_2n_mm": 0.448,
+   "grip_sink_mm": 1.957,
+   "grip_force_n": 22.62,
+   "max_sink_mm": 2.609
+  }
+ ],
+ "totals": {
+  "variants": 14,
+  "stage3_ok": 12,
+  "samples": 35,
+  "stage4_draws": {
+   "attempts": 34,
+   "accepted": 23
+  }
+ },
+ "videos": [
+  {
+   "src": "media/soft/pinch_bun.mp4",
+   "title": "Brioche bun: the pinch sinks ~2 mm into the crumb"
+  },
+  {
+   "src": "media/soft/pinch_croissant.mp4",
+   "title": "Croissant: ~1.7 mm"
+  }
+ ],
+ "stills": [
+  {
+   "src": "media/soft/sink_baguette_v001_0000_f140_1.03mm.jpg",
+   "title": "baguette \u00b7 deepest sink 1.03mm"
+  },
+  {
+   "src": "media/soft/sink_bun_v000_0000_f86_2.39mm.jpg",
+   "title": "bun \u00b7 deepest sink 2.39mm"
+  },
+  {
+   "src": "media/soft/sink_crescent_v007_0000_f157_1.84mm.jpg",
+   "title": "crescent \u00b7 deepest sink 1.84mm"
+  },
+  {
+   "src": "media/soft/sink_croissant_v008_0000_f97_2.09mm.jpg",
+   "title": "croissant \u00b7 deepest sink 2.09mm"
+  },
+  {
+   "src": "media/soft/sink_roll_v009_0000_f96_1.57mm.jpg",
+   "title": "roll \u00b7 deepest sink 1.57mm"
+  }
+ ],
+ "grid": "media/soft/grid.jpg",
+ "datasets": {
+  "fast": {
+   "episodes": 70,
+   "ok": 70,
+   "frames": 15310,
+   "distinct_physics_samples": 35,
+   "hours_at_15fps": 0.284,
+   "track_err_arm_deg_p95": 0.9303658778704663,
+   "final_dist_to_plate_cm_mean": 1.58,
+   "max_lift_cm_mean": 14.84,
+   "failed": []
+  },
+  "hq": {
+   "episodes": 35,
+   "ok": 35,
+   "frames": 7655,
+   "distinct_physics_samples": 35,
+   "hours_at_15fps": 0.142,
+   "track_err_arm_deg_p95": 0.9267395165509584,
+   "final_dist_to_plate_cm_mean": 1.58,
+   "max_lift_cm_mean": 14.84,
+   "failed": []
+  }
+ }
+}
