@@ -7,6 +7,10 @@ const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls)
 const fmt = (x, d = 1) => (x == null || Number.isNaN(x)) ? '—' : Number(x).toFixed(d);
 
 const PHASES = [
+  ['pull', /lift spray|pull|undock/i, '#f472b6'],
+  ['turn', /open faucet|open_joint|turn the lever|swing/i, '#facc15'],
+  ['hold', /\bhold\b|\| right: wait/i, '#a3e635'],
+  ['via', /return home #\d+\.\d/i, '#6b7586'],
   ['reach', /reach|approach|pre-?grasp/i, '#8ea3c0'],
   ['descend', /descend|lower to/i, '#5fb3d9'],
   ['grasp', /close|grip|grasp|squeeze/i, '#c084fc'],
@@ -22,6 +26,7 @@ function phaseOf(label) {
 }
 function cleanLabel(l) {
   return l.replace(/^(right|left|both):\s*/i, '').replace(/croissant_croissant/g, 'croissant').replace(/blue_plate_blue_plate/g, 'plate')
+    .replace(/spray_head_spray_head/g, 'spray head').replace(/faucet_faucet_lever\w*/g, 'lever').replace(/flower_pot_flower_pot_pot/g, 'pot')
     .replace(/\s*#\d+\s*$/, '');
 }
 
@@ -53,12 +58,12 @@ function renderStats() {
   const r = MAN.runs, d = SUM.dataset || {}, T = SUM.totals;
   const verified = T ? T.physics_samples : Object.values(r).reduce((a, x) => a + (x.n_verified_total || 0), 0);
   const chips = [
-    ['1', 'human video · 15 s'],
-    ['2 × 3', 'DexAgent stages passed'],
+    ['2', 'human videos · 2 tasks'],
+    ['3 × 3', 'DexAgent stages passed'],
     [verified, 'physics-verified robot episodes'],
     [T ? T.rendered_episodes : (d.episodes ?? '—'), 'rendered robot-camera episodes'],
     [T ? (T.frames / 1000).toFixed(0) + 'k' : (d.frames ? (d.frames / 1000).toFixed(1) + 'k' : '—'), 'frames'],
-    [SUM.new_tools?.length ?? 0, 'tools the agent created'],
+    [(SUM.new_tools?.length ?? 0) + (SUM.water_tools ?? 0), 'tools the agent created'],
     ['7 + 22', 'DOF per arm + hand'],
   ];
   $('#stats').innerHTML = chips.map(([v, k]) => `<span class="chip"><b>${v}</b> ${k}</span>`).join('');
@@ -110,10 +115,14 @@ async function selectRun(k) {
   const run = MAN.runs[k];
   $('#loading').classList.remove('hide'); $('#loading-msg').textContent = 'Loading the Tianji + SharpaWave rig…';
   await viewer.loadModel(`data/models/${run.model}.json`);
-  viewer.wristCam = `wrist_${run.side}`;
+  viewer.wristCam = run.wrist || `wrist_${run.side}`;
   const v = $('#pip-video'); v.src = `media/human_${k}.mp4`; v.load();
-  $('#pip-cap').textContent = k === 'left' ? 'Aria · mirrored · time-normalized' : 'Aria · time-normalized';
+  $('#pip-cap').textContent = k === 'left' ? 'Aria · mirrored · time-normalized' : k === 'water' ? 'Aria · both hands · time-normalized' : 'Aria · time-normalized';
   drawMinimap();
+  const help = document.querySelector('.mm-help');
+  if (help) help.innerHTML = run.task === 'water_flowers'
+    ? 'Each dot is one <b>physics-verified episode</b> (the pot\'s start inside the sink; the faucet and its docked spray head stay mounted). The ★ is the agent\'s episode retargeted from the video; the rest are DexAgent Stage 4 randomizations, every one re-simulated in contact physics. Click to load.'
+    : 'Each pair is one <b>physics-verified episode</b> (● croissant, ○ plate start). The ★ is the agent\'s episode retargeted from the video; the rest are DexAgent Stage 4 randomizations, every one re-simulated in contact physics. Click to load.';
   await loadEpisode('original');
   $('#loading').classList.add('hide');
   $('#count').textContent = `${run.episodes.length} episodes shown · ${run.n_verified_total} verified in this run`;
@@ -190,6 +199,7 @@ window.addEventListener('resize', () => { if (state.epData) drawTrack(); });
 
 // ------------------------------------------------------------------ minimap + outcome
 function drawMinimap() {
+  if (MAN.runs[state.run].task === 'water_flowers') return drawMinimapWater();
   const svg = $('#minimap'), W = 340, H = 260, eps = MAN.runs[state.run].episodes;
   const xs = [-0.32, 0.38], ys = [0.27, 0.65];
   const X = x => 20 + (x - xs[0]) / (xs[1] - xs[0]) * (W - 40), Y = y => H - 20 - (y - ys[0]) / (ys[1] - ys[0]) * (H - 40);
@@ -209,7 +219,40 @@ function drawMinimap() {
   svg.querySelectorAll('.ep').forEach(g => g.onclick = () => loadEpisode(g.dataset.id));
 }
 
+function drawMinimapWater() {
+  const svg = $('#minimap'), W = 340, H = 260, eps = MAN.runs[state.run].episodes;
+  const xs = [-0.2, 0.42], ys = [0.2, 0.68];
+  const X = x => 20 + (x - xs[0]) / (xs[1] - xs[0]) * (W - 40), Y = y => H - 20 - (y - ys[0]) / (ys[1] - ys[0]) * (H - 40);
+  const sx = 0.48 / (xs[1] - xs[0]) * (W - 40), sy = 0.266 / (ys[1] - ys[0]) * (H - 40), r = 0.078 / (xs[1] - xs[0]) * (W - 40);
+  let s = `<rect class="tbl" x="8" y="8" width="${W - 16}" height="${H - 16}" rx="10"/>`
+    + `<rect x="${X(0.106) - sx / 2}" y="${Y(0.395) - sy / 2}" width="${sx}" height="${sy}" rx="8" fill="none" stroke="#5b6573" stroke-dasharray="4 3"/>`
+    + `<text x="${X(0.106) + sx / 2 - 30}" y="${Y(0.395) - sy / 2 - 5}">sink</text>`
+    + `<circle cx="${X(0.111)}" cy="${Y(0.61)}" r="6" fill="#9aa3ad"/><text x="${X(0.111) + 9}" y="${Y(0.61) + 4}">faucet</text>`
+    + `<text x="${X(0) - 22}" y="${H - 11}">robot ↓</text>`;
+  const ordered = [...eps.filter(e => e.id !== 'original'), ...eps.filter(e => e.id === 'original')];
+  for (const e of ordered) {
+    const m = e.metrics, p = m.pot_start, orig = e.id === 'original';
+    s += `<g class="ep" data-id="${e.id}"><circle class="p" cx="${X(p[0])}" cy="${Y(p[1])}" r="${orig ? r : 3}" fill="none" stroke="#3ddc97" opacity="${orig ? 0.9 : 0.35}"/>`
+      + (orig ? `<text x="${X(p[0]) - 5}" y="${Y(p[1]) + 4}" style="fill:#ffd36b;font-size:15px">★</text><circle class="c" cx="${X(p[0])}" cy="${Y(p[1])}" r="9" fill="transparent"/>`
+        : `<circle class="c" cx="${X(p[0])}" cy="${Y(p[1])}" r="4" fill="${m.success ? '#ff9a3c' : '#ff5d6c'}" opacity="0.85"/>`) + '</g>';
+  }
+  svg.innerHTML = s;
+  svg.querySelectorAll('.ep').forEach(g => g.onclick = () => loadEpisode(g.dataset.id));
+}
+
 function renderResult(m, meta) {
+  if (MAN.runs[state.run].task === 'water_flowers') {
+    const cell = (k, v, s, cls = '') => `<div class="res-arm"><div class="k">${k}</div><div class="v ${cls}">${v}</div><div class="s">${s}</div></div>`;
+    $('#result').innerHTML =
+      cell('Task', m.success ? '✓ watering' : '✗ failed', 'head over the pot, lever on', m.success ? 'ok' : 'bad') +
+      cell('Head lowered', fmt(m.head_pulled_cm) + ' cm', 'from the dock to over the pot') +
+      cell('Over the pot', fmt(m.head_over_pot_cm, 2) + ' cm', 'head to pot axis, at the end') +
+      cell('Lever', fmt(m.lever_deg) + '°', 'on from 17.5°') +
+      cell('Pot moved', fmt(m.pot_moved_mm) + ' mm', 'never touched') +
+      cell('Duration', fmt(meta?.duration_s ?? viewer.duration) + ' s', 'simulated');
+    $('#res-meta').textContent = 'MuJoCo · 500 Hz · both arms';
+    return;
+  }
   const cell = (k, v, s, cls = '') => `<div class="res-arm"><div class="k">${k}</div><div class="v ${cls}">${v}</div><div class="s">${s}</div></div>`;
   $('#result').innerHTML =
     cell('Task', m.success ? '✓ served' : '✗ failed', 'croissant on plate, released', m.success ? 'ok' : 'bad') +

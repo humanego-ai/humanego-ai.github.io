@@ -23,16 +23,17 @@
 <section class="hero">
   <div class="kicker">Human → Sim → Robot · Agentic Real2Sim</div>
   <h1 class="logo">Human<span>Ego</span><small>Real2Sim</small></h1>
-  <p class="tag">One <b>15-second human video</b> of serving bread, captured with Aria glasses, becomes a
-    <b>physics-verified simulation</b> of our <b>Tianji dual-arm robot with SharpaWave dexterous hands</b> &mdash; and then
-    <b>hundreds of randomized robot episodes</b> seen through the robot's own ZED camera. Built by an LLM agent running the
-    <a href="https://github.com/dexagent1/DexAgent" target="_blank" rel="noopener">DexAgent</a> pipeline end to end.</p>
+  <p class="tag">Two <b>human videos</b> captured with Aria glasses, <b>serving bread</b> with one hand and <b>watering flowers</b> with both, become
+    <b>physics-verified simulations</b> of our <b>Tianji dual-arm robot with SharpaWave dexterous hands</b> &mdash; and then
+    <b>over a thousand randomized robot episodes</b>, with agent-designed diversity, soft bread and photoreal renders, seen through the robot's own cameras. Built by an
+    LLM agent running the <a href="https://github.com/dexagent1/DexAgent" target="_blank" rel="noopener">DexAgent</a> pipeline end to end.</p>
   <div class="links">
     <a href="https://humanego-ai.github.io" target="_blank" rel="noopener">🌐 HumanEgo</a>
     <a href="../sim/" target="_blank" rel="noopener">🤖 Policy Sim</a>
     <a href="https://github.com/dexagent1/DexAgent" target="_blank" rel="noopener">🧩 DexAgent</a>
     <a href="https://arxiv.org/abs/2609.35318" target="_blank" rel="noopener">📄 DexAgent paper</a>
     <a href="#data">📦 Generated data</a>
+    <a href="#water">💧 Water flowers</a>
     <a href="#quality">✨ Photoreal</a>
     <a href="#diversity">🎲 Diversity</a>
     <a href="#efficiency">⚡ Efficiency</a>
@@ -146,6 +147,28 @@
       <div class="note" id="agent-note"></div></div>
     <div class="sec-h small"><h3>Self-evolving tool library</h3><p>Tools the agent created and tested through <code>library_create</code> during these runs; they are now part of the library.</p></div>
     <div class="tools" id="tools"></div>
+  </section>
+
+  <section class="section" id="water">
+    <div class="sec-h"><h2>A second task: water the flowers, with both arms</h2><p id="w-task">One more human video, the same pipeline: the left hand pulls the faucet's spray head out of its dock and holds it over the potted flowers, the right hand swings the lever on. Replay it in 3D above (Run → Water the flowers).</p></div>
+    <div class="stage-grid">
+      <div class="scard"><div class="scard-h"><span class="n">IN</span><h4>The human demonstration</h4><span class="badge ok">Aria · 19.4 s</span></div>
+        <video class="media" id="w-human" muted loop playsinline preload="none"></video>
+        <div class="subgoals" id="w-subgoals"></div><p id="w-objects"></p></div>
+      <div class="scard"><div class="scard-h"><span class="n">02</span><h4>Reconstruction</h4><span class="badge ok">passed</span></div>
+        <img class="media" id="w-s2" alt="Stage 2 reconstruction over the video frame" loading="lazy">
+        <p>The setup's table top became the <b>sink floor</b> (the sink sits below the counter in the video); the faucet is held by a keyed shank, the spray head by a <b>6 N magnet</b> in its dock (comes off at 4.7 N), the lever is a hinge with friction so it stays where it is pushed; an open pot of tulips stands in the sink.</p></div>
+      <div class="scard wide"><div class="scard-h"><span class="n">03</span><h4>The robot does it in contact physics</h4><span class="badge ok">all gates passed</span></div>
+        <video class="media" id="w-s3" muted loop playsinline preload="none" style="aspect-ratio:auto"></video>
+        <p>Left: a side pinch pulls the head 5.5 cm off the magnet and holds it 0.2 mm from its target over the pot's mouth; right: it rises out of the basin, pinches the lever tip from the front and swings it to 23.6° (on from 17.5°) while the left keeps holding. Both hold to the end.</p></div>
+    </div>
+    <div class="sec-h small"><h3>How the agent got there</h3><p>Every stage session, including DexAgent's cross-stage repair loops (a later stage re-opens an earlier one with evidence) and two gaps in the library's own audits that this task exposed and that were fixed with regression tests.</p></div>
+    <div class="card"><table class="res" id="w-sessions"></table></div>
+    <div class="sec-h small"><h3>Tools the agent wrote for this task</h3><p>Created and tested through <code>library_create</code>; now part of the library.</p></div>
+    <div class="tools" id="w-tools"></div>
+    <div class="sec-h small"><h3>Generated data</h3><p>Stage 4 randomizes the pot inside the sink (the faucet and its docked head stay mounted); every layout is re-simulated in contact physics, then rendered from the ZED, both wrists and a randomized third-person camera.</p></div>
+    <div class="kpis big" id="w-kpis"></div>
+    <div class="wclips" id="w-clips"></div>
   </section>
 
   <section class="section" id="data">

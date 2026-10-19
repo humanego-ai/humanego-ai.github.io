@@ -114,5 +114,28 @@ function renderSoft(S) {
   lazyVideos($('#s-videos'));
 }
 
-const [Q, D, E, S] = await Promise.all([getJSON('data/quality.json'), getJSON('data/diversity.json'), getJSON('data/efficiency.json'), getJSON('data/soft.json')]);
-renderQuality(Q); renderDiversity(D); renderEfficiency(E); renderSoft(S);
+function renderWater(W) {
+  const box = $('#water');
+  if (!W) { box.style.display = 'none'; return; }
+  $('#w-human').dataset.src = W.media.human; if (W.media.s3) $('#w-s3').dataset.src = W.media.s3; $('#w-s2').src = W.media.s2;
+  const col = { left: '#f472b6', right: '#facc15', both: '#a3e635' };
+  $('#w-subgoals').innerHTML = W.subgoals.map(g => `<div class="sg"><div class="m" style="color:${col[g.hand] || 'var(--txt)'}">${esc(g.hand)} · ${esc(g.motion)}<small>${(g.window || []).map(x => (+x).toFixed(1)).join('–')} s</small></div><div class="g">${esc(g.goal)}</div></div>`).join('');
+  $('#w-objects').innerHTML = W.objects.map(o => `<b>${esc(o.id.replace(/_/g, ' '))}</b> (${esc(o.type)}, ${esc(o.role)})`).join(' · ');
+  $('#w-sessions').innerHTML = '<tr><th>#</th><th>Stage</th><th>Rounds</th><th>Result</th><th>What happened</th></tr>' + W.sessions.map((r, i) => {
+    const cls = /passed/.test(r.result) ? 'color:var(--ok)' : /blocked/.test(r.result) ? 'color:#ffb35c' : 'color:#7cc4ff';
+    return `<tr><td>${i + 1}</td><td><b>${esc(r.stage)}</b></td><td>${r.rounds}</td><td style="${cls};font-weight:600">${esc(r.result)}</td><td class="why">${esc(r.note)}</td></tr>`; }).join('');
+  $('#w-tools').innerHTML = W.tools.map(t => `<div class="tool"><span class="tc">${esc(t.type)}</span><div class="tn">${esc(t.name)}</div><p>${esc(t.summary)}</p></div>`).join('');
+  const a = W.stage4 || {}, d = W.dataset || {};
+  $('#w-kpis').innerHTML = [
+    kpi('Verified layouts', `${a.accepted ?? '—'}`, `of ${a.attempts ?? '—'} drawn (${Math.round(100 * (a.rate || 0))}%), each re-simulated`),
+    kpi('CPU per sample', `${a.s_per_sample ?? '—'}<small>s</small>`, 'bimanual, 24 s episodes'),
+    kpi('Rendered episodes', `${d.ok ?? '—'}/${d.episodes ?? '—'}`, 'pass the dataset checks'),
+    kpi('Frames', d.frames ? `${(d.frames / 1000).toFixed(1)}k` : '—', 'ZED + 2 wrists + third-person, with depth'),
+  ].join('');
+  $('#w-clips').innerHTML = (W.clips || []).map(c => `<div class="clip"><div class="quad">${['ego', 'tp0', 'wrist_left', 'wrist_right'].filter(v => c[v]).map(v => `<video data-src="${c[v]}" muted loop playsinline preload="none"></video>`).join('')}</div>
+    <div class="cap"><b>${esc(c.id.replace('ep_', '').replace(/_r\d$/, ''))}</b><span>ZED · third-person · left wrist · right wrist</span></div></div>`).join('');
+  lazyVideos(box);
+}
+
+const [Q, D, E, S, W] = await Promise.all([getJSON('data/quality.json'), getJSON('data/diversity.json'), getJSON('data/efficiency.json'), getJSON('data/soft.json'), getJSON('data/water.json')]);
+renderWater(W); renderQuality(Q); renderDiversity(D); renderEfficiency(E); renderSoft(S);

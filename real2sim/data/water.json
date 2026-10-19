@@ -1,0 +1,212 @@
+{
+ "task": "Water the flowers: with the left hand, pull the faucet's pull-down spray head out of the spout and hold it over the potted flowers in the sink; with the right hand, push the faucet's lever to turn the water on.",
+ "summary": "The left hand grasps the green pull-down spray head docked in the tip of the chrome gooseneck faucet's spout, pulls it straight down out of the spout (its dark hose paying out behind it) and carries it down into the sink until it hangs nozzle-down just above the potted orange tulips, and keeps it there; afterwards the right hand reaches to the thin lever standing on the yellow valve body at the right of the faucet, pinches its tip and pushes it over to the on position, and both hands hold this pose to the end while a stream of water runs from the spray head onto the flowers.",
+ "objects": [
+  {
+   "id": "faucet",
+   "name": "chrome gooseneck faucet",
+   "type": "articulated",
+   "role": "manipulated"
+  },
+  {
+   "id": "spray_head",
+   "name": "green spray head",
+   "type": "rigid",
+   "role": "tool"
+  },
+  {
+   "id": "flower_pot",
+   "name": "blue pot of orange tulips",
+   "type": "rigid",
+   "role": "target"
+  },
+  {
+   "id": "sink",
+   "name": "stainless steel sink",
+   "type": "rigid",
+   "role": "container"
+  }
+ ],
+ "subgoals": [
+  {
+   "hand": "left",
+   "motion": "pull",
+   "window": [
+    1.8,
+    6.0
+   ],
+   "goal": "The spray head is held in the left hand and the spray head is clear of the gooseneck spout."
+  },
+  {
+   "hand": "left",
+   "motion": "carry",
+   "window": [
+    5.9,
+    10.0
+   ],
+   "goal": "The spray head is held upright in the left hand and the spray head is above the flower pot's opening."
+  },
+  {
+   "hand": "right",
+   "motion": "open_joint",
+   "window": [
+    12.2,
+    17.6
+   ],
+   "goal": "The lever is open, the spray head is held in the left hand and the spray head is above the flower pot's opening."
+  },
+  {
+   "hand": "both",
+   "motion": "hold",
+   "window": [
+    17.6,
+    19.4
+   ],
+   "goal": "The spray head is held upright in the left hand, the spray head is above the flower pot's opening and the lever is open."
+  }
+ ],
+ "sessions": [
+  {
+   "stage": "Stage 1",
+   "rounds": 8,
+   "result": "passed",
+   "note": "4 objects (faucet with a hinged lever, spray head docked in the spout, pot, sink), 4 subgoals for both hands"
+  },
+  {
+   "stage": "Stage 2",
+   "rounds": 37,
+   "result": "blocked \u2192 Stage 1",
+   "note": "scene built (sink floor as the table top, magnetic dock, lever hinge); two subgoals named objects no hand touches"
+  },
+  {
+   "stage": "Stage 1",
+   "rounds": 2,
+   "result": "passed (repair loop 1)",
+   "note": "object refs of subgoals 1 and 4 corrected from the frames"
+  },
+  {
+   "stage": "Stage 2",
+   "rounds": 3,
+   "result": "passed",
+   "note": "contact-consistency check passes"
+  },
+  {
+   "stage": "Stage 3",
+   "rounds": 19,
+   "result": "blocked \u2192 Stage 2",
+   "note": "whole task executed, but the pot had no measurable mouth, the spout no body, and the faucet turned in its hole"
+  },
+  {
+   "stage": "Stage 2",
+   "rounds": 6,
+   "result": "passed (repair loop 2)",
+   "note": "open pot, faucet part bodies, keyed square shank (turns 0.07\u00b0 instead of 12.5\u00b0)"
+  },
+  {
+   "stage": "Stage 3",
+   "rounds": 58,
+   "result": "library fix",
+   "note": "end_state_rest_audit released the grip it judged: objects held at the end are now judged with the recorded grip"
+  },
+  {
+   "stage": "Stage 3",
+   "rounds": 6,
+   "result": "library fix",
+   "note": "object_visual_penetration_audit counted an invisible magnet plate: now only drawn geometry"
+  },
+  {
+   "stage": "Stage 3",
+   "rounds": 15,
+   "result": "passed",
+   "note": "every gate green, Stage 1 goals, bimanual sync and Stage 4 gates included"
+  }
+ ],
+ "tools": [
+  {
+   "name": "construct_pulldown_faucet",
+   "summary": "A gooseneck faucet as a free body (base flange, mounting shank, column, elliptical arched spout ending in a downward square dock socket, side valve stub with a cap) with a lever on a friction hinge, plus its pull-down spray head as a separate free asset whose neck seats in the dock, with the latch sites and the docked pose of the head.",
+   "type": "skill"
+  },
+  {
+   "name": "construct_pulldown_faucet_magnetic",
+   "summary": "construct_pulldown_faucet with a magnetic dock: the free faucet (flange, mounting shank, column, arched spout ending in a downward square dock socket, valve stub and cap, lever on a friction hinge) carries a magnet plate in its dock face, and the separate free spray head carries a magnet child body with a constant adhesion actuator, so the head hangs docked by itself, comes free under a downward pull larger than the magnet force minus its weight, and needs no equality constraint (the faucet stays an uncoupled component).",
+   "type": "skill"
+  },
+  {
+   "name": "construct_pulldown_faucet_magnetic_seated",
+   "summary": "construct_pulldown_faucet_magnetic with the magnet contacts set for MuJoCo 3.x margin/gap semantics (the head seats flush on the dock face instead of hovering at the summed margins): the free faucet (flange, mounting shank, column, arched spout ending in a downward square dock socket, valve stub and cap, lever on a friction hinge) carries a magnet plate in its dock face, and the separate free spray head carries a magnet child body with a constant adhesion actuator, so the head hangs docked by itself, comes free under a downward pull larger than the magnet force minus its weight, and needs no equality constraint (the faucet stays an uncoupled component).",
+   "type": "skill"
+  },
+  {
+   "name": "construct_pulldown_faucet_keyed",
+   "summary": "construct_pulldown_faucet_magnetic_seated with its parts as named bodies (the root is the base column; <name>_gooseneck_spout carries the arched tube, the dock collar and its magnet plate; <name>_valve_body the stub and cap; the lever hinges on the valve body) so Stage 1 part refs resolve to bodies, and a square (keyed) mounting shank so the free faucet cannot turn in a square counter hole: the free faucet (flange, mounting shank, column, arched spout ending in a downward square dock socket, valve stub and cap, lever on a friction hinge) carries a magnet plate in its dock face, and the separate free spray head carries a magnet child body with a constant adhesion actuator, so the head hangs docked by itself, comes free under a downward pull larger than the magnet force minus its weight, and needs no equality constraint (the faucet stays an uncoupled component).",
+   "type": "skill"
+  },
+  {
+   "name": "add_connector_latch_body_anchor",
+   "summary": "Writes the latch weld of a plug held in its port (a connector, a docked tool such as a pull-down spray head in its spout) into a staged Stage 2 scene exactly as add_connector_latch does, but with the weld point at the plug body's origin (anchor 0) instead of at the plug tip site, so a plug body whose origin is not its tip starts with a weld that MuJoCo and equality_constraint_check both read as satisfied; returns the executor rule and the scene_recon.json fields.",
+   "type": "skill"
+  },
+  {
+   "name": "body_pull_off_test",
+   "summary": "Holds a base body still and checks that a part attached to it without any equality (a magnetically docked spray head, a part on a magnet, a box held by friction) stays where it is under gravity for hold_s, then ramps a force on the part along a direction and reports the force at which it separates, which must lie inside [min_release_N, max_release_N] when given.",
+   "type": "verifier"
+  },
+  {
+   "name": "stage4_start_jitter_from_clearance",
+   "summary": "Set a Stage 4 task's random start offset of the arm joints (robot.init_jitter_rad in stage4.json) from how close each hand and arm come to the scene while that offset is applied, so a robot parked next to a fixture (a sink wall, a shelf) is not jittered into it.",
+   "type": "skill"
+  }
+ ],
+ "media": {
+  "human": "media/human_water.mp4",
+  "s2": "media/water/s2_compare.jpg",
+  "s3": "media/water/s3_sim.mp4"
+ },
+ "stage4": {
+  "accepted": 48,
+  "attempts": 58,
+  "physics_rejected": 1,
+  "rate": 0.828,
+  "s_per_sample": 79.5
+ },
+ "dataset": {
+  "episodes": 98,
+  "ok": 98,
+  "frames": 36162,
+  "distinct_physics_samples": 49,
+  "hours_at_15fps": 0.67,
+  "track_err_arm_deg_p95": 2.1871650301626846,
+  "failed": []
+ },
+ "clips": [
+  {
+   "id": "ep_shard_00_original_r0",
+   "ego": "media/water/c0_ego.mp4",
+   "wrist_left": "media/water/c0_wrist_left.mp4",
+   "wrist_right": "media/water/c0_wrist_right.mp4",
+   "tp0": "media/water/c0_tp0.mp4"
+  },
+  {
+   "id": "ep_shard_00_0005_r0",
+   "ego": "media/water/c1_ego.mp4",
+   "wrist_left": "media/water/c1_wrist_left.mp4",
+   "wrist_right": "media/water/c1_wrist_right.mp4",
+   "tp0": "media/water/c1_tp0.mp4"
+  },
+  {
+   "id": "ep_shard_00_0011_r0",
+   "ego": "media/water/c2_ego.mp4",
+   "wrist_left": "media/water/c2_wrist_left.mp4",
+   "wrist_right": "media/water/c2_wrist_right.mp4",
+   "tp0": "media/water/c2_tp0.mp4"
+  },
+  {
+   "id": "ep_shard_01_0001_r0",
+   "ego": "media/water/c3_ego.mp4",
+   "wrist_left": "media/water/c3_wrist_left.mp4",
+   "wrist_right": "media/water/c3_wrist_right.mp4",
+   "tp0": "media/water/c3_tp0.mp4"
+  }
+ ]
+}
