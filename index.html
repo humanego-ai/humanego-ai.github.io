@@ -213,11 +213,6 @@
     }
     .pill-stat.pop { animation: pill-stat-pop 0.42s ease-out; }
 
-    /* ---- Press / media-coverage row (sits below the main link buttons) ----
-       Same dark-capsule language as .link-buttons, but each pill leads with the
-       outlet's logo on a small white chip, so three very different marks (grey
-       Synced figure, dark EAI tile, red UMD block) read cleanly and uniformly
-       on the dark pill. Two-line label = Chinese outlet name + English byline. */
     /* ---- IROS 2026 workshop awards ----
        A gold laurel band that mirrors the "As Featured In" label treatment but
        swaps the neutral rules for a warm award accent. Cards are links out to
@@ -315,74 +310,68 @@
       .award-sub { max-width: none; }
     }
 
-    .media-coverage { margin-top: 1.7em; }
-    .media-coverage-label {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.85em;
-      margin: 0 auto 1em;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: #9b9b9b;
+    /* ---- Media: press coverage and invited talks ----
+       Equal-size tiles in a centred wall. The wall is capped so a row holds at
+       most five, which makes the two groups fall as 4 and 5+4 instead of the
+       ragged rows that variable-width pills produced. */
+    .media-wall { max-width: 900px; margin: 0.4rem auto 0; }
+    .media-group + .media-group { margin-top: 2.1rem; }
+    .media-group-label {
+      display: flex; align-items: center; justify-content: center; gap: 0.85em;
+      margin: 0 auto 1.05rem; font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; color: #9b9b9b;
     }
-    .media-coverage-label::before,
-    .media-coverage-label::after {
-      content: "";
-      height: 1px;
-      width: clamp(26px, 9vw, 64px);
-      background: linear-gradient(to right, rgba(0, 0, 0, 0), #d6d6d6);
+    .media-group-label::before, .media-group-label::after {
+      content: ""; height: 1px; width: clamp(26px, 9vw, 64px);
+      background: linear-gradient(to right, rgba(0,0,0,0), #d6d6d6);
     }
-    .media-coverage-label::after { transform: scaleX(-1); }
-    .media-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.7em;
-    }
-    /* Rows are separate .media-buttons groups so the line breaks are explicit;
-       keep the vertical rhythm equal to the in-row gap. */
-    .media-buttons + .media-buttons { margin-top: 0.7em; }
-    .media-buttons a {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.66em;
-      padding: 0.4em 1.45em 0.4em 0.44em;
-      font-size: clamp(1.05rem, 3vw, 1.32rem);
-      background: #363636;
-      color: #fff !important;
-      border-radius: 999px;
-      text-decoration: none;
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
-    }
-    .media-buttons a:hover {
-      background: #111;
-      transform: translateY(-2px);
-      box-shadow: 0 7px 20px rgba(0, 0, 0, 0.20);
-    }
-    .media-logo {
-      flex: 0 0 auto;
-      height: 2.5em;
-      min-width: 2.5em;
-      max-width: 6.2em;
-      padding: 0.16em 0.44em;
+    .media-group-label::after { transform: scaleX(-1); }
+    .media-tiles { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .content .media-tile, .media-tile {
+      position: relative;
+      flex: 0 0 calc((100% - 48px) / 5);       /* five per row at any desktop width */
+      max-width: 168px;
+      min-width: 0;                            /* let a long handle wrap instead of widening the tile */
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      padding: 1.1rem 0.75rem 0.95rem;
       background: #fff;
-      border-radius: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+      border: 1px solid #ececec;
+      border-radius: 16px;
+      color: inherit;
+      text-decoration: none;
+      transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
     }
-    .media-logo img {
-      max-height: 100%;
-      max-width: 100%;
-      width: auto;
-      object-fit: contain;
-      border-radius: 5px;
-      display: block;
+    .media-tile:hover {
+      transform: translateY(-3px);
+      border-color: #f1c9a6;
+      box-shadow: 0 10px 26px rgba(212, 103, 20, 0.12);
+    }
+    .media-tile::after {                       /* outbound-link cue on hover */
+      content: "\2197"; position: absolute; top: 0.45rem; right: 0.65rem;
+      font-size: 0.78rem; color: #D46714; opacity: 0; transition: opacity 0.18s ease;
+    }
+    .media-tile:hover::after { opacity: 1; }
+    .media-tile-logo {
+      width: 56px; height: 56px; margin-bottom: 0.65rem;
+      border-radius: 14px; overflow: hidden; background: #fff;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.07);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .media-tile-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .media-tile-name {
+      font-size: 0.93rem; font-weight: 600; color: #1f1f1f; line-height: 1.28;
+      text-wrap: balance;                      /* never truncate an outlet's name */
+      overflow-wrap: anywhere;
+    }
+    .media-tile-sub {
+      margin-top: 0.22rem;
+      font-size: 0.74rem; color: #8b8b8b; line-height: 1.3;
+      text-wrap: balance;
+      overflow-wrap: anywhere;
+    }
+    @media (max-width: 680px) {                /* phones: three per row, so Talks is 3 x 3 */
+      .content .media-tile, .media-tile { flex-basis: calc((100% - 24px) / 3); max-width: none; }
+      .media-tiles.is-2up .media-tile { flex-basis: calc((100% - 12px) / 2); }   /* Press: 2 x 2 */
     }
     /* ---- Follow-up work card (ForceBand) ---- */
     .followup { margin-top: 1.7em; text-align: center; }
@@ -416,24 +405,6 @@
     .followup-desc { font-size: 0.85rem; color: #cfcfcf; line-height: 1.28; }
     @media (max-width: 520px) {
       .followup-card { flex-direction: column; text-align: center; }
-    }
-    .media-text {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      line-height: 1.14;
-      text-align: left;
-    }
-    .media-name {
-      font-size: 1em;
-      font-weight: 600;
-      letter-spacing: 0.005em;
-    }
-    .media-sub {
-      font-size: 0.62em;
-      font-weight: 500;
-      color: #bdbdbd;
-      letter-spacing: 0.02em;
     }
     pre.bibtex {
       background: #f5f5f5;
@@ -1084,6 +1055,7 @@
     <li class="toc-item" data-target="team"><a class="toc-link" href="#team">Our Team</a></li>
     <li class="toc-item" data-target="acknowledge"><a class="toc-link" href="#acknowledge">Acknowledge</a></li>
     <li class="toc-item" data-target="bibtex"><a class="toc-link" href="#bibtex">BibTeX</a></li>
+    <li class="toc-item" data-target="media"><a class="toc-link" href="#media">Media</a></li>
   </ul>
 </nav>
 
@@ -2393,69 +2365,85 @@
 
 <!-- redeploy nudge: 2026-05-23 -->
 
-<!-- ================= AS FEATURED IN ================= -->
-<section class="section" id="media-coverage">
-  <div class="container">
-    <!-- Press / media coverage: same dark-capsule style, logo-led pills. -->
-    <div class="media-coverage">
-      <div class="media-coverage-label">As Featured In</div>
-      <div class="media-buttons">
-        <a href="https://mp.weixin.qq.com/s/C7rvC5-3WDndJJYTHEIIGA" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/synced.png" alt="机器之心 Synced"></span>
-          <span class="media-text"><span class="media-name">机器之心</span><span class="media-sub">Synced</span></span>
-        </a>
-        <a href="https://mp.weixin.qq.com/s/Y_OWaBTAeaYyOZf3l5V8mA" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/eai-times.png" alt="具身纪元 EAI Times"></span>
-          <span class="media-text"><span class="media-name">具身纪元</span><span class="media-sub">EAI Times</span></span>
-        </a>
-        <a href="https://x.com/junfanzhu98/status/2068605511549743127" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/saturday-robotics.png" alt="Saturday Robotics"></span>
-          <span class="media-text"><span class="media-name">Saturday Robotics</span><span class="media-sub">@saturdayrobotic</span></span>
-        </a>
-        <a href="https://www.techbeat.net/talk-info?id=1057" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/techbeat.png" alt="TechBeat"></span>
-          <span class="media-text"><span class="media-name">将门技术社区</span><span class="media-sub">TechBeat</span></span>
-        </a>
-        <a href="https://www.bilibili.com/video/BV1a6Mv63EyG?t=4.6" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/3d-vision-workshop.png" alt="3D视觉工坊 3D Vision Workshop"></span>
-          <span class="media-text"><span class="media-name">3D视觉工坊</span><span class="media-sub">3D Vision Workshop</span></span>
-        </a>
-        <a href="https://www.xiaohongshu.com/user/profile/645271980000000014011ef5" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/ai-yeqing.png" alt="AI椰青 on Xiaohongshu"></span>
-          <span class="media-text"><span class="media-name">AI椰青</span><span class="media-sub">Xiaohongshu</span></span>
-        </a>
+<!-- ================= MEDIA ================= -->
+<section class="section" id="media" data-toc="media">
+  <div class="container content">
+    <h2 class="title is-3 section-title">Media</h2>
+    <div class="media-wall">
+      <div class="media-group">
+        <div class="media-group-label">Press</div>
+        <div class="media-tiles is-2up">
+          <a class="media-tile" href="https://mp.weixin.qq.com/s/C7rvC5-3WDndJJYTHEIIGA" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/synced.png" alt="机器之心 Synced" loading="lazy"></span>
+            <span class="media-tile-name">机器之心</span>
+            <span class="media-tile-sub">Synced</span>
+          </a>
+          <a class="media-tile" href="https://mp.weixin.qq.com/s/Y_OWaBTAeaYyOZf3l5V8mA" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/eai-times.png" alt="具身纪元 EAI Times" loading="lazy"></span>
+            <span class="media-tile-name">具身纪元</span>
+            <span class="media-tile-sub">EAI Times</span>
+          </a>
+          <a class="media-tile" href="https://www.xiaohongshu.com/explore/6a49fda9000000001503e074?xsec_token=ABTSovSpkld4a56blXUxn_PMj03IpN8geu95KWp8Vkesk=&amp;xsec_source=pc_search&amp;source=web_explore_feed" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/robolens.png" alt="RoboLens 源策未来 Archon Robotics" loading="lazy"></span>
+            <span class="media-tile-name">RoboLens</span>
+            <span class="media-tile-sub">源策未来 Archon Robotics</span>
+          </a>
+          <a class="media-tile" href="https://today.umd.edu/umd-researchers-enable-robots-to-learn-from-human-experience" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/umd.png" alt="UMD Today" loading="lazy"></span>
+            <span class="media-tile-name">UMD Today</span>
+            <span class="media-tile-sub">University of Maryland</span>
+          </a>
+        </div>
       </div>
-      <div class="media-buttons">
-        <a href="https://meeting.tencent.com/crm/NX6E4Xx7e7" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/shanghai-ai-lab.png" alt="Shanghai AI Lab"></span>
-          <span class="media-text"><span class="media-name">Shanghai AI Lab</span><span class="media-sub">上海人工智能实验室</span></span>
-        </a>
-        <a href="https://www.xiaohongshu.com/explore/6a49fda9000000001503e074?xsec_token=ABTSovSpkld4a56blXUxn_PMj03IpN8geu95KWp8Vkesk=&amp;xsec_source=pc_search&amp;source=web_explore_feed" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/robolens.png" alt="RoboLens 源策未来 Archon Robotics"></span>
-          <span class="media-text"><span class="media-name">RoboLens</span><span class="media-sub">源策未来 Archon Robotics</span></span>
-        </a>
-        <a href="https://www.gimai.io/" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/gim.png" alt="General Intelligent Machines"></span>
-          <span class="media-text"><span class="media-name">General Intelligent Machines</span><span class="media-sub">GIM</span></span>
-        </a>
-      </div>
-      <div class="media-buttons">
-        <a href="https://today.umd.edu/umd-researchers-enable-robots-to-learn-from-human-experience" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/umd.png" alt="UMD Today"></span>
-          <span class="media-text"><span class="media-name">UMD Today</span><span class="media-sub">University of Maryland</span></span>
-        </a>
-        <a href="https://gamma.umd.edu/" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/gamma-lab.png" alt="GAMMA Lab, University of Maryland"></span>
-          <span class="media-text"><span class="media-name">GAMMA Lab</span><span class="media-sub">University of Maryland</span></span>
-        </a>
-        <a href="https://zsdonghao.github.io/" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/pku.png" alt="Peking University"></span>
-          <span class="media-text"><span class="media-name">Peking University</span><span class="media-sub">Prof. Hao Dong's Lab</span></span>
-        </a>
-        <a href="https://www.baai.ac.cn/" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/baai.png" alt="Beijing Academy of Artificial Intelligence (BAAI)"></span>
-          <span class="media-text"><span class="media-name">Beijing Academy of Artificial Intelligence</span><span class="media-sub">BAAI 智源研究院</span></span>
-        </a>
+      <div class="media-group">
+        <div class="media-group-label">Talks</div>
+        <div class="media-tiles">
+          <a class="media-tile" href="https://x.com/junfanzhu98/status/2068605511549743127" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/saturday-robotics.png" alt="Saturday Robotics" loading="lazy"></span>
+            <span class="media-tile-name">Saturday Robotics</span>
+            <span class="media-tile-sub">@saturday<wbr>robotic</span>
+          </a>
+          <a class="media-tile" href="https://www.techbeat.net/talk-info?id=1057" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/techbeat.png" alt="TechBeat" loading="lazy"></span>
+            <span class="media-tile-name">将门技术社区</span>
+            <span class="media-tile-sub">TechBeat</span>
+          </a>
+          <a class="media-tile" href="https://www.bilibili.com/video/BV1a6Mv63EyG?t=4.6" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/3d-vision-workshop.png" alt="3D视觉工坊 3D Vision Workshop" loading="lazy"></span>
+            <span class="media-tile-name">3D视觉工坊</span>
+            <span class="media-tile-sub">3D Vision Workshop</span>
+          </a>
+          <a class="media-tile" href="https://www.xiaohongshu.com/user/profile/645271980000000014011ef5" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/ai-yeqing.png" alt="AI椰青 on Xiaohongshu" loading="lazy"></span>
+            <span class="media-tile-name">AI椰青</span>
+            <span class="media-tile-sub">Xiaohongshu</span>
+          </a>
+          <a class="media-tile" href="https://meeting.tencent.com/crm/NX6E4Xx7e7" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/shanghai-ai-lab.png" alt="Shanghai AI Lab" loading="lazy"></span>
+            <span class="media-tile-name">Shanghai AI Lab</span>
+            <span class="media-tile-sub">上海人工智能实验室</span>
+          </a>
+          <a class="media-tile" href="https://www.gimai.io/" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/gim.png" alt="General Intelligent Machines" loading="lazy"></span>
+            <span class="media-tile-name">General Intelligent Machines</span>
+            <span class="media-tile-sub">GIM</span>
+          </a>
+          <a class="media-tile" href="https://gamma.umd.edu/" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/gamma-lab.png" alt="GAMMA Lab, University of Maryland" loading="lazy"></span>
+            <span class="media-tile-name">GAMMA Lab</span>
+            <span class="media-tile-sub">University of Maryland</span>
+          </a>
+          <a class="media-tile" href="https://zsdonghao.github.io/" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/pku.png" alt="Peking University" loading="lazy"></span>
+            <span class="media-tile-name">Peking University</span>
+            <span class="media-tile-sub">Prof. Hao Dong's Lab</span>
+          </a>
+          <a class="media-tile" href="https://www.baai.ac.cn/" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/baai.png" alt="Beijing Academy of Artificial Intelligence (BAAI)" loading="lazy"></span>
+            <span class="media-tile-name">Beijing Academy of Artificial Intelligence</span>
+            <span class="media-tile-sub">BAAI 智源研究院</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
