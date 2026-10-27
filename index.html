@@ -342,6 +342,9 @@
       justify-content: center;
       gap: 0.7em;
     }
+    /* Rows are separate .media-buttons groups so the line breaks are explicit;
+       keep the vertical rhythm equal to the in-row gap. */
+    .media-buttons + .media-buttons { margin-top: 0.7em; }
     .media-buttons a {
       display: inline-flex;
       align-items: center;
@@ -1061,6 +1064,7 @@
     </li>
     <li class="toc-item" data-target="clip-full-video"><a class="toc-link" href="#clip-full-video">HumanEgo &mdash; Full Video</a></li>
     <li class="toc-item" data-target="interactive-sim"><a class="toc-link" href="#interactive-sim">Interactive Simulation</a></li>
+    <li class="toc-item" data-target="real2sim"><a class="toc-link" href="#real2sim">Real2Sim</a></li>
     <li class="toc-item" data-target="insights"><a class="toc-link" href="#insights"><span class="toc-star">&#x2726;</span>Insights</a></li>
     <li class="toc-item" data-target="overview"><a class="toc-link" href="#overview">Overview</a></li>
     <li class="toc-item" data-target="abstract"><a class="toc-link" href="#abstract">Abstract</a></li>
@@ -1210,11 +1214,9 @@
         <a href="https://github.com/TX-Leo/HumanEgo" target="_blank" rel="noopener" id="code-pill"><i class="fab fa-github"></i>&nbsp;Code<span class="pill-stat is-star" id="gh-stars" hidden><i class="fas fa-star stat-ico" aria-hidden="true"></i><span class="stat-num" id="gh-stars-num">0</span></span></a>
         <a href="https://huggingface.co/datasets/Leo-TX/HumanEgo" target="_blank" rel="noopener"><i class="fas fa-database"></i>&nbsp;Dataset</a>
         <a href="https://huggingface.co/spaces/Leo-TX/humanego-gallery" target="_blank" rel="noopener"><i class="fas fa-images"></i>&nbsp;Data Gallery</a>
-        <a href="sim/" title="Run the released policy in simulation, in your browser"><i class="fas fa-cube"></i>&nbsp;Interactive Sim</a>
-        <a href="real2sim/" title="One human video turned by an agent into a physics-verified simulation of our Tianji + SharpaWave robot, and into robot-camera data"><i class="fas fa-robot"></i>&nbsp;Real2Sim</a>
         <a href="https://youtu.be/pdL46diijuY" target="_blank" rel="noopener"><i class="fab fa-youtube"></i>&nbsp;Video</a>
         <br>
-        <a href="https://x.com/TX_Leo_Wang/status/2059320921228546220" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="0.85em" height="0.85em" fill="currentColor" style="vertical-align:-0.05em;" aria-hidden="true"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg>&nbsp;X<span class="pill-stat is-views" id="x-views" data-views="110000" hidden><i class="fas fa-eye stat-ico" aria-hidden="true"></i><span class="stat-num" id="x-views-num">0</span></span></a>
+        <a href="https://x.com/TX_Leo_Wang/status/2059320921228546220" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1227" width="0.85em" height="0.85em" fill="currentColor" style="vertical-align:-0.05em;" aria-hidden="true"><path d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg>&nbsp;X<span class="pill-stat is-views" id="x-views" data-views="128000" hidden><i class="fas fa-eye stat-ico" aria-hidden="true"></i><span class="stat-num" id="x-views-num">0</span></span></a>
         <a href="https://www.linkedin.com/feed/update/urn:li:activity:7465088305622159361/" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i>&nbsp;LinkedIn</a>
         <a href="https://youtu.be/OyLIPKTkR7c" target="_blank" rel="noopener"><i class="fab fa-youtube"></i>&nbsp;5-min Talk (EN)</a>
         <a href="https://www.xiaohongshu.com/explore/6a518e1b000000001702c97a?xsec_token=ABG8M7-mOaTC-ZJUZdWsDslABs-DEcFouhytTD43Rxphs=&amp;xsec_source=pc_user" target="_blank" rel="noopener"><i class="fas fa-play-circle"></i>&nbsp;1h Talk (CN)</a>
@@ -1223,6 +1225,9 @@
         <a href="https://docs.google.com/presentation/d/1vJcPOh1DZwDVXBW2SXHRVrZTwEo1GuZPrejtP6qkeoU/edit?slide=id.g3d768adbbee_0_0#slide=id.g3d768adbbee_0_0" target="_blank" rel="noopener"><i class="fas fa-file-powerpoint"></i>&nbsp;Slides</a>
         <a href="https://docs.google.com/presentation/d/176mPGtUklhS7h0wZ-SolEQj2gvUoeAjhBWJkmjrhvuw/edit?usp=sharing" target="_blank" rel="noopener"><i class="fas fa-scroll"></i>&nbsp;Poster</a>
         <a href="#bibtex"><i class="fas fa-quote-right"></i>&nbsp;BibTeX</a>
+        <br>
+        <a href="sim/" title="Run the released policy in simulation, in your browser"><i class="fas fa-cube"></i>&nbsp;Policy in Simulation</a>
+        <a href="real2sim/" title="One human video turned by an agent into a physics-verified simulation of our Tianji + SharpaWave robot, and into robot-camera data"><i class="fas fa-robot"></i>&nbsp;Real2Sim</a>
       </div>
 
       <!-- ================= FOLLOW-UP WORK ================= -->
@@ -1419,8 +1424,45 @@
     </div>
     <div class="link-buttons" style="margin-top: 1em; text-align: center;">
       <a href="sim/"><i class="fas fa-cube"></i>&nbsp;Open the simulator</a>
-      <a href="real2sim/"><i class="fas fa-robot"></i>&nbsp;Real2Sim: one video &rarr; Tianji + SharpaWave data</a>
       <a href="https://github.com/TX-Leo/HumanEgo/tree/main/simulation" target="_blank" rel="noopener"><i class="fab fa-github"></i>&nbsp;Simulation code</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REAL2SIM ================= -->
+<section class="section" id="real2sim" data-toc="real2sim">
+  <div class="container content wide">
+    <h2 class="title is-3 section-title">Real2Sim</h2>
+    <p class="has-text-centered" style="max-width: 860px; margin: 0 auto 1em;">
+      <b>One human video in, robot data out.</b> Two egocentric videos from Aria glasses &mdash; serving bread
+      with one hand and watering flowers with both &mdash; are turned by an LLM agent running the
+      <b>DexAgent</b> pipeline into <b>physics-verified simulations</b> of our Tianji dual-arm robot with
+      SharpaWave dexterous hands, and then into <b>over a thousand randomized robot episodes</b> with
+      agent-designed diversity, soft bread and photoreal renders, seen through the robot's own cameras.
+    </p>
+    <div class="columns pair-cols is-variable is-5" style="margin-top: 0.4em;">
+      <div class="column">
+        <h3 class="task-clip-title">Serve Bread &middot; One Hand</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture loop>
+            <source src="real2sim/media/hq/hero_scene.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+      <div class="column">
+        <h3 class="task-clip-title">Water Flowers &middot; Both Hands</h3>
+        <div class="pair-media-wrap">
+          <video class="scroll-play" muted playsinline preload="auto" disablepictureinpicture loop>
+            <source src="real2sim/media/water/hq_hero.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+    </div>
+    <div class="link-buttons" style="margin-top: 1em; text-align: center;">
+      <a href="real2sim/"><i class="fas fa-robot"></i>&nbsp;Open Real2Sim</a>
+      <a href="real2sim/#data"><i class="fas fa-database"></i>&nbsp;Generated data</a>
+      <a href="https://github.com/dexagent1/DexAgent" target="_blank" rel="noopener"><i class="fab fa-github"></i>&nbsp;DexAgent</a>
+      <a href="https://arxiv.org/abs/2609.35318" target="_blank" rel="noopener"><i class="ai ai-arxiv"></i>&nbsp;DexAgent paper</a>
     </div>
   </div>
 </section>
@@ -2368,18 +2410,24 @@
           <span class="media-logo"><img src="static/images/media/eai-times.png" alt="具身纪元 EAI Times"></span>
           <span class="media-text"><span class="media-name">具身纪元</span><span class="media-sub">EAI Times</span></span>
         </a>
-        <a href="https://today.umd.edu/umd-researchers-enable-robots-to-learn-from-human-experience" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/umd.png" alt="UMD Today"></span>
-          <span class="media-text"><span class="media-name">UMD Today</span><span class="media-sub">University of Maryland</span></span>
-        </a>
         <a href="https://x.com/junfanzhu98/status/2068605511549743127" target="_blank" rel="noopener">
           <span class="media-logo"><img src="static/images/media/saturday-robotics.png" alt="Saturday Robotics"></span>
           <span class="media-text"><span class="media-name">Saturday Robotics</span><span class="media-sub">@saturdayrobotic</span></span>
         </a>
         <a href="https://www.techbeat.net/talk-info?id=1057" target="_blank" rel="noopener">
           <span class="media-logo"><img src="static/images/media/techbeat.png" alt="TechBeat"></span>
-          <span class="media-text"><span class="media-name">TechBeat</span><span class="media-sub">将门技术社区</span></span>
+          <span class="media-text"><span class="media-name">将门技术社区</span><span class="media-sub">TechBeat</span></span>
         </a>
+        <a href="https://www.bilibili.com/video/BV1a6Mv63EyG?t=4.6" target="_blank" rel="noopener">
+          <span class="media-logo"><img src="static/images/media/3d-vision-workshop.png" alt="3D视觉工坊 3D Vision Workshop"></span>
+          <span class="media-text"><span class="media-name">3D视觉工坊</span><span class="media-sub">3D Vision Workshop</span></span>
+        </a>
+        <a href="https://www.xiaohongshu.com/user/profile/645271980000000014011ef5" target="_blank" rel="noopener">
+          <span class="media-logo"><img src="static/images/media/ai-yeqing.png" alt="AI椰青 on Xiaohongshu"></span>
+          <span class="media-text"><span class="media-name">AI椰青</span><span class="media-sub">Xiaohongshu</span></span>
+        </a>
+      </div>
+      <div class="media-buttons">
         <a href="https://meeting.tencent.com/crm/NX6E4Xx7e7" target="_blank" rel="noopener">
           <span class="media-logo"><img src="static/images/media/shanghai-ai-lab.png" alt="Shanghai AI Lab"></span>
           <span class="media-text"><span class="media-name">Shanghai AI Lab</span><span class="media-sub">上海人工智能实验室</span></span>
@@ -2388,17 +2436,27 @@
           <span class="media-logo"><img src="static/images/media/robolens.png" alt="RoboLens 源策未来 Archon Robotics"></span>
           <span class="media-text"><span class="media-name">RoboLens</span><span class="media-sub">源策未来 Archon Robotics</span></span>
         </a>
-        <a href="https://www.bilibili.com/video/BV1a6Mv63EyG?t=4.6" target="_blank" rel="noopener">
-          <span class="media-logo"><img src="static/images/media/3d-vision-workshop.png" alt="3D视觉工坊 3D Vision Workshop"></span>
-          <span class="media-text"><span class="media-name">3D视觉工坊</span><span class="media-sub">3D Vision Workshop</span></span>
-        </a>
         <a href="https://www.gimai.io/" target="_blank" rel="noopener">
           <span class="media-logo"><img src="static/images/media/gim.png" alt="General Intelligent Machines"></span>
           <span class="media-text"><span class="media-name">General Intelligent Machines</span><span class="media-sub">GIM</span></span>
         </a>
+      </div>
+      <div class="media-buttons">
+        <a href="https://today.umd.edu/umd-researchers-enable-robots-to-learn-from-human-experience" target="_blank" rel="noopener">
+          <span class="media-logo"><img src="static/images/media/umd.png" alt="UMD Today"></span>
+          <span class="media-text"><span class="media-name">UMD Today</span><span class="media-sub">University of Maryland</span></span>
+        </a>
         <a href="https://gamma.umd.edu/" target="_blank" rel="noopener">
           <span class="media-logo"><img src="static/images/media/gamma-lab.png" alt="GAMMA Lab, University of Maryland"></span>
           <span class="media-text"><span class="media-name">GAMMA Lab</span><span class="media-sub">University of Maryland</span></span>
+        </a>
+        <a href="https://zsdonghao.github.io/" target="_blank" rel="noopener">
+          <span class="media-logo"><img src="static/images/media/pku.png" alt="Peking University"></span>
+          <span class="media-text"><span class="media-name">Peking University</span><span class="media-sub">Prof. Hao Dong's Lab</span></span>
+        </a>
+        <a href="https://www.baai.ac.cn/" target="_blank" rel="noopener">
+          <span class="media-logo"><img src="static/images/media/baai.png" alt="Beijing Academy of Artificial Intelligence (BAAI)"></span>
+          <span class="media-text"><span class="media-name">Beijing Academy of Artificial Intelligence</span><span class="media-sub">BAAI 智源研究院</span></span>
         </a>
       </div>
     </div>
