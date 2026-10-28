@@ -16,6 +16,6 @@ chip at a fixed height):
 | `shanghai-ai-lab.png`   | Shanghai AI Lab     | https://meeting.tencent.com/crm/NX6E4Xx7e7 (talk) |
 | `gim.png`               | General Intelligent Machines | https://www.gimai.io/ (talk) — the site's own cube favicon (only published at 32 px), redrawn at 256 px |
 | `gamma-lab.png`         | GAMMA Lab, UMD      | https://gamma.umd.edu/ (talk) |
-| `ai-yeqing.png`         | AI椰青 (Xiaohongshu) | https://www.xiaohongshu.com/user/profile/645271980000000014011ef5 (talk) — interim: Xiaohongshu platform logo, swap for the account avatar |
+| `ai-yeqing.png`         | AI椰青 (Xiaohongshu) | https://www.xiaohongshu.com/user/profile/645271980000000014011ef5 (talk) — the account's avatar |
 | `pku.png`               | Peking University, Prof. Hao Dong's Lab | https://zsdonghao.github.io/ (talk) |
 | `baai.png`              | BAAI 智源研究院       | https://www.baai.ac.cn/ (talk) |
