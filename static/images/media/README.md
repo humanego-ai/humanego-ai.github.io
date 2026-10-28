@@ -14,7 +14,7 @@ chip at a fixed height):
 | `saturday-robotics.png` | Saturday Robotics   | https://x.com/junfanzhu98/status/2068605511549743127 |
 | `techbeat.png`          | TechBeat            | https://www.techbeat.net/talk-info?id=1057 |
 | `shanghai-ai-lab.png`   | Shanghai AI Lab     | https://meeting.tencent.com/crm/NX6E4Xx7e7 (talk) |
-| `gim.png`               | General Intelligent Machines | https://www.gimai.io/ (talk) |
+| `gim.png`               | General Intelligent Machines | https://www.gimai.io/ (talk) — the site's own cube favicon (only published at 32 px), redrawn at 256 px |
 | `gamma-lab.png`         | GAMMA Lab, UMD      | https://gamma.umd.edu/ (talk) |
 | `ai-yeqing.png`         | AI椰青 (Xiaohongshu) | https://www.xiaohongshu.com/user/profile/645271980000000014011ef5 (talk) — interim: Xiaohongshu platform logo, swap for the account avatar |
 | `pku.png`               | Peking University, Prof. Hao Dong's Lab | https://zsdonghao.github.io/ (talk) |
