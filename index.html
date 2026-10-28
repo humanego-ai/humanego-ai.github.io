@@ -311,10 +311,10 @@
     }
 
     /* ---- Media: press coverage and invited talks ----
-       Equal-size tiles in a centred wall. The wall is capped so a row holds at
-       most five, which makes the two groups fall as 4 and 5+4 instead of the
-       ragged rows that variable-width pills produced. */
-    .media-wall { max-width: 900px; margin: 0.4rem auto 0; }
+       Equal-size tiles in a centred wall, four per row, so the three groups
+       fall as 4+3 / 3 / 4 instead of the ragged rows that variable-width pills
+       produced. */
+    .media-wall { max-width: 780px; margin: 0.4rem auto 0; }
     .media-group + .media-group { margin-top: 2.1rem; }
     .media-group-label {
       display: flex; align-items: center; justify-content: center; gap: 0.85em;
@@ -329,8 +329,8 @@
     .media-tiles { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
     .content .media-tile, .media-tile {
       position: relative;
-      flex: 0 0 calc((100% - 48px) / 5);       /* five per row at any desktop width */
-      max-width: 168px;
+      flex: 0 0 calc((100% - 36px) / 4);       /* four per row at any desktop width */
+      max-width: 186px;
       min-width: 0;                            /* let a long handle wrap instead of widening the tile */
       display: flex; flex-direction: column; align-items: center; text-align: center;
       padding: 1.1rem 0.75rem 0.95rem;
@@ -369,9 +369,8 @@
       text-wrap: balance;
       overflow-wrap: anywhere;
     }
-    @media (max-width: 680px) {                /* phones: three per row, so Talks is 3 x 3 */
-      .content .media-tile, .media-tile { flex-basis: calc((100% - 24px) / 3); max-width: none; }
-      .media-tiles.is-2up .media-tile { flex-basis: calc((100% - 12px) / 2); }   /* Press: 2 x 2 */
+    @media (max-width: 680px) {                /* phones: two per row */
+      .content .media-tile, .media-tile { flex-basis: calc((100% - 12px) / 2); max-width: none; }
     }
     /* ---- Follow-up work card (ForceBand) ---- */
     .followup { margin-top: 1.7em; text-align: center; }
@@ -1055,7 +1054,7 @@
     <li class="toc-item" data-target="team"><a class="toc-link" href="#team">Our Team</a></li>
     <li class="toc-item" data-target="acknowledge"><a class="toc-link" href="#acknowledge">Acknowledge</a></li>
     <li class="toc-item" data-target="bibtex"><a class="toc-link" href="#bibtex">BibTeX</a></li>
-    <li class="toc-item" data-target="media"><a class="toc-link" href="#media">Media</a></li>
+    <li class="toc-item" data-target="media"><a class="toc-link" href="#media">Media and Talks</a></li>
   </ul>
 </nav>
 
@@ -2368,11 +2367,16 @@
 <!-- ================= MEDIA ================= -->
 <section class="section" id="media" data-toc="media">
   <div class="container content">
-    <h2 class="title is-3 section-title">Media</h2>
+    <h2 class="title is-3 section-title">Media and Talks</h2>
     <div class="media-wall">
       <div class="media-group">
         <div class="media-group-label">Press</div>
-        <div class="media-tiles is-2up">
+        <div class="media-tiles">
+          <a class="media-tile" href="https://today.umd.edu/umd-researchers-enable-robots-to-learn-from-human-experience" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/umd.png" alt="UMD Today" loading="lazy"></span>
+            <span class="media-tile-name">UMD Today</span>
+            <span class="media-tile-sub">University of Maryland</span>
+          </a>
           <a class="media-tile" href="https://mp.weixin.qq.com/s/C7rvC5-3WDndJJYTHEIIGA" target="_blank" rel="noopener">
             <span class="media-tile-logo"><img src="static/images/media/synced.png" alt="机器之心 Synced" loading="lazy"></span>
             <span class="media-tile-name">机器之心</span>
@@ -2383,21 +2387,6 @@
             <span class="media-tile-name">具身纪元</span>
             <span class="media-tile-sub">EAI Times</span>
           </a>
-          <a class="media-tile" href="https://www.xiaohongshu.com/explore/6a49fda9000000001503e074?xsec_token=ABTSovSpkld4a56blXUxn_PMj03IpN8geu95KWp8Vkesk=&amp;xsec_source=pc_search&amp;source=web_explore_feed" target="_blank" rel="noopener">
-            <span class="media-tile-logo"><img src="static/images/media/robolens.png" alt="RoboLens 源策未来 Archon Robotics" loading="lazy"></span>
-            <span class="media-tile-name">RoboLens</span>
-            <span class="media-tile-sub">源策未来 Archon Robotics</span>
-          </a>
-          <a class="media-tile" href="https://today.umd.edu/umd-researchers-enable-robots-to-learn-from-human-experience" target="_blank" rel="noopener">
-            <span class="media-tile-logo"><img src="static/images/media/umd.png" alt="UMD Today" loading="lazy"></span>
-            <span class="media-tile-name">UMD Today</span>
-            <span class="media-tile-sub">University of Maryland</span>
-          </a>
-        </div>
-      </div>
-      <div class="media-group">
-        <div class="media-group-label">Talks</div>
-        <div class="media-tiles">
           <a class="media-tile" href="https://x.com/junfanzhu98/status/2068605511549743127" target="_blank" rel="noopener">
             <span class="media-tile-logo"><img src="static/images/media/saturday-robotics.png" alt="Saturday Robotics" loading="lazy"></span>
             <span class="media-tile-name">Saturday Robotics</span>
@@ -2418,16 +2407,31 @@
             <span class="media-tile-name">AI椰青</span>
             <span class="media-tile-sub">Xiaohongshu</span>
           </a>
-          <a class="media-tile" href="https://meeting.tencent.com/crm/NX6E4Xx7e7" target="_blank" rel="noopener">
-            <span class="media-tile-logo"><img src="static/images/media/shanghai-ai-lab.png" alt="Shanghai AI Lab" loading="lazy"></span>
-            <span class="media-tile-name">Shanghai AI Lab</span>
-            <span class="media-tile-sub">上海人工智能实验室</span>
+        </div>
+      </div>
+      <div class="media-group">
+        <div class="media-group-label">Industry</div>
+        <div class="media-tiles">
+          <a class="media-tile" href="https://www.xiaohongshu.com/explore/6a49fda9000000001503e074?xsec_token=ABTSovSpkld4a56blXUxn_PMj03IpN8geu95KWp8Vkesk=&amp;xsec_source=pc_search&amp;source=web_explore_feed" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/robolens.png" alt="RoboLens 源策未来 Archon Robotics" loading="lazy"></span>
+            <span class="media-tile-name">RoboLens</span>
+            <span class="media-tile-sub">源策未来 Archon Robotics</span>
           </a>
           <a class="media-tile" href="https://www.gimai.io/" target="_blank" rel="noopener">
             <span class="media-tile-logo"><img src="static/images/media/gim.png" alt="General Intelligent Machines" loading="lazy"></span>
             <span class="media-tile-name">General Intelligent Machines</span>
             <span class="media-tile-sub">GIM</span>
           </a>
+          <a class="media-tile" href="http://dolphinlynxi.com/" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/dolphin-lynx.png" alt="海豚灵汐 Dolphin Lynx" loading="lazy"></span>
+            <span class="media-tile-name">海豚灵汐</span>
+            <span class="media-tile-sub">Dolphin Lynx</span>
+          </a>
+        </div>
+      </div>
+      <div class="media-group">
+        <div class="media-group-label">Academia &amp; Institutes</div>
+        <div class="media-tiles">
           <a class="media-tile" href="https://gamma.umd.edu/" target="_blank" rel="noopener">
             <span class="media-tile-logo"><img src="static/images/media/gamma-lab.png" alt="GAMMA Lab, University of Maryland" loading="lazy"></span>
             <span class="media-tile-name">GAMMA Lab</span>
@@ -2436,12 +2440,16 @@
           <a class="media-tile" href="https://zsdonghao.github.io/" target="_blank" rel="noopener">
             <span class="media-tile-logo"><img src="static/images/media/pku.png" alt="Peking University" loading="lazy"></span>
             <span class="media-tile-name">Peking University</span>
-            <span class="media-tile-sub">Prof. Hao Dong's Lab</span>
           </a>
           <a class="media-tile" href="https://www.baai.ac.cn/" target="_blank" rel="noopener">
             <span class="media-tile-logo"><img src="static/images/media/baai.png" alt="Beijing Academy of Artificial Intelligence (BAAI)" loading="lazy"></span>
             <span class="media-tile-name">Beijing Academy of Artificial Intelligence</span>
             <span class="media-tile-sub">BAAI 智源研究院</span>
+          </a>
+          <a class="media-tile" href="https://meeting.tencent.com/crm/NX6E4Xx7e7" target="_blank" rel="noopener">
+            <span class="media-tile-logo"><img src="static/images/media/shanghai-ai-lab.png" alt="Shanghai AI Lab" loading="lazy"></span>
+            <span class="media-tile-name">Shanghai AI Lab</span>
+            <span class="media-tile-sub">上海人工智能实验室</span>
           </a>
         </div>
       </div>
